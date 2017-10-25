@@ -6,6 +6,9 @@ import Home from './components/Home';
 import PupilLogin from './components/pupils/PupilLogin';
 import HomeworksShow from './components/homeworks/HomeworksShow';
 
+import './scss/bulma/css/bulma.css';
+import './scss/style.scss';
+
 class App extends React.Component {
 
   render() {
