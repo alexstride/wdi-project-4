@@ -1,11 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+import Home from './components/Home';
+import PupilLogin from './components/pupils/PupilLogin';
+import HomeworksShow from './components/homeworks/HomeworksShow';
 
 class App extends React.Component {
 
   render() {
     return (
-      <h1>WDI Project 4: MERN Stack App</h1>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/pupils/login" component={PupilLogin} />
+          <Route exact path="/homeworks/:id" component={HomeworksShow} />
+        </Switch>
+      </BrowserRouter>
     );
   }
 }
