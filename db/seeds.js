@@ -42,6 +42,7 @@ Promise
         {
           email: 'test@test.com',
           password: 'pass',
+          passwordConfirmation: 'pass',
           homework: homework[0]
         }
       ]);
