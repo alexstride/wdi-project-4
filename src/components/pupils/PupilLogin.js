@@ -6,7 +6,7 @@ class PupilLogin extends React.Component {
       <div>
         <h1>Pupil Login</h1>
         <form>
-          
+
         </form>
       </div>
     );
