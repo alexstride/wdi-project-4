@@ -1,2 +1,28 @@
-body {
+.main-title {
+  text-align: center;
+  padding: 20px;
+  margin: 30px 0;
+}
+
+.centered-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-error {
+  color: tomato;
+}
+
+.code-block {
+  display: flex;
+  flex-direction: column;
+  padding: 30px 0;
+  form {
+    button {
+      transform: translate(0, -100%);
+      width: 20%;
+      align-self: flex-end;
+    }
+  }
 }
