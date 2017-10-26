@@ -11,10 +11,16 @@ class HomeworksShow extends React.Component {
     submitModalOpen: false
   }
 
+  componentDidMount() {
+    Axios
+      .get('/api/homeworks/')
+      .then(res => this.setState({ homework: res.data[0] }));
+  }
+
   handleChange = (newValue, id) => {
     const problems = this.state.homework.problems.map(prob => {
       if (prob._id === id) {
-        return Object.assign(prob, { pupilCode: newValue });
+        return Object.assign(prob, { pupilCode: newValue, message: 'Your work has not been saved' });
       } else {
         return prob;
       }
@@ -26,18 +32,12 @@ class HomeworksShow extends React.Component {
     });
   }
 
-  componentDidMount() {
-    Axios
-      .get('/api/homeworks/')
-      .then(res => this.setState({ homework: res.data[0] }));
-  }
-
   submitConfirm = (e) => {
     e.preventDefault();
     Axios
       .put(`/api/homeworks/${this.state.homework._id}`, Object.assign(this.state.homework, { hasBeenSubmitted: true }))
       .then(res => {
-        this.setState({ homework: res.data }, () => console.log(this.state));
+        this.setState({ homework: res.data });
       })
       .then(() => this.setState({submitModalOpen: !this.state.submitModalOpen}))
       .catch(err => console.log(err));
@@ -46,6 +46,37 @@ class HomeworksShow extends React.Component {
   toggleModal = (e) => {
     e.preventDefault();
     this.setState({submitModalOpen: !this.state.submitModalOpen});
+  }
+
+  createMessage(id, message) {
+    const problems = this.state.homework.problems.map(problem => {
+      if(problem._id === id) {
+        const lovely = Object.assign(problem, {message: message});
+        return lovely;
+      } else {
+        console.log(problem);
+        return problem;
+      }
+    });
+    this.setState(prevState => {
+      const newState = Object.assign({}, prevState);
+      newState.homework.problems = problems;
+      return newState;
+    });
+  }
+
+
+
+  codeBlockHandleSubmit = (e, id, pupilCode) => {
+    e.preventDefault();
+    Axios
+      .put(`/api/homeworks/${this.state.homework._id}/problems/${id}`, { pupilCode: pupilCode })
+      .then(() => {
+        this.createMessage(id, 'Your work has been saved');
+      })
+      .catch(() => {
+        this.createMessage(id, 'Your work was unable to be saved');
+      });
   }
 
   render() {
@@ -64,6 +95,7 @@ class HomeworksShow extends React.Component {
               parentId={this.state.homework.id}
               isSubmitted={this.state.homework.hasBeenSubmitted}
               handleChange={(newValue) => this.handleChange(newValue, problem._id)}
+              handleSubmit={(e) => this.codeBlockHandleSubmit(e, problem._id, problem.pupilCode)}
             />)}
           <div className="level">
             <div className="level-item">
