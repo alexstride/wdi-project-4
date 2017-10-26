@@ -18,7 +18,6 @@ class HomeworksShow extends React.Component {
   }
 
   handleChange = (newValue, id) => {
-
     const problems = this.state.homework.problems.map(prob => {
       if (prob._id === id) {
         return Object.assign(prob, { pupilCode: newValue, message: 'Your work has not been saved' });
@@ -38,7 +37,7 @@ class HomeworksShow extends React.Component {
     Axios
       .put(`/api/homeworks/${this.state.homework._id}`, Object.assign(this.state.homework, { hasBeenSubmitted: true }))
       .then(res => {
-        this.setState({ homework: res.data }, () => console.log(this.state));
+        this.setState({ homework: res.data });
       })
       .then(() => this.setState({submitModalOpen: !this.state.submitModalOpen}))
       .catch(err => console.log(err));
@@ -49,33 +48,35 @@ class HomeworksShow extends React.Component {
     this.setState({submitModalOpen: !this.state.submitModalOpen});
   }
 
+  createMessage(id, message) {
+    const problems = this.state.homework.problems.map(problem => {
+      if(problem._id === id) {
+        const lovely = Object.assign(problem, {message: message});
+        return lovely;
+      } else {
+        console.log(problem);
+        return problem;
+      }
+    });
+    this.setState(prevState => {
+      const newState = Object.assign({}, prevState);
+      newState.homework.problems = problems;
+      return newState;
+    });
+  }
+
+
+
   codeBlockHandleSubmit = (e, id, pupilCode) => {
     e.preventDefault();
     Axios
       .put(`/api/homeworks/${this.state.homework._id}/problems/${id}`, { pupilCode: pupilCode })
       .then(() => {
-        const problems = this.state.homeworks.problems.map(problem => {
-          if(problem._id === id) {
-            const lovely = Object.assign(problem, {message: 'Your work has been saved'});
-            console.log(lovely);
-            return lovely;
-          } else {
-            console.log(problem);
-            return problem;
-          }
-        });
-        this.setState(prevState => {
-          const newState = Object.assign({}, prevState);
-          newState.homework.problems = problems;
-          return newState;
-        });
-        this.setState(prevState => {
-          const newState = Object.assign({}, prevState);
-          newState.homework.problems = problems;
-          return newState;
-        });
+        this.createMessage(id, 'Your work has been saved');
       })
-      .catch(() => this.setState({ message: 'Error occured. Unable to save work'}));
+      .catch(() => {
+        this.createMessage(id, 'Your work was unable to be saved');
+      });
   }
 
   render() {
