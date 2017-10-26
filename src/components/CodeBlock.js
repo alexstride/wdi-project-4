@@ -29,7 +29,7 @@ class CodeBlock extends React.Component {
             className="textarea"
             value={this.state.pupilCode}
             onChange={this.handleChange}
-            readOnly={!this.props.isEditable}
+            readOnly={this.props.readOnly}
           >
           </textarea>
           <button className="button is-small is-info">
