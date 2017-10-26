@@ -1,14 +1,21 @@
 import React from 'react';
 import Axios from 'axios';
 
+// import brace from 'brace';
+import AceEditor from 'react-ace';
+import 'brace/mode/python';
+import 'brace/theme/twilight';
+
+
+
 class CodeBlock extends React.Component {
   state = {
     pupilCode: this.props.pupilCode,
     error: null
   }
 
-  handleChange = ({ target: { value } }) => {
-    this.setState({ pupilCode: value });
+  handleChange = (newValue) => {
+    this.setState({ pupilCode: newValue });
   }
 
   handleSubmit = (e) => {
@@ -17,22 +24,28 @@ class CodeBlock extends React.Component {
     Axios
       .put(`/api/homeworks/${this.props.parentId}/problems/${this.props.id}`, { pupilCode: this.state.pupilCode })
       .then(() => this.setState({ error: null }))
-      .catch(() => this.setState({ error: 'Error occured; unable to save work'}));
+      .catch(() => this.setState({ error: 'Error occured. Unable to save work'}));
   }
 
   render() {
     return (
       <div className="code-block">
-        <p>{this.props.description}</p>
+        <p className="problem-description">{this.props.description}</p>
         <form onSubmit={this.handleSubmit}>
-          <textarea
-            className="textarea"
+          <AceEditor
             value={this.state.pupilCode}
+            className="ace-component"
+            mode="python"
+            theme="twilight"
             onChange={this.handleChange}
+            name={this.props.id}
+            height='250px'
+            width='500px'
+            fontSize='18px'
+            editorProps={{$blockScrolling: true}}
             readOnly={this.props.isSubmitted}
-          >
-          </textarea>
-          <button className="button is-small is-info">
+          / >
+          <button className="is-info">
             Save
           </button>
           {this.state.error && <small className="form-error">{this.state.error}</small>}
