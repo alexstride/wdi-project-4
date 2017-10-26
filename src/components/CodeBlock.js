@@ -1,5 +1,4 @@
 import React from 'react';
-import Axios from 'axios';
 
 // import brace from 'brace';
 import AceEditor from 'react-ace';
@@ -8,50 +7,33 @@ import 'brace/theme/twilight';
 
 
 
-class CodeBlock extends React.Component {
-  state = {
-    message: null
-  }
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-
-    Axios
-      .put(`/api/homeworks/${this.props.parentId}/problems/${this.props.id}`, { pupilCode: this.props.pupilCode })
-      .then(() => this.setState({ error: null }))
-      .catch(() => this.setState({ message: 'Error occured. Unable to save work'}));
-  }
-
-  render() {
-    return (
-      <div className="code-block">
-        <p className="problem-description">{this.props.description}</p>
-        <form onSubmit={this.handleSubmit}>
-          <AceEditor
-            value={this.props.pupilCode}
-            className="ace-component"
-            mode="python"
-            theme="twilight"
-            onChange={this.props.handleChange}
-            name={this.props.id}
-            height='250px'
-            width='600px'
-            fontSize='18px'
-            editorProps={{$blockScrolling: true}}
-            readOnly={this.props.isSubmitted}
-          / >
-          <div className="code-block-footer">
-            <p>This is a message</p>
-            <button className="">
-              Save
-            </button>
-          </div>
-          {this.state.error && <small className="form-error">{this.state.error}</small>}
-        </form>
-      </div>
-    );
-  }
-
-}
+const CodeBlock = ({handleSubmit, pupilCode, handleChange, id, isSubmitted, message, description}) => {
+  return (
+    <div className="code-block">
+      <p className="problem-description">{description}</p>
+      <form onSubmit={handleSubmit}>
+        <AceEditor
+          value={pupilCode}
+          className="ace-component"
+          mode="python"
+          theme="twilight"
+          onChange={handleChange}
+          name={id}
+          height='250px'
+          width='500px'
+          fontSize='18px'
+          editorProps={{$blockScrolling: true}}
+          readOnly={isSubmitted}
+        / >
+        <div className="code-block-footer">
+          <p>{message && message}</p>
+          <button className="">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
 
 export default CodeBlock;
