@@ -15,11 +15,6 @@ class HomeworksShow extends React.Component {
       .then(res => this.setState({ homework: res.data }));
   }
 
-  // editProblem = (problemId) => {
-  //   Axios
-  //     .put(`/api/homeworks/${this.props.match.params.id}/problems/${problemId}`)
-  // }
-
   render() {
     return (
       <main className="container">
@@ -28,7 +23,13 @@ class HomeworksShow extends React.Component {
             {this.state.homework && <h1 className="title is-1">{this.state.homework.name}</h1>}
           </div>
 
-          {this.state.homework && this.state.homework.problems.map(problem => <CodeBlock key={problem.id} {...problem} parentId={this.state.homework.id}/>)}
+          {this.state.homework && this.state.homework.problems.map(problem =>
+            <CodeBlock
+              key={problem.id}
+              {...problem}
+              parentId={this.state.homework.id}
+              isEditable={!this.state.hasBeenSubmitted}
+            />)}
           <div className="leve">
             <div className="level-item">
               <button className="button is-primary">Submit</button>
