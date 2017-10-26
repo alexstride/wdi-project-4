@@ -7,6 +7,7 @@ import Nav from './components/utilities/Nav';
 import PupilLogin from './components/pupils/PupilLogin';
 import TeacherRegister from './components/teachers/TeacherRegister';
 import HomeworksShow from './components/homeworks/HomeworksShow';
+import FlashMessage from './components/utilities/FlashMessage';
 
 import './scss/bulma/css/bulma.css';
 import './scss/style.scss';
@@ -19,6 +20,7 @@ class App extends React.Component {
         <BrowserRouter>
           <div>
             <Nav />
+            <FlashMessage />
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/pupils/login" component={PupilLogin} />

@@ -1,15 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const sectionStyles = {
-  marginTop: '40px'
-};
-
 class Home extends React.Component {
   render() {
     return (
-      <main>
-        <section className="hero is-medium is-dark" style={sectionStyles}>
+      <div>
+        <section className="hero is-medium is-dark">
           <div className="hero-body">
             <div className="container has-text-centered">
               <h1 className="title">
@@ -22,12 +18,12 @@ class Home extends React.Component {
           </div>
         </section>
 
-        <section className="container has-text-centered" style={sectionStyles}>
+        <section className="container has-text-centered">
           <Link to="/pupils/login" className="button is-info">Pupil Login</Link>
           <Link to="/teachers/login" className="button is-info">Teacher Login</Link>
           <Link to="/teachers/register">Create a teacher account</Link>
         </section>
-      </main>
+      </div>
     );
   }
 }

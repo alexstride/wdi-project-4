@@ -8,6 +8,8 @@ class Flash {
   static getMessage() {
     const message = localStorage.getItem('message');
     const type = localStorage.getItem('messageType');
+    localStorage.removeItem('message');
+    localStorage.removeItem('messageType');
     return message ? { message, type} : null;
   }
 }

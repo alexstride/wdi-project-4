@@ -1,6 +1,8 @@
 import React from 'react';
 import Axios from 'axios';
 
+import Flash from '../../lib/Flash';
+
 class TeacherRegister extends React.Component {
   state = {
     credentials: {
@@ -18,6 +20,10 @@ class TeacherRegister extends React.Component {
     Axios
       .post('/api/teachers/register', this.state.credentials)
       .then(() => {
+        Flash.setMessage({
+          message: 'Thanks for registering. Please now login to view the site!',
+          type: 'info'
+        });
         this.props.history.push('/teachers/login');
       })
       .catch((err) => this.setState({ errors: err.response.data.errors }));
