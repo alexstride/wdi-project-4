@@ -69,7 +69,7 @@ class HomeworksShow extends React.Component {
             <div className="level-item">
               <button
                 className={this.state.homework &&
-                  (this.state.homework.hasBeenSubmitted ? 'button disabled' : 'button is-primary')}
+                  (this.state.homework.hasBeenSubmitted ? 'button disabled' : 'button is-success submit-button')}
                 onClick={this.state.homework && (this.state.homework.hasBeenSubmitted ? '' : this.toggleModal)}
               >{this.state.homework && (this.state.homework.hasBeenSubmitted ? 'Submitted' : 'Submit')}</button>
             </div>

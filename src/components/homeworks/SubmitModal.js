@@ -14,7 +14,7 @@ const SubmitModal = ({handleSubmit, toggleModal, modalOpen}) => {
         </h3>
         <p>Once you have submitted you will not be able to edit your homework</p>
         <div className="modal-buttons">
-          <button className="modal-button button is-info" onClick={handleSubmit}>Submit</button>
+          <button className="modal-button button is-success" onClick={handleSubmit}>Submit</button>
           <button className="modal-button button" onClick={toggleModal}>Cancel</button>
         </div>
       </div>

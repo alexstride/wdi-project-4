@@ -1,7 +1,7 @@
 .main-title {
   text-align: center;
   padding: 20px;
-  margin: 25px 0 15px 0;
+  margin: 5px 0;
 }
 
 .centered-content {
@@ -18,6 +18,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 30px 0;
 }
 
 .code-block {
@@ -64,4 +65,9 @@
       }
     }
   }
+}
+
+.submit-button {
+  width: 600px;
+  font-weight: 500;
 }
