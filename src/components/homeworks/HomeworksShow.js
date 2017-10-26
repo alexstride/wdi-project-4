@@ -2,7 +2,7 @@ import React from 'react';
 import Axios from 'axios';
 
 import CodeBlock from '../CodeBlock';
-import SubmitModal from './SUbmitModal';
+import SubmitModal from './SubmitModal';
 
 class HomeworksShow extends React.Component {
 

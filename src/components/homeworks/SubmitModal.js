@@ -1,5 +1,7 @@
 import React from 'react';
 
+import '../../scss/partials/_submitModal.scss';
+
 const SubmitModal = ({handleSubmit, toggleModal, modalOpen}) => {
   return (
     <div className={modalOpen ? 'modal is-active' : 'modal'}>
@@ -11,20 +13,10 @@ const SubmitModal = ({handleSubmit, toggleModal, modalOpen}) => {
           Are you sure you want to submit this homework?
         </h3>
         <p>Once you have submitted you will not be able to edit your homework</p>
-        <p className="buttons has-addons is-centered">
-          <span
-            onClick={handleSubmit}
-            className="button is-primary"
-          >
-            Submit
-          </span>
-          <span
-            onClick={toggleModal}
-            className="button is-info"
-          >
-            Cancel
-          </span>
-        </p>
+        <div className="modal-buttons">
+          <button className="modal-button button is-info" onClick={handleSubmit}>Submit</button>
+          <button className="modal-button button" onClick={toggleModal}>Cancel</button>
+        </div>
       </div>
       <button
         onClick={toggleModal}
