@@ -2,11 +2,13 @@ import React from 'react';
 import Axios from 'axios';
 
 import CodeBlock from '../CodeBlock';
+import SubmitModal from './SUbmitModal';
 
 class HomeworksShow extends React.Component {
 
   state = {
-    homework: null
+    homework: null,
+    submitModalOpen: false
   }
 
   componentDidMount() {
@@ -15,11 +17,18 @@ class HomeworksShow extends React.Component {
       .then(res => this.setState({ homework: res.data[0] }));
   }
 
-  handleSubmit = () => {
+  submitConfirm = (e) => {
+    e.preventDefault();
     Axios
       .put(`/api/homeworks/${this.state.homework._id}`, {hasBeenSubmitted: true})
       .then(res => this.setState({homework: res.data}))
+      .then(() => this.setState({submitModalOpen: !this.state.submitModalOpen}))
       .catch(err => console.log(err));
+  }
+
+  toggleModal = (e) => {
+    e.preventDefault();
+    this.setState({submitModalOpen: !this.state.submitModalOpen});
   }
 
   render() {
@@ -42,12 +51,17 @@ class HomeworksShow extends React.Component {
             <div className="level-item">
               <button
                 className={this.state.homework &&
-                  (this.state.homework.hasBeenSubmitted ? 'button is-light' : 'button is-primary')}
-                onClick={this.handleSubmit}
+                  (this.state.homework.hasBeenSubmitted ? 'button disabled' : 'button is-primary')}
+                onClick={this.state.homework && (this.state.homework.hasBeenSubmitted ? '' : this.toggleModal)}
               >{this.state.homework && (this.state.homework.hasBeenSubmitted ? 'Submitted' : 'Submit')}</button>
             </div>
           </div>
         </div>
+        <SubmitModal
+          handleSubmit={this.submitConfirm}
+          toggleModal={this.toggleModal}
+          modalOpen={this.state.submitModalOpen}
+        />
       </main>
     );
   }
