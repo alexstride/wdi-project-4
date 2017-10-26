@@ -16,7 +16,7 @@ router.route('/homeworks/:id')
 
 
 router.route('/pupils/login')
-  .post(auth.login);
+  .post(auth.pupilLogin);
 
 router.all('/*', (req, res) => res.notFound());
 

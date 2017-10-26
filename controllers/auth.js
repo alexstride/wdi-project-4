@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const { secret } = require('../config/environment');
 const Pupil = require('../models/pupil');
 
-function login(req, res, next) {
+function pupilLogin(req, res, next) {
   Pupil
     .findOne({ email: req.body.email })
     .then((pupil) => {
@@ -14,6 +14,8 @@ function login(req, res, next) {
     .catch(next);
 }
 
+
+
 module.exports = {
-  login
+  pupilLogin
 };
