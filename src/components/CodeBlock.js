@@ -45,6 +45,9 @@ class CodeBlock extends React.Component {
             editorProps={{$blockScrolling: true}}
             readOnly={this.props.isSubmitted}
           / >
+          <div className="code-block-footer">
+
+          </div>
           <button className="is-info">
             Save
           </button>

@@ -21,7 +21,9 @@ class HomeworksShow extends React.Component {
     e.preventDefault();
     Axios
       .put(`/api/homeworks/${this.state.homework._id}`, {hasBeenSubmitted: true})
-      .then(res => this.setState({homework: res.data}))
+      .then(res => {
+        this.setState({ homework: res.data });
+      })
       .then(() => this.setState({submitModalOpen: !this.state.submitModalOpen}))
       .catch(err => console.log(err));
   }
@@ -45,7 +47,7 @@ class HomeworksShow extends React.Component {
               key={problem.id}
               {...problem}
               parentId={this.state.homework.id}
-              isSubmitted={this.state.hasBeenSubmitted}
+              isSubmitted={this.state.homework.hasBeenSubmitted}
             />)}
           <div className="level">
             <div className="level-item">
