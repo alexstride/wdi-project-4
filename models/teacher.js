@@ -5,8 +5,8 @@ const teacherSchema = mongoose.Schema({
   firstname: { type: String },
   lastname: { type: String },
   school: { type: String },
-  email: { type: String, unique: 'the provided email must be unique', required: 'an email must be provided' },
-  password: { type: String, required: 'a password must be provided' },
+  email: { type: String, unique: 'The provided email must be unique', required: 'An email must be provided' },
+  password: { type: String, required: 'A password must be provided' },
   pupil: { type: mongoose.Schema.ObjectId, ref: 'Pupil'}
 });
 

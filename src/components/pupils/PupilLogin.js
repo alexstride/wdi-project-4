@@ -3,10 +3,6 @@ import Axios from 'axios';
 
 import Auth from '../../lib/Auth';
 
-const formStyles = {
-  width: '50%'
-};
-
 class PupilLogin extends React.Component {
   state = {
     credentials: {
@@ -41,7 +37,7 @@ class PupilLogin extends React.Component {
           <h1 className="title is-1">Pupil Login</h1>
         </div>
         <div className="centered-content">
-          <form style={formStyles} onSubmit={this.handleSubmit}>
+          <form className="half-width" onSubmit={this.handleSubmit}>
             <div className="field">
               <label className="label">Email</label>
               <div className="control">

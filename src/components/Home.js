@@ -24,6 +24,8 @@ class Home extends React.Component {
 
         <section className="container has-text-centered" style={sectionStyles}>
           <Link to="/pupils/login" className="button is-info">Pupil Login</Link>
+          <Link to="/teachers/login" className="button is-info">Teacher Login</Link>
+          <Link to="/teachers/register">Create a teacher account</Link>
         </section>
       </main>
     );
