@@ -28,7 +28,7 @@ class HomeworksShow extends React.Component {
               key={problem.id}
               {...problem}
               parentId={this.state.homework.id}
-              isEditable={!this.state.hasBeenSubmitted}
+              isSubmitted={this.state.hasBeenSubmitted}
             />)}
           <div className="leve">
             <div className="level-item">
