@@ -13,7 +13,11 @@ router.route('/homeworks/:id')
   .get(homeworks.show)
   .put(homeworks.update);
 
+router.route('/teachers/login')
+  .post(auth.teacherLogin);
 
+router.route('/teachers/register')
+  .post(auth.teacherRegistration);
 
 router.route('/pupils/login')
   .post(auth.pupilLogin);
