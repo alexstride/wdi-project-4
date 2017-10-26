@@ -28,7 +28,7 @@ Promise
               description: 'Make this code print "Hello, World!"',
               starterCode: 'def printHello():\n  pirnt(\'Hello, World\')\nprintHello()\n',
               pupilCode: 'def printHello():\n  pirnt(\'Hello, World\')\nprintHello()\n',
-              feedback: ''
+              feedback: 'Not qute there'
             },{
               description: 'Make this code add 3 and 5',
               starterCode: 'def addNumbers(a, b):\n  print(a + b)\naddNumbers()',
