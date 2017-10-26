@@ -1,34 +1,37 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const pupilSchema = mongoose.Schema({
-  email: { type: String, unique: 'the the provided email must be unique', requried: 'an email must be provided' },
+const teacherSchema = mongoose.Schema({
+  firstname: { type: String },
+  lastname: { type: String },
+  school: { type: String },
+  email: { type: String, unique: 'the provided email must be unique', required: 'an email must be provided' },
   password: { type: String, required: 'a password must be provided' },
-  homework: { type: mongoose.Schema.ObjectId, ref: 'Homework' }
+  pupil: { type: mongoose.Schema.ObjectId, ref: 'Pupil'}
 });
 
-pupilSchema
+teacherSchema
   .virtual('passwordConfirmation')
   .set(function setPasswordConfirmation(passwordConfirmation) {
     this._passwordConfirmation = passwordConfirmation;
   });
 
-pupilSchema.pre('validate', function checkPassword(next) {
+teacherSchema.pre('validate', function checkPassword(next) {
   if(!this._passwordConfirmation || this._passwordConfirmation !== this.password) {
     this.invalidate('passwordConfirmation', 'Passwords do not match');
   }
   next();
 });
 
-pupilSchema.pre('save', function hashPassword(next) {
+teacherSchema.pre('save', function hashPassword(next) {
   if(this.isModified('password')) {
     this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(8));
   }
   next();
 });
 
-pupilSchema.methods.validatePassword = function validatePassword(password) {
+teacherSchema.methods.validatePassword = function validatePassword(password) {
   return bcrypt.compareSync(password, this.password);
 };
 
-module.exports = mongoose.model('Pupil', pupilSchema);
+module.exports = mongoose.model('Teacher', teacherSchema);

@@ -7,10 +7,12 @@ mongoose.connect(dbURI, { useMongoClient: true });
 
 const Pupil = require('../models/pupil');
 const Homework = require('../models/homework');
+const Teacher = require('../models/teacher');
 
 const promises = [
   Pupil.remove(),
-  Homework.remove()
+  Homework.remove(),
+  Teacher.remove()
 ];
 
 Promise
@@ -47,6 +49,21 @@ Promise
         }
       ]);
   })
-  .then(pupil => console.log(`${pupil.length} pupils created`))
+  .then(pupil => {
+    console.log(`${pupil.length} pupils created`);
+    return Teacher
+      .create([
+        {
+          email: 'teacher@teacher.com',
+          password: 'pass',
+          passwordConfirmation: 'pass',
+          pupil: pupil[0],
+          firstname: 'John',
+          lastname: 'Burston',
+          school: 'St. Olave\'s'
+        }
+      ]);
+  })
+  .then(teacher =>  console.log(`${teacher.length} teachers have been created`))
   .catch((err) => console.log(err))
   .finally(() => mongoose.connection.close());
