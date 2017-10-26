@@ -11,6 +11,21 @@ class HomeworksShow extends React.Component {
     submitModalOpen: false
   }
 
+  handleChange = (newValue, id) => {
+    const problems = this.state.homework.problems.map(prob => {
+      if (prob._id === id) {
+        return Object.assign(prob, { pupilCode: newValue });
+      } else {
+        return prob;
+      }
+    });
+    this.setState(prevState => {
+      const newState = Object.assign({}, prevState);
+      newState.homework.problems = problems;
+      return newState;
+    });
+  }
+
   componentDidMount() {
     Axios
       .get('/api/homeworks/')
@@ -20,8 +35,10 @@ class HomeworksShow extends React.Component {
   submitConfirm = (e) => {
     e.preventDefault();
     Axios
-      .put(`/api/homeworks/${this.state.homework._id}`, {hasBeenSubmitted: true})
-      .then(res => this.setState({homework: res.data}))
+      .put(`/api/homeworks/${this.state.homework._id}`, Object.assign(this.state.homework, { hasBeenSubmitted: true }))
+      .then(res => {
+        this.setState({ homework: res.data }, () => console.log(this.state));
+      })
       .then(() => this.setState({submitModalOpen: !this.state.submitModalOpen}))
       .catch(err => console.log(err));
   }
@@ -45,7 +62,8 @@ class HomeworksShow extends React.Component {
               key={problem.id}
               {...problem}
               parentId={this.state.homework.id}
-              isSubmitted={this.state.hasBeenSubmitted}
+              isSubmitted={this.state.homework.hasBeenSubmitted}
+              handleChange={(newValue) => this.handleChange(newValue, problem._id)}
             />)}
           <div className="level">
             <div className="level-item">
