@@ -11,10 +11,17 @@ class HomeworksShow extends React.Component {
     submitModalOpen: false
   }
 
+  componentDidMount() {
+    Axios
+      .get('/api/homeworks/')
+      .then(res => this.setState({ homework: res.data[0] }));
+  }
+
   handleChange = (newValue, id) => {
+
     const problems = this.state.homework.problems.map(prob => {
       if (prob._id === id) {
-        return Object.assign(prob, { pupilCode: newValue });
+        return Object.assign(prob, { pupilCode: newValue, message: 'Your work has not been saved' });
       } else {
         return prob;
       }
@@ -24,12 +31,6 @@ class HomeworksShow extends React.Component {
       newState.homework.problems = problems;
       return newState;
     });
-  }
-
-  componentDidMount() {
-    Axios
-      .get('/api/homeworks/')
-      .then(res => this.setState({ homework: res.data[0] }));
   }
 
   submitConfirm = (e) => {
@@ -48,6 +49,35 @@ class HomeworksShow extends React.Component {
     this.setState({submitModalOpen: !this.state.submitModalOpen});
   }
 
+  codeBlockHandleSubmit = (e, id, pupilCode) => {
+    e.preventDefault();
+    Axios
+      .put(`/api/homeworks/${this.state.homework._id}/problems/${id}`, { pupilCode: pupilCode })
+      .then(() => {
+        const problems = this.state.homeworks.problems.map(problem => {
+          if(problem._id === id) {
+            const lovely = Object.assign(problem, {message: 'Your work has been saved'});
+            console.log(lovely);
+            return lovely;
+          } else {
+            console.log(problem);
+            return problem;
+          }
+        });
+        this.setState(prevState => {
+          const newState = Object.assign({}, prevState);
+          newState.homework.problems = problems;
+          return newState;
+        });
+        this.setState(prevState => {
+          const newState = Object.assign({}, prevState);
+          newState.homework.problems = problems;
+          return newState;
+        });
+      })
+      .catch(() => this.setState({ message: 'Error occured. Unable to save work'}));
+  }
+
   render() {
     return (
       <main className="container">
@@ -64,6 +94,7 @@ class HomeworksShow extends React.Component {
               parentId={this.state.homework.id}
               isSubmitted={this.state.homework.hasBeenSubmitted}
               handleChange={(newValue) => this.handleChange(newValue, problem._id)}
+              handleSubmit={(e) => this.codeBlockHandleSubmit(e, problem._id, problem.pupilCode)}
             />)}
           <div className="level">
             <div className="level-item">
