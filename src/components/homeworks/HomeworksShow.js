@@ -1,12 +1,15 @@
 import React from 'react';
 import Axios from 'axios';
 
-import CodeBlock from '../CodeBlock';
+import Auth from '../../lib/Auth';
+
+import Problem from './Problem';
 import SubmitModal from './SubmitModal';
 
 class HomeworksShow extends React.Component {
 
   state = {
+    user: {},
     homework: null,
     submitModalOpen: false
   }
@@ -15,6 +18,7 @@ class HomeworksShow extends React.Component {
     Axios
       .get('/api/homeworks/')
       .then(res => this.setState({ homework: res.data[0] }));
+    this.setState({user: Auth.getPayload()});
   }
 
   handleChange = (newValue, id) => {
@@ -54,7 +58,6 @@ class HomeworksShow extends React.Component {
         const lovely = Object.assign(problem, {message: message});
         return lovely;
       } else {
-        console.log(problem);
         return problem;
       }
     });
@@ -79,6 +82,29 @@ class HomeworksShow extends React.Component {
       });
   }
 
+  feedbackOnChange = (id, feedback) => {
+    const problems = this.state.homework.problems.map(prob => {
+      if(prob._id === id) {
+        return Object.assign(prob, {feedback});
+      } else {
+        return prob;
+      }
+    });
+    this.setState(prevState => {
+      const newState = Object.assign({}, prevState);
+      newState.homework.problems = problems;
+      return newState;
+    });
+  }
+
+  feedbackSubmit = (e, id, feedback) => {
+    e.preventDefault();
+    Axios
+      .put(`/api/homeworks/${this.state.homework._id}/problems/${id}`, {feedback})
+      .then((res) => console.log(res.data))
+      .catch(err => console.log(err));
+  }
+
   render() {
     return (
       <main className="container">
@@ -89,14 +115,17 @@ class HomeworksShow extends React.Component {
           </div>
 
           {this.state.homework && this.state.homework.problems.map(problem =>
-            <CodeBlock
+            <Problem
+              user={this.state.user}
               key={problem.id}
-              {...problem}
-              parentId={this.state.homework.id}
-              isSubmitted={this.state.homework.hasBeenSubmitted}
-              handleChange={(newValue) => this.handleChange(newValue, problem._id)}
-              handleSubmit={(e) => this.codeBlockHandleSubmit(e, problem._id, problem.pupilCode)}
-            />)}
+              problem={problem}
+              homework={this.state.homework}
+              handleChange={this.handleChange}
+              codeBlockHandleSubmit={this.codeBlockHandleSubmit}
+              feedbackSubmit={this.feedbackSubmit}
+              feedbackOnChange={this.feedbackOnChange}
+            />
+          )}
           <div className="level">
             <div className="level-item">
               <button
