@@ -35,7 +35,7 @@ class CodeBlock extends React.Component {
             onChange={this.props.handleChange}
             name={this.props.id}
             height='250px'
-            width='500px'
+            width='600px'
             fontSize='18px'
             editorProps={{$blockScrolling: true}}
             readOnly={this.props.isSubmitted}
