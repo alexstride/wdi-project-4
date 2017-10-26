@@ -2,10 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import Auth from './lib/Auth';
-
 import Home from './components/Home';
-import Nav from './components/Nav';
+import Nav from './components/utilities/Nav';
 import PupilLogin from './components/pupils/PupilLogin';
 import TeacherRegister from './components/teachers/TeacherRegister';
 import HomeworksShow from './components/homeworks/HomeworksShow';
