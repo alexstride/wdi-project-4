@@ -18,7 +18,7 @@ const Problem = ({problem, homework, handleChange, codeBlockHandleSubmit, user, 
         {...problem}
         user={user}
         feedbackSubmit={(e) => feedbackSubmit(e, problem._id, problem.feedback)}
-        feedbackOnChange={() => feedbackOnChange(problem._id, problem.feedback)}
+        feedbackOnChange={(e) => feedbackOnChange(e, problem._id, problem.feedback)}
       />
     </div>
   );

@@ -11,11 +11,17 @@ const Feedback = ({user, feedback, feedbackSubmit, feedbackOnChange}) => {
       {'teacherId' in user &&
       <form onSubmit={feedbackSubmit}>
         <div className="field">
-          <input className="input">Please provide feedback:</input>
+          <label className="label">Please provide feedback:</label>
           <div className="control">
-            <textarea onChange={feedbackOnChange}className="textarea" value={feedback} placeholder="please provide feedback"></textarea>
+            <textarea
+              onChange={feedbackOnChange}
+              className="textarea"
+              value={feedback}
+              placeholder="please provide feedback"
+            ></textarea>
           </div>
         </div>
+        <button className="button is-primary">save</button>
       </form>}
     </div>
   );

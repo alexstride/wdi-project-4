@@ -7,6 +7,7 @@ import Auth from './lib/Auth';
 import Home from './components/Home';
 import Nav from './components/Nav';
 import PupilLogin from './components/pupils/PupilLogin';
+import TeacherLogin from './components/teachers/TeacherLogin';
 import TeacherRegister from './components/teachers/TeacherRegister';
 import HomeworksShow from './components/homeworks/HomeworksShow';
 
@@ -24,6 +25,7 @@ class App extends React.Component {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/pupils/login" component={PupilLogin} />
+              <Route exact path="/teachers/login" component={TeacherLogin} />
               <Route exact path="/teachers/register" component={TeacherRegister} />
               <Route exact path="/homeworks/" component={HomeworksShow} />
             </Switch>
