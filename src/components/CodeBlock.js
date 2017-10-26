@@ -10,21 +10,16 @@ import 'brace/theme/twilight';
 
 class CodeBlock extends React.Component {
   state = {
-    pupilCode: this.props.pupilCode,
-    error: null
-  }
-
-  handleChange = (newValue) => {
-    this.setState({ pupilCode: newValue });
+    message: null
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
 
     Axios
-      .put(`/api/homeworks/${this.props.parentId}/problems/${this.props.id}`, { pupilCode: this.state.pupilCode })
+      .put(`/api/homeworks/${this.props.parentId}/problems/${this.props.id}`, { pupilCode: this.props.pupilCode })
       .then(() => this.setState({ error: null }))
-      .catch(() => this.setState({ error: 'Error occured. Unable to save work'}));
+      .catch(() => this.setState({ message: 'Error occured. Unable to save work'}));
   }
 
   render() {
@@ -33,11 +28,11 @@ class CodeBlock extends React.Component {
         <p className="problem-description">{this.props.description}</p>
         <form onSubmit={this.handleSubmit}>
           <AceEditor
-            value={this.state.pupilCode}
+            value={this.props.pupilCode}
             className="ace-component"
             mode="python"
             theme="twilight"
-            onChange={this.handleChange}
+            onChange={this.props.handleChange}
             name={this.props.id}
             height='250px'
             width='500px'
@@ -46,11 +41,11 @@ class CodeBlock extends React.Component {
             readOnly={this.props.isSubmitted}
           / >
           <div className="code-block-footer">
-
+            <p>This is a message</p>
+            <button className="">
+              Save
+            </button>
           </div>
-          <button className="is-info">
-            Save
-          </button>
           {this.state.error && <small className="form-error">{this.state.error}</small>}
         </form>
       </div>

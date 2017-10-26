@@ -37,19 +37,31 @@
     .ace-component {
 
     }
-    button {
-      transform: translate(0, -100%);
-      width: 20%;
+    .code-block-footer {
       align-self: flex-end;
-      padding: 6px;
-      border: 0;
-      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      transform: translate(0, -100%);
 
-      background-color: #4d8ff9;
-      color: white;
-      font-size: 18px;
-      font-weight: 500;
-      outline: 0;
+      p {
+        padding: 0 10px;
+        color: #bbb;
+        font-style: italic;
+      }
+
+      button {
+        width: 100px;
+        padding: 6px;
+        border: 0;
+        cursor: pointer;
+
+        background-color: #4d8ff9;
+        color: white;
+        font-size: 18px;
+        font-weight: 500;
+        outline: 0;
+      }
     }
   }
 }
