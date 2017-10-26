@@ -11,8 +11,8 @@ class HomeworksShow extends React.Component {
 
   componentDidMount() {
     Axios
-      .get(`/api/homeworks/${this.props.match.params.id}`)
-      .then(res => this.setState({ homework: res.data }));
+      .get('/api/homeworks/')
+      .then(res => this.setState({ homework: res.data[0] }));
   }
 
   render() {
