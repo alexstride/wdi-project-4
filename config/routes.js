@@ -33,7 +33,7 @@ router.route('pupils/:id/homeworks/:homeworkId')
   .put(pupils.homeworksUpdate);
 
 router.route('pupils/:id/homeworks/:homeworkId/problems/:problemId')
-  .put(pupils.homeworkProblemUpdate);
+  .put(pupils.homeworksProblemUpdate);
 
 router.all('/*', (req, res) => res.notFound());
 
