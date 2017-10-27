@@ -5,8 +5,7 @@ const homeworks = require('../controllers/homeworks');
 const pupils = require('../controllers/pupils');
 
 router.route('/homeworks')
-  .get(homeworks.index)
-  .post(homeworks.create);
+  .post(homeworks.set);
 
 // the below route has been deprecated by the the pupils/:id/homeworks/:homeworkId/problems/:problemId route
 // router.route('/homeworks/:id/problems/:problemId')
@@ -30,8 +29,8 @@ router.route('pupils/:id/homeworks/')
   .get(pupils.homeworksIndex);
 
 router.route('pupils/:id/homeworks/:homeworkId')
-  .get(homeworks.show)
-  .put(homeworks.update);
+  .get(pupils.homeworksShow)
+  .put(pupils.homeworksUpdate);
 
 router.route('pupils/:id/homeworks/:homeworkId/problems/:problemId')
   .put(pupils.homeworkProblemUpdate);
