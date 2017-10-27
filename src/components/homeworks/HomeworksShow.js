@@ -56,8 +56,7 @@ class HomeworksShow extends React.Component {
   createMessage(id, message) {
     const problems = this.state.homework.problems.map(problem => {
       if(problem._id === id) {
-        const lovely = Object.assign(problem, {message: message});
-        return lovely;
+        return Object.assign(problem, {message: message});
       } else {
         return problem;
       }
@@ -84,7 +83,7 @@ class HomeworksShow extends React.Component {
   feedbackOnChange = (e, id) => {
     const newProblems = this.state.homework.problems.map(problem => {
       if(problem.id === id) {
-        return Object.assign(problem, {feedback: e.target.value});
+        return Object.assign(problem, {feedback: e.target.value, feedbackMessage: 'your feedback has not been saved'});
       } else {
         return problem;
       }
@@ -100,6 +99,7 @@ class HomeworksShow extends React.Component {
     e.preventDefault();
     Axios
       .put(`/api/homeworks/${this.state.homework._id}/problems/${id}`, {feedback})
+      .then((res) => this.setState({homework: res.data}))
       .catch(err => console.log(err));
   }
 
