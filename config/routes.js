@@ -25,15 +25,15 @@ router.route('/teachers/register')
 router.route('/pupils/login')
   .post(auth.pupilLogin);
 
-router.route('pupils/:id/homeworks/')
+router.route('/pupils/:id/homeworks')
   .get(pupils.homeworksIndex);
 
-router.route('pupils/:id/homeworks/:homeworkId')
+router.route('/pupils/:id/homeworks/:homeworkId')
   .get(pupils.homeworksShow)
   .put(pupils.homeworksUpdate);
 
-router.route('pupils/:id/homeworks/:homeworkId/problems/:problemId')
-  .put(pupils.homeworkProblemUpdate);
+router.route('/pupils/:id/homeworks/:homeworkId/problems/:problemId')
+  .put(pupils.homeworksProblemUpdate);
 
 router.all('/*', (req, res) => res.notFound());
 

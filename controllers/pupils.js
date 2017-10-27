@@ -1,6 +1,7 @@
 const Pupil = require('../models/pupil');
 
 function homeworksIndex(req, res, next) {
+  console.log('homeworksIndex running!');
   Pupil
     .findById(req.params.id)
     .exec()
