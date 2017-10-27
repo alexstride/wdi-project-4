@@ -21,6 +21,8 @@ Promise
     return Pupil
       .create([
         {
+          firstname: 'Ben',
+          lastname: 'Jones',
           email: 'test@test.com',
           password: 'pass',
           passwordConfirmation: 'pass',
