@@ -1,4 +1,21 @@
 const Homework = require('../models/homework');
+const Pupil = require('../models/pupil');
+
+function hwSet(req, res, next) {
+  Pupil
+    .find()
+    .then(pupils => {
+      pupils.forEach(pupil => {
+        const newHomework = pupil.homeworks.create(req.body);
+        pupil.homeworks.push(newHomework);
+        return pupil.save();
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      next(err);
+    });
+}
 
 function hwIndex(req, res, next) {
   Homework
@@ -47,6 +64,7 @@ function hwUpdateProblem(req, res, next) {
 }
 
 module.exports = {
+  // set: hwSet,
   index: hwIndex,
   show: hwShow,
   update: hwUpdate,
