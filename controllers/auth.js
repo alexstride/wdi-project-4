@@ -19,7 +19,7 @@ function teacherLogin(req, res, next) {
   Teacher
     .findOne({ email: req.body.email })
     .then(teacher => {
-      if(!teacher || !teacher.validatePassword(req.body.password))  return res.staus(401).json({ message: 'Unauthorized' });
+      if(!teacher || !teacher.validatePassword(req.body.password))  return res.status(401).json({ message: 'Unauthorized' });
       const token = jwt.sign({ teacherId: teacher.id, userType: 'teacher' }, secret, { expiresIn: '6hrs'});
       return res.json({ message: `Welcome back ${teacher.firstname} ${teacher.lastname}`, token });
     })
