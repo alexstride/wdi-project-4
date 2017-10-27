@@ -1,6 +1,8 @@
 import React from 'react';
 import Axios from 'axios';
 import { Link } from 'react-router-dom';
+import Auth from '../../lib/Auth';
+import Flash from '../../lib/Flash';
 
 class PupilIndex extends React.Component {
   state = {
@@ -8,12 +10,18 @@ class PupilIndex extends React.Component {
   }
 
   componentDidMount() {
+    const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     Axios
-      .get('/api/pupils')
+      .get('/api/pupils', { headers })
       .then(res => {
         this.setState({ pupils: res.data }, () => console.log(this.state));
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        if (err.response.status === 401) {
+          Flash.setMessage({ message: 'Access denied', type: 'danger'});
+          this.props.history.push('/teachers/login');
+        }
+      });
   }
 
   render() {

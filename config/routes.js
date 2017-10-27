@@ -3,6 +3,7 @@ const router = require('express').Router();
 const auth = require('../controllers/auth');
 const homeworks = require('../controllers/homeworks');
 const pupils = require('../controllers/pupils');
+const { secureRouteTeacher } = require('../lib/secureRoute');
 
 router.route('/homeworks')
   .post(homeworks.set);
@@ -23,7 +24,7 @@ router.route('/teachers/register')
   .post(auth.teacherRegistration);
 
 router.route('/pupils')
-  .get(pupils.pupilsIndex);
+  .get(secureRouteTeacher, pupils.pupilsIndex);
 
 router.route('/pupils/login')
   .post(auth.pupilLogin);
