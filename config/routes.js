@@ -8,13 +8,14 @@ router.route('/homeworks')
   .get(homeworks.index)
   .post(homeworks.create);
 
-// the below route has been deprecated by the the pupils/homeworks/problems route
+// the below route has been deprecated by the the pupils/:id/homeworks/:homeworkId/problems/:problemId route
 // router.route('/homeworks/:id/problems/:problemId')
 //   .put(homeworks.updateProblem);
 
-router.route('/homeworks/:id')
-  .get(homeworks.show)
-  .put(homeworks.update);
+// the below routes have been deprecated by the pupils/:id/homeworks/homeworks/:homeworkId route
+// router.route('/homeworks/:id')
+//   .get(homeworks.show)
+//   .put(homeworks.update);
 
 router.route('/teachers/login')
   .post(auth.teacherLogin);
@@ -27,6 +28,10 @@ router.route('/pupils/login')
 
 router.route('pupils/:id/homeworks/')
   .get(pupils.homeworksIndex);
+
+router.route('pupils/:id/homeworks/:homeworkId')
+  .get(homeworks.show)
+  .put(homeworks.update);
 
 router.route('pupils/:id/homeworks/:homeworkId/problems/:problemId')
   .put(pupils.homeworkProblemUpdate);
