@@ -25,7 +25,7 @@ class TeacherLogin extends React.Component {
       .then((res) => {
         return Auth.setToken(res.data.token);
       })
-      .then(() => this.props.history.push('/homeworks/'))
+      .then(() => this.props.history.push('/pupils'))
       .catch(() => this.setState({ error: 'Invalid credentials' }));
   }
 
