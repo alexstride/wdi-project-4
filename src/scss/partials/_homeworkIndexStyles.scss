@@ -1,0 +1,13 @@
+.homework-index {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .homework-index-card {
+      width: 70%;
+      height: 160px;
+      border: 4px solid #bbb;
+      border-radius: 10px;
+      margin: 15px 0;
+      padding: 10px 8px
+  }
+}

@@ -26,6 +26,9 @@ router.route('/teachers/register')
 router.route('/pupils')
   .get(secureRouteTeacher, pupils.pupilsIndex);
 
+router.route('/pupils/:id')
+  .get(pupils.pupilsShow);
+
 router.route('/pupils/login')
   .post(auth.pupilLogin);
 
