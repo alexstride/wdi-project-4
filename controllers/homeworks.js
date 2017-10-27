@@ -64,7 +64,7 @@ function hwUpdateProblem(req, res, next) {
 }
 
 module.exports = {
-  // set: hwSet,
+  set: hwSet,
   index: hwIndex,
   show: hwShow,
   update: hwUpdate,
