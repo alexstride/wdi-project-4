@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Feedback = ({user, feedback, feedbackSubmit, feedbackOnChange}) => {
+const Feedback = ({user, feedback, feedbackSubmit, feedbackOnChange, feedbackMessage}) => {
   return (
     <div className="feedback">
       {'pupilId' in user && feedback.length > 0 &&
@@ -22,6 +22,7 @@ const Feedback = ({user, feedback, feedbackSubmit, feedbackOnChange}) => {
           </div>
         </div>
         <button className="button is-primary is-small">save</button>
+        {feedbackMessage && <small>{feedbackMessage}</small>}
       </form>}
     </div>
   );
