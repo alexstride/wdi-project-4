@@ -10,7 +10,8 @@ const problemSchema = mongoose.Schema({
 const homeworkSchema = mongoose.Schema({
   name: { type: String, requried: true },
   hasBeenSubmitted: { type: Boolean, required: true },
-  problems: [ problemSchema ]
+  problems: [ problemSchema ],
+  setDate: { type: Date, req: 'A homework set date is required'}
 });
 
 module.exports = mongoose.model('Homework', homeworkSchema);

@@ -1,13 +1,16 @@
 const router = require('express').Router();
-const auth = require('../controllers/auth');
 
+const auth = require('../controllers/auth');
 const homeworks = require('../controllers/homeworks');
+const pupils = require('../controllers/pupils');
 
 router.route('/homeworks')
-  .get(homeworks.index);
+  .get(homeworks.index)
+  .post(homeworks.create);
 
-router.route('/homeworks/:id/problems/:problemId')
-  .put(homeworks.updateProblem);
+// the below route has been deprecated by the the pupils/homeworks/problems route
+// router.route('/homeworks/:id/problems/:problemId')
+//   .put(homeworks.updateProblem);
 
 router.route('/homeworks/:id')
   .get(homeworks.show)
@@ -21,6 +24,12 @@ router.route('/teachers/register')
 
 router.route('/pupils/login')
   .post(auth.pupilLogin);
+
+router.route('pupils/:id/homeworks/')
+  .get(pupils.homeworksIndex);
+
+router.route('pupils/:id/homeworks/:homeworkId/problems/:problemId')
+  .put(pupils.homeworkProblemUpdate);
 
 router.all('/*', (req, res) => res.notFound());
 
