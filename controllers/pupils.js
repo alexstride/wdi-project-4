@@ -1,5 +1,13 @@
 const Pupil = require('../models/pupil');
 
+function pupilsIndex(req, res, next) {
+  Pupil
+    .find()
+    .exec()
+    .then(pupils => res.json(pupils))
+    .catch(next);
+}
+
 function homeworksIndex(req, res, next) {
   Pupil
     .findById(req.params.id)
@@ -59,6 +67,7 @@ function homeworksProblemUpdate(req, res, next) {
 }
 
 module.exports = {
+  pupilsIndex,
   homeworksIndex,
   homeworksShow,
   homeworksUpdate,

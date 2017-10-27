@@ -22,6 +22,9 @@ router.route('/teachers/login')
 router.route('/teachers/register')
   .post(auth.teacherRegistration);
 
+router.route('/pupils/')
+  .get(pupils.pupilsIndex);
+
 router.route('/pupils/login')
   .post(auth.pupilLogin);
 
