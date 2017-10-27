@@ -9,6 +9,7 @@ import TeacherLogin from './components/teachers/TeacherLogin';
 import TeacherRegister from './components/teachers/TeacherRegister';
 import HomeworksShow from './components/homeworks/HomeworksShow';
 import FlashMessage from './components/utilities/FlashMessage';
+import CreateHomework from './components/homeworks/CreateHomework';
 
 import './scss/bulma/css/bulma.css';
 import './scss/style.scss';
@@ -28,6 +29,7 @@ class App extends React.Component {
               <Route exact path="/teachers/login" component={TeacherLogin} />
               <Route exact path="/teachers/register" component={TeacherRegister} />
               <Route exact path="/homeworks/" component={HomeworksShow} />
+              <Route exact path="/homeworks/new" component={CreateHomework} />
             </Switch>
           </div>
         </BrowserRouter>
