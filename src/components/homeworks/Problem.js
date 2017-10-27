@@ -6,7 +6,7 @@ import Feedback from './Feedback';
 
 const Problem = ({problem, homework, handleChange, codeBlockHandleSubmit, user, feedbackSubmit, feedbackOnChange}) => {
   return (
-    <div>
+    <div className="problem-wrapper">
       <Description {...problem}/>
       <CodeBlock
         key={problem.id}

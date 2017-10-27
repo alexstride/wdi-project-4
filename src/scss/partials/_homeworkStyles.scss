@@ -1,0 +1,72 @@
+.homework-background {
+  background-color: #fafafa;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.homework-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.problem-wrapper {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  margin: 20px 10px;
+}
+
+.code-block {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .problem-description {
+    align-self: flex-start;
+    padding: 10px 0;
+    font-weight: 500;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    .ace-component {
+
+    }
+    .code-block-footer {
+      align-self: flex-end;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      transform: translate(0, -100%);
+
+      p {
+        padding: 0 10px;
+        color: #bbb;
+        font-style: italic;
+      }
+
+      button {
+        width: 100px;
+        padding: 6px;
+        border: 0;
+        cursor: pointer;
+
+        background-color: #4d8ff9;
+        color: white;
+        font-size: 18px;
+        font-weight: 500;
+        outline: 0;
+      }
+    }
+  }
+}
+
+.submit-button {
+  width: 600px;
+  font-weight: 500;
+}

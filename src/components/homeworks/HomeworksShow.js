@@ -6,6 +6,8 @@ import Auth from '../../lib/Auth';
 import Problem from './Problem';
 import SubmitModal from './SubmitModal';
 
+import '../../scss/partials/_homeworkStyles.scss';
+
 class HomeworksShow extends React.Component {
 
   state = {
@@ -105,7 +107,8 @@ class HomeworksShow extends React.Component {
 
   render() {
     return (
-      <main className="container">
+      <main className="container homework">
+        <div className="homework-background"></div>
         <div className="homework-wrapper">
           <div className="main-title">
             {this.state.homework && <h1 className="title is-1">{this.state.homework.name}</h1>}
