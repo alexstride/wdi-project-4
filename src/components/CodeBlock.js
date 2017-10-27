@@ -5,7 +5,8 @@ import AceEditor from 'react-ace';
 import 'brace/mode/python';
 import 'brace/theme/twilight';
 
-
+//onChange is not passing the id into the function (problem 1)
+//
 
 const CodeBlock = ({handleSubmit, pupilCode, handleChange, id, isSubmitted, message, description}) => {
   return (
