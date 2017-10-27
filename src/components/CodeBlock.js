@@ -7,10 +7,9 @@ import 'brace/theme/twilight';
 
 
 
-const CodeBlock = ({handleSubmit, pupilCode, handleChange, id, isSubmitted, message, description}) => {
+const CodeBlock = ({handleSubmit, pupilCode, handleChange, id, isSubmitted, message}) => {
   return (
     <div className="code-block">
-      <p className="problem-description">{description}</p>
       <form onSubmit={handleSubmit}>
         <AceEditor
           value={pupilCode}

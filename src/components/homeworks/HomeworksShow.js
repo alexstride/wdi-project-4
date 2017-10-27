@@ -17,11 +17,8 @@ class HomeworksShow extends React.Component {
   componentDidMount() {
     Axios
       .get('/api/homeworks/')
-      .then(res => {
-        console.log(res.data);
-        this.setState({ homework: res.data[0] });
-      })
-      .then(() => this.setState({user: Auth.getPayload()}, () => console.log(this.state)))
+      .then(res => this.setState({ homework: res.data[0]}))
+      .then(() => this.setState({user: Auth.getPayload()}))
       .catch(err => console.log(err));
   }
 
@@ -87,10 +84,8 @@ class HomeworksShow extends React.Component {
   feedbackOnChange = (e, id) => {
     const newProblems = this.state.homework.problems.map(problem => {
       if(problem.id === id) {
-        console.log('changing problem -->', problem);
         return Object.assign(problem, {feedback: e.target.value});
       } else {
-        console.log('not changing problem -->', problem);
         return problem;
       }
     });
@@ -105,7 +100,6 @@ class HomeworksShow extends React.Component {
     e.preventDefault();
     Axios
       .put(`/api/homeworks/${this.state.homework._id}/problems/${id}`, {feedback})
-      .then((res) => console.log(res.data))
       .catch(err => console.log(err));
   }
 
