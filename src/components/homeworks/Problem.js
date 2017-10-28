@@ -1,14 +1,14 @@
 import React from 'react';
 
 import Description from './Description';
-import CodeBlock from '../CodeBlock';
+import CodeBlockFormWrapper from './CodeBlockFormWrapper';
 import Feedback from './Feedback';
 
 const Problem = ({problem, homework, handleChange, codeBlockHandleSubmit, user, feedbackSubmit, feedbackOnChange}) => {
   return (
     <div className="problem-wrapper">
       <Description {...problem}/>
-      <CodeBlock
+      <CodeBlockFormWrapper
         key={problem.id}
         {...problem}
         parentId={homework.id}
