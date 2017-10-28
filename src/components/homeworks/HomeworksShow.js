@@ -99,10 +99,16 @@ class HomeworksShow extends React.Component {
   }
 
   feedbackSubmit = (e, id, feedback) => {
+    console.log('submitting feedback. State: ', this.state.homework);
     e.preventDefault();
     Axios
       .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}/problems/${id}`, {feedback})
-      .then((res) => this.setState({homework: res.data}))
+      .then((res) => this.setState(prevState => {
+        const newProblems = prevState.homework.problems.map(problem => (res.data.id === problem.id) ? Object.assign(problem, res.data) : problem);
+        const newState = Object.assign({}, prevState);
+        newState.homework.problems = newProblems;
+        return newState;
+      }))
       .catch(err => console.log(err));
   }
 
