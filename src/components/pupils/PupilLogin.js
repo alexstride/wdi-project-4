@@ -25,7 +25,10 @@ class PupilLogin extends React.Component {
       .then((res) => {
         return Auth.setToken(res.data.token);
       })
-      .then(() => this.props.history.push('/homeworks/'))
+      .then(() => {
+        const pupil = Auth.getPayload;
+        this.props.history.push(`/pupils/${pupil.pupilId}/`);
+      })
       .catch(() => this.setState({ error: 'Invalid credentials' }));
   }
 

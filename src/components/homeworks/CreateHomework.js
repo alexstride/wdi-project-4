@@ -32,8 +32,10 @@ class CreateHomework extends React.Component {
 
   createHomework = (e) => {
     e.preventDefault();
+    const newHomework = this.state.homework;
+    newHomework.setDate = new Date();
     Axios
-      .post('/api/homeworks', this.state.homework)
+      .post('/api/homeworks', newHomework)
       .then(res => console.log(res.data))
       .then(() => this.props.history.push('/pupils/'))
       .catch(err => console.log(err));
