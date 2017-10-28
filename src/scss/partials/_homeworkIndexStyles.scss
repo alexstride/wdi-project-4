@@ -1,3 +1,6 @@
+$unsbmitted-red: #ffaaa5;
+$submitted-green: #91ff93;
+
 .homework-index {
   display: flex;
   flex-direction: column;
@@ -7,6 +10,8 @@
 // Moved this out, so that there can be mutliple nesting between the two without preventing the styles from reading the individual cards
 
 .homework-index-card {
+  display: flex;
+  flex-direction: column;
   cursor: pointer;
   &:hover {
     .card-title {
@@ -14,17 +19,33 @@
     }
     border-width: 3px;
   }
+
+  .index-card-header {
+    display: flex;
+    justify-content: space-between;
+    small.index-card-status {
+      color: $unsbmitted-red;
+    }
+  }
   .card-title {
     font-size: 20px;
     color: #222;
+    border-bottom: 2px solid white;
+
   }
   width: 70%;
   height: 120px;
-  border: 2px solid #ffaaa5;
+  border: 2px solid $unsbmitted-red;
   border-radius: 3px;
   margin: 15px 0;
   padding: 10px 8px;
   &.is-submitted {
-    border-color: #91ff93;
+    border-color: $submitted-green;
+
+    .index-card-header {
+      small.index-card-status {
+        color: $submitted-green;
+      }
+    }
   }
 }

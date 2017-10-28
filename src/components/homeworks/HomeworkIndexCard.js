@@ -9,7 +9,11 @@ const HomeworkIndexCard = ({ name, link, hasBeenSubmitted, setDate, onClick }) =
   });
   return (
     <div className={classes} onClick={onClick}>
-      <Link className="card-title" to={link}>{name}</Link>
+      <div className="index-card-header">
+        <Link className="card-title" to={link}>{name}</Link>
+        {hasBeenSubmitted && <small className="index-card-status">Submitted</small>}
+        {!hasBeenSubmitted && <small className="index-card-status">Unsubmitted</small>}
+      </div>
       <p className="index-card-setdate">{FormatDate.getDDMMYYY(setDate)}</p>
     </div>
   );
