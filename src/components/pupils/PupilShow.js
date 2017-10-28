@@ -1,6 +1,7 @@
 import React from 'react';
 import Axios from 'axios';
 import FormatDate from '../../lib/FormatDate';
+import _ from 'lodash';
 
 import HomeworkIndexCard from '../homeworks/HomeworkIndexCard';
 
@@ -14,12 +15,22 @@ class PupilShow extends React.Component {
       .get(`/api/pupils/${this.props.match.params.id}`)
       .then(res => this.setState({ pupil: res.data }))
       .then(() => {
-        const submittedHomeworks = this.state.pupil.homeworks
-          .filter(hw => hw.hasBeenSubmitted)
-          .sort(FormatDate.sortDesc);
-        const unsubmittedHomeworks = this.state.pupil.homeworks
-          .filter(hw => !hw.hasBeenSubmitted)
-          .sort(FormatDate.sortDesc);
+        // const submittedHomeworks = this.state.pupil.homeworks
+        //   .filter(hw => hw.hasBeenSubmitted)
+        //   .sort(FormatDate.sortDesc);
+        const submittedHomeworks = _.orderBy(this.state.pupil.homeworks
+          .filter(hw => hw.hasBeenSubmitted), (hw) => Date.parse(hw.setDate), 'desc');
+
+        // const unsubmittedHomeworks = this.state.pupil.homeworks
+        //   .filter(hw => !hw.hasBeenSubmitted)
+        //   .sort(FormatDate.sortDesc);
+
+        const unsubmittedHomeworks = _.orderBy(this.state.pupil.homeworks
+          .filter(hw => !hw.hasBeenSubmitted), (hw) => Date.parse(hw.setDate), 'desc');
+
+        console.log(submittedHomeworks.map(hw => Date.parse(hw.setDate)));
+        console.log(unsubmittedHomeworks.map(hw => Date.parse(hw.setDate)));
+
         this.setState({ submittedHomeworks, unsubmittedHomeworks });
       })
       .catch(err => console.log(err));
