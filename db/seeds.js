@@ -18,36 +18,57 @@ const promises = [
 Promise
   .all(promises)
   .then(() => {
-    return Homework
-      .create([
-        {
-          name: 'Homework Test',
-          hasBeenSubmitted: false,
-          problems: [
-            {
-              description: 'Make this code print "Hello, World!"',
-              starterCode: 'def printHello():\n  pirnt(\'Hello, World\')\nprintHello()\n',
-              pupilCode: 'def printHello():\n  pirnt(\'Hello, World\')\nprintHello()\n',
-              feedback: 'Not qute there'
-            },{
-              description: 'Make this code add 3 and 5',
-              starterCode: 'def addNumbers(a, b):\n  print(a + b)\naddNumbers()',
-              pupilCode: 'def addNumbers(a, b):\n  print(a + b)\naddNumbers()',
-              feedback: ''
-            }
-          ]
-        }
-      ]);
-  })
-  .then(homework => {
-    console.log(`${homework.length} homework created`);
     return Pupil
       .create([
         {
+          firstname: 'Ben',
+          lastname: 'Jones',
           email: 'test@test.com',
           password: 'pass',
           passwordConfirmation: 'pass',
-          homework: homework[0]
+
+          homeworks: [{
+            name: 'Printing for Lemons',
+            hasBeenSubmitted: true,
+            setDate: 'Fri Oct 27 2017 21:24:53 GMT+0100 (BST)',
+            problems: [{
+              description: 'Find the error in the following code',
+              starterCode: 'bla',
+              pupilCode: 'blabla',
+              feedback: 'Very good effort. More required next time'
+            }, {
+              description: 'Fix the problems with the code',
+              starterCode: 'bla',
+              pupilCode: 'blabla',
+              feedback: 'Not so good this time'
+            }, {
+              description: 'Do something else to this code',
+              starterCode: 'bla',
+              pupilCode: 'blabla',
+              feedback: 'Good bla bla bla. Some text here'
+            }]
+          }, {
+            name: 'Arrays and Lists',
+            hasBeenSubmitted: false,
+            setDate: 'Fri Oct 27 2017 21:29:41 GMT+0100 (BST)',
+            problems: [{
+              description: 'Change the array',
+              starterCode: 'bla',
+              pupilCode: 'blabla',
+              feedback: 'Very good effort. More required next time'
+            }, {
+              description: 'Use this List to create a ladder',
+              starterCode: 'bla',
+              pupilCode: 'blabla',
+              feedback: 'Not so good this time'
+            }, {
+              description: 'Swim across this code and clap 5 times',
+              starterCode: 'bla',
+              pupilCode: 'blabla',
+              feedback: 'Good bla bla bla. Some text here'
+            }]
+          }]
+
         }
       ]);
   })

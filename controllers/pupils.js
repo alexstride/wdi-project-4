@@ -1,5 +1,24 @@
 const Pupil = require('../models/pupil');
 
+function pupilsIndex(req, res, next) {
+  Pupil
+    .find()
+    .exec()
+    .then(pupils => res.json(pupils))
+    .catch(next);
+}
+
+function pupilsShow(req, res, next) {
+  Pupil
+    .findById(req.params.id)
+    .exec()
+    .then(pupil => {
+      if (!pupil) res.notFound();
+      res.json(pupil);
+    })
+    .catch(next);
+}
+
 function homeworksIndex(req, res, next) {
   console.log('homeworksIndex running!');
   Pupil
@@ -60,6 +79,8 @@ function homeworksProblemUpdate(req, res, next) {
 }
 
 module.exports = {
+  pupilsShow,
+  pupilsIndex,
   homeworksIndex,
   homeworksShow,
   homeworksUpdate,

@@ -17,9 +17,10 @@ class HomeworksShow extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props);
     Axios
-      .get('/api/homeworks/')
-      .then(res => this.setState({ homework: res.data[0]}))
+      .get(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}`)
+      .then(res => this.setState({ homework: res.data}))
       .then(() => this.setState({user: Auth.getPayload()}))
       .catch(err => console.log(err));
   }
@@ -42,7 +43,7 @@ class HomeworksShow extends React.Component {
   submitConfirm = (e) => {
     e.preventDefault();
     Axios
-      .put(`/api/homeworks/${this.state.homework._id}`, Object.assign(this.state.homework, { hasBeenSubmitted: true }))
+      .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}`, Object.assign(this.state.homework, { hasBeenSubmitted: true }))
       .then(res => {
         this.setState({ homework: res.data });
       })
@@ -73,7 +74,7 @@ class HomeworksShow extends React.Component {
   codeBlockHandleSubmit = (e, id, pupilCode) => {
     e.preventDefault();
     Axios
-      .put(`/api/homeworks/${this.state.homework._id}/problems/${id}`, { pupilCode: pupilCode })
+      .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}/problems/${id}`, { pupilCode: pupilCode })
       .then(() => {
         this.createMessage(id, 'Your work has been saved');
       })
@@ -100,8 +101,13 @@ class HomeworksShow extends React.Component {
   feedbackSubmit = (e, id, feedback) => {
     e.preventDefault();
     Axios
-      .put(`/api/homeworks/${this.state.homework._id}/problems/${id}`, {feedback})
-      .then((res) => this.setState({homework: res.data}))
+      .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}/problems/${id}`, {feedback})
+      .then((res) => this.setState(prevState => {
+        const newProblems = prevState.homework.problems.map(problem => (res.data.id === problem.id) ? Object.assign(problem, res.data) : problem);
+        const newState = Object.assign({}, prevState);
+        newState.homework.problems = newProblems;
+        return newState;
+      }))
       .catch(err => console.log(err));
   }
 

@@ -1,17 +1,13 @@
 const Pupil = require('../models/pupil');
 
 function hwSet(req, res, next) {
-  const promises = [];
-
   Pupil
     .find()
     .then(pupils => {
-      pupils.forEach(pupil => {
+      const promises = pupils.map(pupil => {
         pupil.homeworks.push(req.body);
-        promises.push(
-          pupil.save()
-            .catch(err => console.log(err))
-        );
+        console.log(pupil.homeworks);
+        return pupil.save();
       });
       Promise.all(promises).then(() => res.json({worked: true})).catch(next);
     });

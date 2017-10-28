@@ -2,7 +2,6 @@ import React from 'react';
 import Flash from '../../lib/Flash';
 
 const FlashMessage = () => {
-  console.log('rending flash message');
   const messageObj = Flash.getMessage();
   return (
     <div>
