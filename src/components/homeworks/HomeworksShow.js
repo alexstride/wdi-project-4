@@ -99,7 +99,6 @@ class HomeworksShow extends React.Component {
   }
 
   feedbackSubmit = (e, id, feedback) => {
-    console.log('submitting feedback. State: ', this.state.homework);
     e.preventDefault();
     Axios
       .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}/problems/${id}`, {feedback})
