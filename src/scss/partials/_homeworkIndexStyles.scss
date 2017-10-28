@@ -2,15 +2,29 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  .homework-index-card {
-      width: 70%;
-      height: 160px;
-      border: 3px solid #ffaaa5;
-      border-radius: 10px;
-      margin: 15px 0;
-      padding: 10px 8px;
-      &.is-submitted {
-        border-color: #91ff93;
-      }
+}
+
+// Moved this out, so that there can be mutliple nesting between the two without preventing the styles from reading the individual cards
+
+.homework-index-card {
+  cursor: pointer;
+  &:hover {
+    .card-title {
+      border-bottom: 2px solid #222;
+    }
+    border-width: 3px;
+  }
+  .card-title {
+    font-size: 20px;
+    color: #222;
+  }
+  width: 70%;
+  height: 120px;
+  border: 2px solid #ffaaa5;
+  border-radius: 3px;
+  margin: 15px 0;
+  padding: 10px 8px;
+  &.is-submitted {
+    border-color: #91ff93;
   }
 }

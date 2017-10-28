@@ -15,6 +15,10 @@ class PupilShow extends React.Component {
       .catch(err => console.log(err));
   }
 
+  goToHomework = (id) => {
+    this.props.history.push(`/pupils/${this.state.pupil.id}/homeworks/${id}`);
+  }
+
   render() {
     return (
       <main className="container">
@@ -27,6 +31,7 @@ class PupilShow extends React.Component {
               key={hw.id}
               {...hw}
               link={`/pupils/${this.state.pupil.id}/homeworks/${hw.id}`}
+              onClick={() => this.goToHomework(hw.id)}
             />)}
         </div>
       </main>
