@@ -1,4 +1,5 @@
 import React from 'react';
+import Axios from 'axios';
 
 import CodeBlock from './CodeBlock';
 
@@ -23,6 +24,26 @@ class CreateHomework extends React.Component {
       };
   }
 
+  handleChangeHomework = ({ target: { name, value }}) => {
+    const oldHomework = Object.assign({}, this.state.homework);
+    oldHomework[name] = value;
+    this.setState({ homework: oldHomework });
+  }
+
+  createHomework = (e) => {
+    e.preventDefault();
+    Axios
+      .post('/api/homeworks', this.state.homework)
+      .then(res => console.log(res.data))
+      .then(() => this.props.history.push('/pupils/'))
+      .catch(err => console.log(err));
+  };
+
+  handleChangeProblem = ({ target: { name, value }}) => {
+    const problem = Object.assign({}, this.state.problem, { [name]: value });
+    this.setState({ problem });
+  }
+
   handleCodeBlockChange = (codeValue) => {
     const problem = Object.assign(this.state.problem, {starterCode: codeValue, pupilCode: codeValue});
     this.setState(prevState => {
@@ -30,17 +51,6 @@ class CreateHomework extends React.Component {
       newState.problem = problem;
       return newState;
     });
-  }
-
-  handleChangeHomework = ({ target: { name, value }}) => {
-    const oldHomework = Object.assign({}, this.state.homework);
-    oldHomework[name] = value;
-    this.setState({ homework: oldHomework });
-  }
-
-  handleChangeProblem = ({ target: { name, value }}) => {
-    const problem = Object.assign({}, this.state.problem, { [name]: value });
-    this.setState({ problem });
   }
 
   submitProblem = (e) => {
@@ -55,12 +65,6 @@ class CreateHomework extends React.Component {
   render() {
     return (
       <div className="section container">
-        <ul>
-          {this.state.homework && this.state.homework.problems.map((problem, i) => {
-            <li key={i}>{problem.description}</li>;
-          })}
-        </ul>
-
         <h1 className="title is-1">Use this form to create a homework</h1>
         <p className="subtitle is-3">It will be distributed to all pupils when it is submitted</p>
         <form onSubmit={this.createHomework}>
@@ -77,6 +81,19 @@ class CreateHomework extends React.Component {
               ></input>
             </div>
           </div>
+          <ul>
+            {this.state.homework.problems.map((problem, i) => {
+              return (
+                <li key={i}>
+                  <p>{problem.description}</p>
+                  <CodeBlock
+                    {...problem}
+                    isSubmitted={true}
+                  />
+                </li>
+              );
+            })}
+          </ul>
 
           <button className="button is-primary is-small">Submit</button>
         </form>
@@ -101,7 +118,6 @@ class CreateHomework extends React.Component {
                   {...this.state.problem}
                   isSubmitted={this.state.homework.hasBeenSubmitted}
                   handleChange={(newValue) => this.handleCodeBlockChange(newValue)}
-                  handleSubmit={''}
                 />
               </div>
             </div>
