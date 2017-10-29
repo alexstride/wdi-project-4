@@ -4,20 +4,7 @@ import Auth from '../../lib/Auth';
 
 class Nav extends React.Component {
   state ={
-    isAuth: null,
-    userType: null,
     navActive: false
-  }
-
-  componentDidMount() {
-    let userType = null;
-    const isAuth = Auth.isAuthenticated();
-    if (isAuth) userType = Auth.getPayload().userType;
-
-    this.setState({
-      userType,
-      isAuth
-    });
   }
 
   logout = (e) => {
@@ -31,6 +18,10 @@ class Nav extends React.Component {
   }
 
   render() {
+    let userType = null;
+    const isAuth = Auth.isAuthenticated();
+    if (isAuth) userType = Auth.getPayload().userType;
+
     return (
       <nav className="navbar is-transparent">
         <div className="navbar-brand">
@@ -45,21 +36,21 @@ class Nav extends React.Component {
 
         <div id="navMenu" className={`navbar-menu ${this.state.navActive ? 'is-active' : ''}`}>
           <div className="navbar-start">
-            {this.state.isAuth && this.state.userType === 'teacher' &&
+            {isAuth && userType === 'teacher' &&
               <div className="navbar-item">
                 <Link to="/pupils">
                   All Pupils
                 </Link>
               </div>
             }
-            {this.state.isAuth && this.state.userType === 'teacher' &&
+            {isAuth && userType === 'teacher' &&
               <div className="navbar-item">
                 <Link to="/homeworks/new">
                   Create Homework
                 </Link>
               </div>
             }
-            {this.state.isAuth && this.state.userType === 'pupil' &&
+            {isAuth && userType === 'pupil' &&
               <div className="navbar-item">
                 <Link to={`/pupils/${Auth.getPayload().pupilId}`}>
                   All Homeworks
@@ -70,7 +61,7 @@ class Nav extends React.Component {
           </div>
 
           <div className="navbar-end">
-            {this.state.isAuth && <div className="navbar-item">
+            {isAuth && <div className="navbar-item">
               <div className="control">
                 <button className="button is-danger" onClick={this.logout}>
                   Log Out
@@ -82,7 +73,7 @@ class Nav extends React.Component {
       </nav>
     );
   }
-};
+}
 
 
 export default withRouter(Nav);
