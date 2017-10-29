@@ -24,6 +24,10 @@ class CreateHomework extends React.Component {
       };
   }
 
+  componentDidUpdate() {
+    this.scrollToCreateProblem();
+  }
+
   handleChangeHomework = ({ target: { name, value }}) => {
     const oldHomework = Object.assign({}, this.state.homework);
     oldHomework[name] = value;
@@ -72,6 +76,10 @@ class CreateHomework extends React.Component {
     this.setState({homework: oldHomework, problem: cleanProblem});
   }
 
+  scrollToCreateProblem = () => {
+    this.createProblem.scrollIntoView({ behavior: 'smooth' });
+  }
+
   render() {
     return (
       <div className="container homework">
@@ -85,7 +93,7 @@ class CreateHomework extends React.Component {
             <form onSubmit={this.createHomework}>
               <div className="field">
                 <label className="label">Homework name:</label>
-                <div className="control">
+                <div className="controller">
                   <input
                     onChange={this.handleChangeHomework}
                     className="input"
@@ -101,17 +109,59 @@ class CreateHomework extends React.Component {
                   return (
                     <li key={i}>
                       <p>{problem.description}</p>
-                      <CodeBlock
-                        {...problem}
-                        isSubmitted={true}
-                      />
-                      <a className="delete" onClick={(e) => this.deleteProblem(e, i)}></a>
+                      <div className="code-block">
+                        <div className="code-block-header">
+                          <div>
+                            <a className="delete" onClick={(e) => this.deleteProblem(e, i)}></a>
+                          </div>
+                        </div>
+                        <div className="code-block">
+                          <CodeBlock
+                            {...problem}
+                            isSubmitted={true}
+                          />
+                        </div>
+                      </div>
                     </li>
                   );
                 })}
               </ul>
 
               <button className="button is-primary is-small">Submit</button>
+            </form>
+          </div>
+          <div className="problem-wrapper">
+            <form onSubmit={this.submitProblem}>
+              <div className="field">
+                <label className="label">New problem:</label>
+                <div className="controller">
+                  <input
+                    className="input"
+                    type="text"
+                    name="description"
+                    onChange={this.handleChangeProblem}
+                    value={this.state.problem.description}
+                    placeholder="please provide a description for your problem"
+                  ></input>
+                </div>
+              </div>
+              <div className="field">
+                <div className="controller">
+                  <div className="code-block">
+                    <CodeBlock
+                      {...this.state.problem}
+                      isSubmitted={this.state.homework.hasBeenSubmitted}
+                      handleChange={(newValue) => this.handleCodeBlockChange(newValue)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <button
+                className="button is-primary is-small"
+                ref={(element) => this.createProblem = element}
+              >
+                Add problem
+              </button>
             </form>
           </div>
         </div>
@@ -121,34 +171,3 @@ class CreateHomework extends React.Component {
 }
 
 export default CreateHomework;
-
-
-
-
-{/* <div className="section">
-  <form onSubmit={this.submitProblem}>
-    <div className="field">
-      <label className="label">Problem:</label>
-      <div className="controller">
-        <input
-          className="input"
-          type="text"
-          name="description"
-          onChange={this.handleChangeProblem}
-          value={this.state.problem.description}
-          placeholder="please provide a description for your problem"
-        ></input>
-      </div>
-    </div>
-    <div className="field">
-      <div className="controller">
-        <CodeBlock
-          {...this.state.problem}
-          isSubmitted={this.state.homework.hasBeenSubmitted}
-          handleChange={(newValue) => this.handleCodeBlockChange(newValue)}
-        />
-      </div>
-    </div>
-    <button className="button is-primary">Add problem</button>
-  </form>
-</div> */}
