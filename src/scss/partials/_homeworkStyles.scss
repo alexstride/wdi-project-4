@@ -44,7 +44,6 @@
       align-items: center;
       transform: translate(0, -100%);
 
-
       p {
         padding: 0 10px;
         color: #bbb;
@@ -63,6 +62,10 @@
         outline: 0;
       }
     }
+  }
+  .code-block-header {
+    display: flex;
+    align-self: flex-end;
   }
 }
 
