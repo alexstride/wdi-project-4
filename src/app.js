@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
+import ProtectedRoute from './component/utilities/Protected';
 import Home from './components/Home';
 import Nav from './components/utilities/Nav';
 import PupilLogin from './components/pupils/PupilLogin';
@@ -29,13 +30,13 @@ class App extends React.Component {
             <FlashMessage />
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route exact path="/pupils" component={PupilIndex} />
+              <ProtectedRoute exact path="/pupils" component={PupilIndex} />
               <Route exact path="/pupils/login" component={PupilLogin} />
-              <Route exact path="/pupils/:id" component={PupilShow} />
+              <ProtectedRoute exact path="/pupils/:id" component={PupilShow} />
               <Route exact path="/teachers/login" component={TeacherLogin} />
               <Route exact path="/teachers/register" component={TeacherRegister} />
-              <Route exact path="/pupils/:id/homeworks/:homeworkId" component={HomeworksShow} />
-              <Route exact path="/homeworks/new" component={CreateHomework} />
+              <ProtectedRoute exact path="/pupils/:id/homeworks/:homeworkId" component={HomeworksShow} />
+              <ProtectedRoute exact path="/homeworks/new" component={CreateHomework} />
             </Switch>
           </div>
         </BrowserRouter>

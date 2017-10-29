@@ -1,5 +1,6 @@
 import React from 'react';
 import Axios from 'axios';
+import Flash from '../../Flash';
 
 import Auth from '../../lib/Auth';
 
@@ -22,7 +23,14 @@ class HomeworksShow extends React.Component {
       .get(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}`)
       .then(res => this.setState({ homework: res.data}))
       .then(() => this.setState({user: Auth.getPayload()}))
-      .catch(err => console.log(err));
+      .catch(err => {
+        if (err.response.status === 401) {
+          Flash.setMessage({ message: 'Access denied', type: 'danger'});
+          this.props.history.push('/teachers/login');
+        } else {
+          console.log(err);
+        }
+      });
   }
 
   handleChange = (newValue, id) => {

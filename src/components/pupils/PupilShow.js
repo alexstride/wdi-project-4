@@ -1,5 +1,6 @@
 import React from 'react';
 import Axios from 'axios';
+import Flash from '../../lib/Flash';
 import _ from 'lodash';
 
 import HomeworkIndexCard from '../homeworks/HomeworkIndexCard';
@@ -30,7 +31,14 @@ class PupilShow extends React.Component {
 
         this.setState({ submittedHomeworks, unsubmittedHomeworks });
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        if (err.response.status === 401) {
+          Flash.setMessage({ message: 'Access denied', type: 'danger'});
+          this.props.history.push('/teachers/login');
+        } else {
+          console.log(err);
+        }
+      });
   }
 
   goToHomework = (id) => {

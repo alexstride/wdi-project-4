@@ -13,13 +13,13 @@ class PupilIndex extends React.Component {
     const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     Axios
       .get('/api/pupils', { headers })
-      .then(res => {
-        this.setState({ pupils: res.data }, () => console.log(this.state));
-      })
+      .then(res => this.setState({ pupils: res.data }))
       .catch(err => {
         if (err.response.status === 401) {
           Flash.setMessage({ message: 'Access denied', type: 'danger'});
           this.props.history.push('/teachers/login');
+        } else {
+          console.log(err);
         }
       });
   }

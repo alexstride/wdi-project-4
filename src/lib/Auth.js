@@ -8,7 +8,10 @@ class Auth {
   }
 
   static isAuthenticated() {
-    return !!this.getToken();
+    const payload = this.getPayload();
+    if(!payload) return false;
+    const now = (new Date()).getTime() / 1000;
+    return payload.exp > now;
   }
 
   static logout() {
