@@ -20,7 +20,7 @@ class Nav extends React.Component {
     });
   }
 
-  logout(e) {
+  logout = (e) => {
     e.preventDefault();
     Auth.logout();
     this.props.history.push('/');
