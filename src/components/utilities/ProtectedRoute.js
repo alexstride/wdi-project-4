@@ -5,7 +5,7 @@ import Auth from '../../lib/Auth';
 const ProtectedRoute = ({component: Component, ...other}) => {
   return (
     <Route {...other} render={props => (
-      Auth.isAuthentiated() ? (
+      Auth.isAuthenticated() ? (
         <Component {...props} />
       ) : (
         <Redirect to="/" />

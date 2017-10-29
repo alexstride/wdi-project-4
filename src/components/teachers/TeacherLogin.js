@@ -22,11 +22,12 @@ class TeacherLogin extends React.Component {
     e.preventDefault();
     Axios
       .post('/api/teachers/login', this.state.credentials)
-      .then((res) => {
-        return Auth.setToken(res.data.token);
-      })
+      .then((res) => Auth.setToken(res.data.token))
       .then(() => this.props.history.push('/pupils'))
-      .catch(() => this.setState({ error: 'Invalid credentials' }));
+      .catch((err) => {
+        console.log(err);
+        this.setState({ error: 'Invalid credentials' });
+      });
   }
 
 

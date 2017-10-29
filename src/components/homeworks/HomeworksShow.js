@@ -1,6 +1,6 @@
 import React from 'react';
 import Axios from 'axios';
-import Flash from '../../Flash';
+import Flash from '../../lib/Flash';
 
 import Auth from '../../lib/Auth';
 

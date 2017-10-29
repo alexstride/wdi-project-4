@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import ProtectedRoute from './component/utilities/Protected';
+import ProtectedRoute from './components/utilities/ProtectedRoute';
 import Home from './components/Home';
 import Nav from './components/utilities/Nav';
 import PupilLogin from './components/pupils/PupilLogin';
