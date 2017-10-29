@@ -76,7 +76,7 @@ class HomeworksShow extends React.Component {
     Axios
       .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}/problems/${id}`, { pupilCode: pupilCode })
       .then(() => {
-        this.createMessage(id, 'Your work has been saved');
+        this.createMessage(id, 'All changes saved');
       })
       .catch(() => {
         this.createMessage(id, 'Your work was unable to be saved');
@@ -86,7 +86,7 @@ class HomeworksShow extends React.Component {
   feedbackOnChange = (e, id) => {
     const newProblems = this.state.homework.problems.map(problem => {
       if(problem.id === id) {
-        return Object.assign(problem, {feedback: e.target.value, feedbackMessage: 'your feedback has not been saved'});
+        return Object.assign(problem, {feedback: e.target.value, feedbackMessage: 'Your feedback has not been saved'});
       } else {
         return problem;
       }
@@ -103,7 +103,7 @@ class HomeworksShow extends React.Component {
     Axios
       .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}/problems/${id}`, {feedback})
       .then((res) => this.setState(prevState => {
-        const newProblems = prevState.homework.problems.map(problem => (res.data.id === problem.id) ? Object.assign(problem, res.data) : problem);
+        const newProblems = prevState.homework.problems.map(problem => (res.data.id === problem.id) ? Object.assign(problem, res.data, { feedbackMessage: null }) : problem);
         const newState = Object.assign({}, prevState);
         newState.homework.problems = newProblems;
         return newState;

@@ -13,7 +13,7 @@ const CodeBlockFormWrapper = ({handleSubmit, pupilCode, handleChange, id, isSubm
           isSubmitted={isSubmitted}
         />
         <div className="code-block-footer">
-          <p>{message && message}</p>
+          <p>{message}</p>
           <button className="">
             Save
           </button>

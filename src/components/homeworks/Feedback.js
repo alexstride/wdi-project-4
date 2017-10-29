@@ -5,24 +5,25 @@ const Feedback = ({user, feedback, feedbackSubmit, feedbackOnChange, feedbackMes
     <div className="feedback">
       {'pupilId' in user && feedback.length > 0 &&
       <div>
-        <h5 className="title is-5">Your feedback:</h5>
+        <h5 className="label">Your feedback:</h5>
         <p>{feedback}</p>
       </div>}
       {'teacherId' in user &&
       <form onSubmit={feedbackSubmit}>
-        <div className="field">
+        <div className="feedback-form-wrapper">
           <label className="label">Feedback:</label>
-          <div className="control">
-            <textarea
-              onChange={feedbackOnChange}
-              className="textarea"
-              value={feedback}
-              placeholder="please provide feedback"
-            ></textarea>
+          <textarea
+            onChange={feedbackOnChange}
+            className="textarea"
+            value={feedback}
+            placeholder="Provide feedback here..."
+          ></textarea>
+          <div className="feedback-footer">
+            <button>Save</button>
+            {feedbackMessage && <small>{feedbackMessage}</small>}
           </div>
         </div>
-        <button className="button is-primary is-small">save</button>
-        {feedbackMessage && <small>{feedbackMessage}</small>}
+
       </form>}
     </div>
   );
