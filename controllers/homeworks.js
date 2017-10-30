@@ -4,6 +4,7 @@ function hwSet(req, res, next) {
   Pupil
     .find({ teacher: req.body.teacherId })
     .then(pupils => {
+      console.log(pupils);
       const promises = pupils.map(pupil => {
         pupil.homeworks.push(req.body);
         console.log(pupil.homeworks);
