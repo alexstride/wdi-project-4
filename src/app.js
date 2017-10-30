@@ -15,6 +15,7 @@ import FlashMessage from './components/utilities/FlashMessage';
 import CreateHomework from './components/homeworks/CreateHomework';
 import NoRoute from './components/utilities/NoRoute';
 import PupilCreate from './components/pupils/PupilCreate';
+import ShowHomeworkByQuestion from './components/homeworks/ShowHomeworkByQuestion';
 
 import './scss/bulma/css/bulma.css';
 import './scss/partials/_homeworkIndexStyles.scss';
@@ -40,6 +41,7 @@ class App extends React.Component {
               <Route exact path="/teachers/register" component={TeacherRegister} />
               <ProtectedRoute exact path="/pupils/:id/homeworks/:homeworkId" component={HomeworksShow} />
               <ProtectedRoute exact path="/homeworks/new" component={CreateHomework} />
+              <ProtectedRoute exact path="/homeworks/:setDate/question/:number" component={ShowHomeworkByQuestion}/>
               <Route component={NoRoute} />
             </Switch>
           </div>
