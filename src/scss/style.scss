@@ -36,3 +36,19 @@ main {
 .is-success {
   background-color: $theme-green !important;
 }
+
+.red-circle {
+  display: inline-block;
+  border-radius: 100%;
+  background-color: red;
+  width: 10px;
+  height: 10px;
+}
+
+.green-circle {
+  display: inline-block;
+  border-radius: 100%;
+  background-color: green;
+  width: 10px;
+  height: 10px;
+}

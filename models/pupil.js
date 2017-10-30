@@ -12,6 +12,14 @@ const pupilSchema = mongoose.Schema({
 });
 
 pupilSchema
+  .virtual('allSubmitted')
+  .get(function () {
+    return this.homeworks.every(function (homework) {
+      return homework.hasBeenSubmitted;
+    });
+  });
+
+pupilSchema
   .virtual('passwordConfirmation')
   .set(function setPasswordConfirmation(passwordConfirmation) {
     this._passwordConfirmation = passwordConfirmation;
