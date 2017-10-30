@@ -7,7 +7,8 @@ const pupilSchema = mongoose.Schema({
   lastname: { type: String, req: 'A pupil requires a last name' },
   email: { type: String, unique: 'The provided email must be unique', requried: 'an email must be provided' },
   password: { type: String, required: 'A password must be provided' },
-  homeworks: [ homeworkSchema ]
+  homeworks: [ homeworkSchema ],
+  teacher: { type: mongoose.Schema.ObjectId, ref: 'Teacher', required: true }
 });
 
 pupilSchema

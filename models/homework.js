@@ -11,7 +11,8 @@ const homeworkSchema = mongoose.Schema({
   name: { type: String, requried: true },
   hasBeenSubmitted: { type: Boolean, required: true },
   problems: [ problemSchema ],
-  setDate: { type: Date, req: 'A homework set date is required'}
+  setDate: { type: Date, req: 'A homework set date is required'},
+  dueDate: { type: Date }
 });
 
 module.exports = mongoose.model('Homework', homeworkSchema);
