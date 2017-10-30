@@ -32,7 +32,7 @@ class ShowHomeworkByQuestion extends React.Component {
     const questions = this.state.pupils.reduce((questions, pupil) => {
       pupil.homeworks.forEach(homework => {
         if (homework.setDate === date) {
-          questions.push(homework.problems.slice(questionNumber - 1, questionNumber));
+          questions.push({name: `${pupil.firstname} ${pupil.lastname}`, question: homework.problems.slice(questionNumber - 1, questionNumber)});
         }
       });
       return questions;
