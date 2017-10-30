@@ -18,19 +18,34 @@ const promises = [
 Promise
   .all(promises)
   .then(() => {
+    return Teacher
+      .create([
+        {
+          email: 'teacher@teacher.com',
+          password: 'pass',
+          passwordConfirmation: 'pass',
+          firstname: 'John',
+          lastname: 'Burston',
+          school: 'St. Olave\'s'
+        }
+      ]);
+  })
+  .then(teachers => {
+    console.log(`${teachers.length} teachers created`);
     return Pupil
       .create([
         {
           firstname: 'Ben',
           lastname: 'Jones',
           email: 'test@test.com',
+          teacher: teachers[0],
           password: 'pass',
           passwordConfirmation: 'pass',
-
           homeworks: [{
             name: 'Printing for Lemons',
             hasBeenSubmitted: true,
             setDate: 'Fri Oct 27 2017 21:24:53 GMT+0100 (BST)',
+            dueDate: 'Fri Nov 03 2017 00:00:00',
             problems: [{
               description: 'Find the error in the following code',
               starterCode: 'bla',
@@ -68,25 +83,9 @@ Promise
               feedback: 'Good bla bla bla. Some text here'
             }]
           }]
-
         }
       ]);
   })
-  .then(pupil => {
-    console.log(`${pupil.length} pupils created`);
-    return Teacher
-      .create([
-        {
-          email: 'teacher@teacher.com',
-          password: 'pass',
-          passwordConfirmation: 'pass',
-          pupil: pupil[0],
-          firstname: 'John',
-          lastname: 'Burston',
-          school: 'St. Olave\'s'
-        }
-      ]);
-  })
-  .then(teacher =>  console.log(`${teacher.length} teachers have been created`))
+  .then(pupils =>  console.log(`${pupils.length} pupils have been created`))
   .catch((err) => console.log(err))
   .finally(() => mongoose.connection.close());
