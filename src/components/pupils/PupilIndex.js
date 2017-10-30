@@ -10,7 +10,22 @@ class PupilIndex extends React.Component {
   }
 
   getAggregate(pupils) {
-    return pupils.reduce((resultArray, pupil) => resultArray.concat(pupil.homeworks), []);
+    const resultObject = pupils.reduce((result, pupil) => {
+      pupil.homeworks.forEach(hw => {
+        if (hw.setDate in result) {
+          if (!hw.hasBeenSubmitted) {
+            result[hw.setDate].haveNotSubmitted.push(`${pupil.firstname} ${pupil.lastname}`);
+          }
+        } else {
+          result[hw.setDate] = {name: hw.name, setDate: hw.setDate, dueDate: hw.dueDate, haveNotSubmitted: []};
+          if (!hw.hasBeenSubmitted) {
+            result[hw.setDate].haveNotSubmitted.push(`${pupil.firstname} ${pupil.lastname}`);
+          }
+        }
+      });
+      return result;
+    }, {});
+    return Object.values(resultObject);
   }
 
   componentDidMount() {
@@ -21,6 +36,7 @@ class PupilIndex extends React.Component {
       .then(res => this.setState({ pupils: res.data }))
       .then(() => this.setState({aggregateArray: this.getAggregate(this.state.pupils)}, () => console.log(this.state)))
       .catch(err => {
+        console.log(err);
         if (err.response.status === 401) {
           Flash.setMessage({ message: 'Access denied', type: 'danger'});
           this.props.history.push('/teachers/login');
