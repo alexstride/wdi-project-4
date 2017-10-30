@@ -68,7 +68,7 @@ class HomeworksShow extends React.Component {
       .then(res => {
         this.setState({ homework: res.data });
       })
-      .then(() => this.props.history.goBack())
+      .then(() => this.props.history.push(`/pupils/${this.props.match.params.id}`))
       .catch(err => console.log(err));
   }
 
