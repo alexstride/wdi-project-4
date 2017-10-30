@@ -45,6 +45,13 @@ class Nav extends React.Component {
             }
             {isAuth && userType === 'teacher' &&
               <div className="navbar-item">
+                <Link to="/pupils/new">
+                  Add Pupils
+                </Link>
+              </div>
+            }
+            {isAuth && userType === 'teacher' &&
+              <div className="navbar-item">
                 <Link to="/homeworks/new">
                   Create Homework
                 </Link>
