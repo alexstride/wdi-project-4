@@ -20,7 +20,7 @@ router.route('/homeworks')
 router.route('/teachers/login')
   .post(auth.teacherLogin);
 
-router.route('/teachers/register')
+router.route('/teachers')
   .post(auth.teacherRegistration);
 
 router.route('/pupils')
@@ -31,6 +31,9 @@ router.route('/pupils/:id')
 
 router.route('/pupils/login')
   .post(auth.pupilLogin);
+
+router.route('/pupils/multiple')
+  .post(pupils.pupilsCreate);
 
 router.route('/pupils/:id/homeworks')
   .get(pupils.homeworksIndex);

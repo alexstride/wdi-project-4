@@ -18,7 +18,7 @@ class TeacherRegister extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     Axios
-      .post('/api/teachers/register', this.state.credentials)
+      .post('/api/teachers', this.state.credentials)
       .then(() => {
         Flash.setMessage({
           message: 'Thanks for registering. Please now login to view the site!',
