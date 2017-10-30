@@ -1,4 +1,5 @@
 $unsbmitted-red: #ffaaa5;
+$red: hsl(348, 100%, 61%);
 $submitted-green: #91ff93;
 
 .homework-index {
@@ -11,18 +12,28 @@ $submitted-green: #91ff93;
 
 .homework-index-card {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
   cursor: pointer;
   &:hover {
     border-width: 3px;
   }
 
-  .index-card-header {
+  .index-card-left {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    small.index-card-status {
-      color: $unsbmitted-red;
+  }
+  .index-card-right {
+    width: 33%;
+    text-align: right;
+    small {
+      color: $red;
+    }
+    p.unsubmitted-names {
+      font-size: 14px;
+      color: $red;
+      font-style: italic;
     }
   }
   .card-title {
@@ -33,14 +44,23 @@ $submitted-green: #91ff93;
   }
   width: 70%;
   height: 120px;
-  border: 2px solid $unsbmitted-red;
+  border: 2px solid #ccc;
   border-radius: 3px;
   margin: 15px 0;
   padding: 10px 8px;
+  &.is-unsubmitted {
+    border-color: $unsbmitted-red;
+
+    .index-card-header {
+      small.index-card-status {
+        color: $unsbmitted-red;
+      }
+    }
+  }
   &.is-submitted {
     border-color: $submitted-green;
 
-    .index-card-header {
+    .index-card-right {
       small.index-card-status {
         color: $submitted-green;
       }

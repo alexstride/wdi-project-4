@@ -18,7 +18,6 @@ class HomeworksShow extends React.Component {
   }
 
   componentDidMount() {
-    console.log('mounted');
     Axios
       .get(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}`)
       .then(res => this.setState({ homework: res.data, user: Auth.getPayload()}))

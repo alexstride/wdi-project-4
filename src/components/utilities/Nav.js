@@ -3,13 +3,21 @@ import { Link, withRouter } from 'react-router-dom';
 import Auth from '../../lib/Auth';
 
 class Nav extends React.Component {
-  state ={
-    navActive: false
+  constructor() {
+    super();
+    this.state = {
+      navActive: false
+    };
+  }
+
+  componentDidMount() {
+    this.props.history.listen(() => this.setState({navActive: false}));
   }
 
   logout = (e) => {
     e.preventDefault();
     Auth.logout();
+    this.props.history.listen(() => this.setState({navActive: false}));
     this.props.history.push('/');
   }
 
@@ -21,7 +29,7 @@ class Nav extends React.Component {
     let userType = null;
     const isAuth = Auth.isAuthenticated();
     if (isAuth) userType = Auth.getPayload().userType;
-
+    console.log('nav props: ', this.props);
     return (
       <nav className="navbar is-transparent">
         <div className="navbar-brand">
@@ -70,7 +78,7 @@ class Nav extends React.Component {
           <div className="navbar-end">
             {isAuth && <div className="navbar-item">
               <div className="control">
-                <button className="button is-danger" onClick={this.logout}>
+                <button className="button is-danger is-outlined" onClick={this.logout}>
                   Log Out
                 </button>
               </div>
@@ -81,6 +89,5 @@ class Nav extends React.Component {
     );
   }
 }
-
 
 export default withRouter(Nav);
