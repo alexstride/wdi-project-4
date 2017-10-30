@@ -39,7 +39,7 @@ class CreateHomework extends React.Component {
     Axios
       .post('/api/homeworks', newHomework)
       .then(res => console.log(res.data))
-      .then(() => this.props.history.push('/pupils/'))
+      .then(() => this.props.history.push('/pupils'))
       .catch(err => console.log(err));
   };
 

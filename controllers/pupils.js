@@ -20,9 +20,10 @@ function pupilsShow(req, res, next) {
 }
 
 function pupilsCreate(req, res, next) {
+  console.log(req.body);
   Pupil
     .create(req.body)
-    .then(res => res.json(res))
+    .then(newPupils => res.json(newPupils))
     .catch(next);
 }
 

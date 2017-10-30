@@ -14,7 +14,7 @@ class PupilIndex extends React.Component {
     const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     Axios
       .get(`/api/teachers/${payload.teacherId}/pupils`, { headers })
-      .then(res => this.setState({ pupils: res.data }))
+      .then(res => this.setState({ pupils: res.data },() => console.log(res.data)))
       .catch(err => {
         if (err.response.status === 401) {
           Flash.setMessage({ message: 'Access denied', type: 'danger'});
@@ -32,11 +32,16 @@ class PupilIndex extends React.Component {
           <h1 className="title is-1">All Pupils</h1>
         </div>
         <div className="pupil-index-list">
-          {this.state.pupils && this.state.pupils.map(pupil =>
-            <Link
-              key={pupil.id}
-              to={`/pupils/${pupil.id}`}
-            >{`${pupil.firstname} ${pupil.lastname} - ${pupil.email}`}</Link>)}
+          <ul>
+            {this.state.pupils && this.state.pupils.map(pupil =>
+              <li key={pupil.id}>
+                <Link to={`/pupils/${pupil.id}`}>
+                  {pupil.allSubmitted ? <div className="green-circle"></div> : <div className="red-circle"></div> }
+                  {`${pupil.firstname} ${pupil.lastname} - ${pupil.email}`}
+                </Link>
+              </li>
+            )}
+          </ul>
         </div>
       </main>
     );
