@@ -27,6 +27,8 @@ class HomeworksShow extends React.Component {
         if (err.response.status === 401) {
           Flash.setMessage({ message: 'Access denied', type: 'danger'});
           this.props.history.push('/teachers/login');
+        } else if (err.response.status === 404) {
+          this.props.history.push('/NoRoute');
         } else {
           console.log(err);
         }
