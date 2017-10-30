@@ -162,7 +162,7 @@ class HomeworksShow extends React.Component {
               }
             </div>
             <div className="level-item">
-              {this.state.homework && this.state.homework.hasBeenSubmitted &&
+              {this.state.homework && this.state.homework.hasBeenSubmitted && this.state.user.teacherId &&
                 <button className="button with20margin is-success" onClick={this.saveAndReturn}>Save and return</button>
               }
             </div>
