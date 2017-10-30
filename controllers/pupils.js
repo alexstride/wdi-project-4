@@ -2,7 +2,7 @@ const Pupil = require('../models/pupil');
 
 function pupilsIndex(req, res, next) {
   Pupil
-    .find()
+    .find({ teacher: req.params.id })
     .exec()
     .then(pupils => res.json(pupils))
     .catch(next);

@@ -4,25 +4,23 @@ import Axios from 'axios';
 import CodeBlock from './CodeBlock';
 
 class CreateHomework extends React.Component {
-  constructor() {
-    super();
-    this.state =
-      {
-        homework: {
-          name: '',
-          hasBeenSubmitted: false,
-          problems: [],
-          setDate: null
-        },
-        problem: {
-          feedback: '',
-          starterCode: '',
-          pupilCode: '',
-          description: ''
-        },
-        errors: null
-      };
-  }
+
+  state =
+    {
+      homework: {
+        name: '',
+        hasBeenSubmitted: false,
+        problems: [],
+        setDate: null
+      },
+      problem: {
+        feedback: '',
+        starterCode: '',
+        pupilCode: '',
+        description: ''
+      },
+      errors: null
+    };
 
   componentDidUpdate() {
     this.scrollToCreateProblem();

@@ -23,7 +23,7 @@ router.route('/teachers/login')
 router.route('/teachers')
   .post(auth.teacherRegistration);
 
-router.route('/pupils')
+router.route('/teachers/:id/pupils')
   .get(secureRouteTeacher, pupils.pupilsIndex);
 
 router.route('/pupils/:id')
