@@ -29,13 +29,13 @@ class ShowHomeworkByQuestion extends React.Component {
 
   getQuestions(hwSetDate, questionNumber) {
     const date = (new Date(parseInt(hwSetDate))).toISOString();
-    const questions = this.state.pupils.reduce((result, pupil) => {
+    const questions = this.state.pupils.reduce((questions, pupil) => {
       pupil.homeworks.forEach(homework => {
         if (homework.setDate === date) {
-          result.push(homework.problems.slice(questionNumber - 1, questionNumber));
+          questions.push(homework.problems.slice(questionNumber - 1, questionNumber));
         }
       });
-      return result;
+      return questions;
     }, []);
     this.setState({ questions }, () => console.log(this.state));
   }
