@@ -36,6 +36,7 @@ class PupilCreate extends React.Component {
 
   componentDidUpdate() {
     this.scrollToAddPupilButton();
+    console.log(this.state);
   }
 
   handleChange = ({target: { name, value }}) => {
@@ -45,7 +46,7 @@ class PupilCreate extends React.Component {
 
   addPupil = (e) => {
     e.preventDefault();
-    const pupil = {firstname: '', lastname: '', email: '', password: '', passwordConfirmation: ''};
+    const pupil = {firstname: '', lastname: '', email: '', password: '', passwordConfirmation: '', teacher: Auth.getPayload().teacherId};
     const newPupils = this.state.newPupils.slice();
     newPupils.push(this.state.pupil);
     this.setState({ newPupils, pupil });
