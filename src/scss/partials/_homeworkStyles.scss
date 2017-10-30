@@ -1,3 +1,5 @@
+@import 'variables.scss';
+
 .homework-background {
   background-color: #fafafa;
   position: fixed;
@@ -92,7 +94,7 @@
           border: 0;
           cursor: pointer;
 
-          background-color: #56FC3C;
+          background-color: $theme-green;
           color: white;
           font-size: 16px;
           font-weight: 500;

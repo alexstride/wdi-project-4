@@ -5,7 +5,6 @@ import CodeBlockFormWrapper from './CodeBlockFormWrapper';
 import Feedback from './Feedback';
 
 const Problem = ({problem, homework, handleChange, codeBlockHandleSubmit, user, feedbackSubmit, feedbackOnChange}) => {
-  console.log(problem);
   return (
     <div className="problem-wrapper">
       <Description {...problem}/>

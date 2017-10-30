@@ -12,17 +12,16 @@ import '../../scss/partials/_homeworkStyles.scss';
 class HomeworksShow extends React.Component {
 
   state = {
-    user: {},
+    user: null,
     homework: null,
     submitModalOpen: false
   }
 
   componentDidMount() {
-    console.log(this.props);
+    console.log('mounted');
     Axios
       .get(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}`)
-      .then(res => this.setState({ homework: res.data}))
-      .then(() => this.setState({user: Auth.getPayload()}))
+      .then(res => this.setState({ homework: res.data, user: Auth.getPayload()}))
       .catch(err => {
         if (err.response.status === 401) {
           Flash.setMessage({ message: 'Access denied', type: 'danger'});
@@ -58,6 +57,18 @@ class HomeworksShow extends React.Component {
         this.setState({ homework: res.data });
       })
       .then(() => this.setState({submitModalOpen: !this.state.submitModalOpen}))
+      .catch(err => console.log(err));
+  }
+
+  saveAndReturn = (e) => {
+    e.preventDefault();
+    e.preventDefault();
+    Axios
+      .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}`, Object.assign(this.state.homework, { hasBeenSubmitted: true }))
+      .then(res => {
+        this.setState({ homework: res.data });
+      })
+      .then(() => this.props.history.goBack())
       .catch(err => console.log(err));
   }
 
@@ -145,11 +156,15 @@ class HomeworksShow extends React.Component {
           )}
           <div className="level">
             <div className="level-item">
-              <button
-                className={this.state.homework &&
-                  (this.state.homework.hasBeenSubmitted ? 'button disabled' : 'button is-success submit-button')}
-                onClick={this.state.homework && (this.state.homework.hasBeenSubmitted ? '' : this.toggleModal)}
-              >{this.state.homework && (this.state.homework.hasBeenSubmitted ? 'Submitted' : 'Submit')}</button>
+              {this.state.homework && this.state.homework.hasBeenSubmitted ?
+                <button className="button disabled pad-button" >Submitted</button> :
+                <button className="button is-success submit-button with20margin" onClick={this.toggleModal}>Submit</button>
+              }
+            </div>
+            <div className="level-item">
+              {this.state.homework && this.state.homework.hasBeenSubmitted &&
+                <button className="button with20margin is-success" onClick={this.saveAndReturn}>Save and return</button>
+              }
             </div>
           </div>
         </div>
