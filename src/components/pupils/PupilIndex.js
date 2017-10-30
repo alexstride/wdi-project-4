@@ -9,12 +9,17 @@ class PupilIndex extends React.Component {
     pupils: null
   }
 
+  getAggregate(pupils) {
+    return pupils.reduce((resultArray, pupil) => resultArray.concat(pupil.homeworks), []);
+  }
+
   componentDidMount() {
     const payload = Auth.getPayload();
     const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     Axios
       .get(`/api/teachers/${payload.teacherId}/pupils`, { headers })
-      .then(res => this.setState({ pupils: res.data },() => console.log(res.data)))
+      .then(res => this.setState({ pupils: res.data }))
+      .then(() => this.setState({aggregateArray: this.getAggregate(this.state.pupils)}, () => console.log(this.state)))
       .catch(err => {
         if (err.response.status === 401) {
           Flash.setMessage({ message: 'Access denied', type: 'danger'});
@@ -26,6 +31,7 @@ class PupilIndex extends React.Component {
   }
 
   render() {
+    console.dir(this.state.pupils);
     return (
       <main className="container">
         <div className="main-title">
