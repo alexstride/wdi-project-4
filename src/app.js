@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import ProtectedRoute from './component/utilities/Protected';
+import ProtectedRoute from './components/utilities/ProtectedRoute';
 import Home from './components/Home';
 import Nav from './components/utilities/Nav';
 import PupilLogin from './components/pupils/PupilLogin';
@@ -13,6 +13,7 @@ import TeacherRegister from './components/teachers/TeacherRegister';
 import HomeworksShow from './components/homeworks/HomeworksShow';
 import FlashMessage from './components/utilities/FlashMessage';
 import CreateHomework from './components/homeworks/CreateHomework';
+import NoRoute from './components/utilities/NoRoute';
 
 import './scss/bulma/css/bulma.css';
 import './scss/partials/_homeworkIndexStyles.scss';
@@ -37,6 +38,7 @@ class App extends React.Component {
               <Route exact path="/teachers/register" component={TeacherRegister} />
               <ProtectedRoute exact path="/pupils/:id/homeworks/:homeworkId" component={HomeworksShow} />
               <ProtectedRoute exact path="/homeworks/new" component={CreateHomework} />
+              <Route component={NoRoute} />
             </Switch>
           </div>
         </BrowserRouter>
