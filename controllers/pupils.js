@@ -19,6 +19,13 @@ function pupilsShow(req, res, next) {
     .catch(next);
 }
 
+function pupilsCreate(req, res, next) {
+  Pupil
+    .create(req.body)
+    .then(res => res.json(res))
+    .catch(next);
+}
+
 function homeworksIndex(req, res, next) {
   console.log('homeworksIndex running!');
   Pupil
@@ -81,6 +88,7 @@ function homeworksProblemUpdate(req, res, next) {
 module.exports = {
   pupilsShow,
   pupilsIndex,
+  pupilsCreate,
   homeworksIndex,
   homeworksShow,
   homeworksUpdate,

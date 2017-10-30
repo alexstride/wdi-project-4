@@ -9,7 +9,10 @@ function hwSet(req, res, next) {
         console.log(pupil.homeworks);
         return pupil.save();
       });
-      Promise.all(promises).then(() => res.json({worked: true})).catch(next);
+      Promise
+        .all(promises)
+        .then(() => res.json({worked: true}))
+        .catch(next);
     });
 }
 
