@@ -2,7 +2,7 @@ const Pupil = require('../models/pupil');
 
 function hwSet(req, res, next) {
   Pupil
-    .find()
+    .find({ teacher: req.body.teacherId })
     .then(pupils => {
       const promises = pupils.map(pupil => {
         pupil.homeworks.push(req.body);

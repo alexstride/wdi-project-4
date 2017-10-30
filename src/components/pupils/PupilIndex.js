@@ -10,9 +10,10 @@ class PupilIndex extends React.Component {
   }
 
   componentDidMount() {
+    const payload = Auth.getPayload();
     const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     Axios
-      .get('/api/pupils', { headers })
+      .get(`/api/teachers/${payload.teacherId}/pupils`, { headers })
       .then(res => this.setState({ pupils: res.data }))
       .catch(err => {
         if (err.response.status === 401) {
