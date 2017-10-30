@@ -14,7 +14,7 @@ const CodeBlockFormWrapper = ({handleSubmit, pupilCode, handleChange, id, isSubm
         />
         <div className="code-block-footer">
           <p>{message}</p>
-          <button className="">
+          <button className={message ? '' : 'deactivated'}>
             Save
           </button>
         </div>

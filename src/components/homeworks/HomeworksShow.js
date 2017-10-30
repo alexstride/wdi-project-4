@@ -68,7 +68,7 @@ class HomeworksShow extends React.Component {
       .then(res => {
         this.setState({ homework: res.data });
       })
-      .then(() => this.props.history.goBack())
+      .then(() => this.props.history.push(`/pupils/${this.props.match.params.id}`))
       .catch(err => console.log(err));
   }
 
@@ -103,6 +103,8 @@ class HomeworksShow extends React.Component {
         this.createMessage(id, 'Your work was unable to be saved');
       });
   }
+
+  //change these functions so that there is a new attribute indicating whether or not there are outstanding changes.
 
   feedbackOnChange = (e, id) => {
     const newProblems = this.state.homework.problems.map(problem => {

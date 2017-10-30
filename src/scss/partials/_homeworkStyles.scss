@@ -62,6 +62,10 @@
         font-size: 18px;
         font-weight: 500;
         outline: 0;
+        &.deactivated {
+          background-color: grey;
+          cursor: not-allowed;
+        }
       }
     }
   }
@@ -99,6 +103,10 @@
           font-size: 16px;
           font-weight: 500;
           outline: 0;
+          &.deactivated {
+            background-color: grey;
+            cursor: not-allowed;
+          }
 
         }
       }

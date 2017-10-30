@@ -4,7 +4,10 @@ import Description from './Description';
 import CodeBlockFormWrapper from './CodeBlockFormWrapper';
 import Feedback from './Feedback';
 
+//it seems that a lot of information is getting passed through into this component, and not all of it is being used. This should probably be reviewed.
+
 const Problem = ({problem, homework, handleChange, codeBlockHandleSubmit, user, feedbackSubmit, feedbackOnChange}) => {
+  console.log(problem);
   return (
     <div className="problem-wrapper">
       <Description {...problem}/>

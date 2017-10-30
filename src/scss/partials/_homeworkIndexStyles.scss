@@ -12,11 +12,9 @@ $submitted-green: #91ff93;
 .homework-index-card {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   cursor: pointer;
   &:hover {
-    .card-title {
-      border-bottom: 2px solid #222;
-    }
     border-width: 3px;
   }
 
