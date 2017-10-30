@@ -1,5 +1,6 @@
 import React from 'react';
 import Axios from 'axios';
+import Auth from '../../lib/Auth';
 
 import CodeBlock from './CodeBlock';
 
@@ -36,6 +37,7 @@ class CreateHomework extends React.Component {
     e.preventDefault();
     const newHomework = this.state.homework;
     newHomework.setDate = new Date();
+    newHomework.teacherId = Auth.getPayload().teacherId;
     Axios
       .post('/api/homeworks', newHomework)
       .then(res => console.log(res.data))
