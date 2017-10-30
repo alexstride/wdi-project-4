@@ -19,7 +19,7 @@ const Feedback = ({user, feedback, feedbackSubmit, feedbackOnChange, feedbackMes
             placeholder="Provide feedback here..."
           ></textarea>
           <div className="feedback-footer">
-            <button>Save</button>
+            <button className={feedbackMessage ? 'bla' : 'deactivated' }>Save</button>
             {feedbackMessage && <small>{feedbackMessage}</small>}
           </div>
         </div>

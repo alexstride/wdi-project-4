@@ -104,6 +104,8 @@ class HomeworksShow extends React.Component {
       });
   }
 
+  //change these functions so that there is a new attribute indicating whether or not there are outstanding changes.
+
   feedbackOnChange = (e, id) => {
     const newProblems = this.state.homework.problems.map(problem => {
       if(problem.id === id) {
