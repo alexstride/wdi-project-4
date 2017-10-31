@@ -19,6 +19,15 @@ function pupilsShow(req, res, next) {
     .catch(next);
 }
 
+function pupilsDelete(req, res, next) {
+  Pupil
+    .findById(req.params.id)
+    .exec()
+    .then(pupil => pupil.remove())
+    .then(() => res.status(204).end())
+    .catch(next);
+}
+
 function pupilsCreate(req, res, next) {
   console.log(req.body);
   Pupil
@@ -90,6 +99,7 @@ module.exports = {
   pupilsShow,
   pupilsIndex,
   pupilsCreate,
+  pupilsDelete,
   homeworksIndex,
   homeworksShow,
   homeworksUpdate,

@@ -37,7 +37,107 @@ Promise
         {
           firstname: 'Ben',
           lastname: 'Jones',
-          email: 'test@test.com',
+          email: 'ben@ben.com',
+          teacher: teachers[0],
+          password: 'pass',
+          passwordConfirmation: 'pass',
+          homeworks: [{
+            name: 'Printing for Lemons',
+            hasBeenSubmitted: true,
+            setDate: 'Fri Oct 27 2017 21:24:53 GMT+0100 (BST)',
+            dueDate: 'Fri Nov 03 2017 00:00:00',
+            problems: [{
+              description: 'Find the error in the following code',
+              starterCode: 'bla',
+              pupilCode: 'blabla',
+              feedback: 'Very good effort. More required next time'
+            }, {
+              description: 'Fix the problems with the code',
+              starterCode: 'bla',
+              pupilCode: 'blabla',
+              feedback: 'Not so good this time'
+            }, {
+              description: 'Do something else to this code',
+              starterCode: 'bla',
+              pupilCode: 'blabla',
+              feedback: 'Good bla bla bla. Some text here'
+            }]
+          }, {
+            name: 'Arrays and Lists',
+            hasBeenSubmitted: false,
+            setDate: 'Fri Oct 27 2017 21:29:41 GMT+0100 (BST)',
+            problems: [{
+              description: 'Change the array',
+              starterCode: 'bla',
+              pupilCode: 'blabla',
+              feedback: 'Very good effort. More required next time'
+            }, {
+              description: 'Use this List to create a ladder',
+              starterCode: 'bla',
+              pupilCode: 'blabla',
+              feedback: 'Not so good this time'
+            }, {
+              description: 'Swim across this code and clap 5 times',
+              starterCode: 'bla',
+              pupilCode: 'blabla',
+              feedback: 'Good bla bla bla. Some text here'
+            }]
+          }]
+        },
+        {
+          firstname: 'Josh',
+          lastname: 'Lynch',
+          email: 'josh@josh.com',
+          teacher: teachers[0],
+          password: 'pass',
+          passwordConfirmation: 'pass',
+          homeworks: [{
+            name: 'Printing for Lemons',
+            hasBeenSubmitted: true,
+            setDate: 'Fri Oct 27 2017 21:24:53 GMT+0100 (BST)',
+            dueDate: 'Fri Nov 03 2017 00:00:00',
+            problems: [{
+              description: 'Find the error in the following code',
+              starterCode: 'bla',
+              pupilCode: 'blabla',
+              feedback: 'Very good effort. More required next time'
+            }, {
+              description: 'Fix the problems with the code',
+              starterCode: 'bla',
+              pupilCode: 'blabla',
+              feedback: 'Not so good this time'
+            }, {
+              description: 'Do something else to this code',
+              starterCode: 'bla',
+              pupilCode: 'blabla',
+              feedback: 'Good bla bla bla. Some text here'
+            }]
+          }, {
+            name: 'Arrays and Lists',
+            hasBeenSubmitted: false,
+            setDate: 'Fri Oct 27 2017 21:29:41 GMT+0100 (BST)',
+            problems: [{
+              description: 'Change the array',
+              starterCode: 'bla',
+              pupilCode: 'blabla',
+              feedback: 'Very good effort. More required next time'
+            }, {
+              description: 'Use this List to create a ladder',
+              starterCode: 'bla',
+              pupilCode: 'blabla',
+              feedback: 'Not so good this time'
+            }, {
+              description: 'Swim across this code and clap 5 times',
+              starterCode: 'bla',
+              pupilCode: 'blabla',
+              feedback: 'Good bla bla bla. Some text here'
+            }]
+          }]
+        },
+        {
+          firstname: 'Alex',
+          lastname: 'Stride',
+          email: 'alex@alex.com',
           teacher: teachers[0],
           password: 'pass',
           passwordConfirmation: 'pass',
