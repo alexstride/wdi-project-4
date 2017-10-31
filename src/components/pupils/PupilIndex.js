@@ -68,7 +68,7 @@ class PupilIndex extends React.Component {
           <h2 className="title is-4">Class Homeworks</h2>
         </div>
         <div className="homework-index">
-          {this.state.aggregateArray && this.state.aggregateArray.map(hw => <AggregatedIndexCard key={hw.setDate} {...hw} />)}
+          {this.state.aggregateArray && this.state.aggregateArray.map(hw =>  <AggregatedIndexCard key={hw.setDate} {...hw} />)}
         </div>
       </main>
     );

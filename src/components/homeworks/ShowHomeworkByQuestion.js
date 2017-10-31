@@ -5,6 +5,7 @@ import Flash from '../../lib/Flash';
 import CodeBlock from './CodeBlock';
 import Feedback from './Feedback';
 import FormatDate from '../../lib/FormatDate';
+import { Link } from 'react-router-dom';
 
 class ShowHomeworkByQuestion extends React.Component {
 
@@ -15,7 +16,20 @@ class ShowHomeworkByQuestion extends React.Component {
     user: Auth.getPayload()
   }
 
+  componentDidUpdate() {
+    if(this.props.match.params.number !== this.lastNumber) {
+      this.loadData();
+      this.lastNumber = this.props.match.params.number;
+    }
+    window.scrollTo(0, 0);
+  }
+
   componentDidMount() {
+    this.loadData();
+    this.lastNumber = 1;
+  }
+
+  loadData = () => {
     const payload = Auth.getPayload();
     const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     Axios
@@ -34,9 +48,7 @@ class ShowHomeworkByQuestion extends React.Component {
       });
   }
 
-  // example URL http://localhost:8000/homeworks/1509135893000/question/1
-
-  getQuestions(hwSetDate, qNum) {
+  getQuestions = (hwSetDate, qNum) => {
     const date = (new Date(parseInt(hwSetDate))).toISOString();
     const questions = this.state.pupils.reduce((problems, pupil) => {
       pupil.homeworks.forEach(homework => {
@@ -50,7 +62,7 @@ class ShowHomeworkByQuestion extends React.Component {
     this.setState({ questions });
   }
 
-  getHomework(hwSetDate, qNum) {
+  getHomework = (hwSetDate, qNum) => {
     const index = qNum - 1;
     const date = (new Date(parseInt(hwSetDate))).toISOString();
     const homeworkHeader = this.state.pupils.reduce((hw, pupil) => {
@@ -60,19 +72,18 @@ class ShowHomeworkByQuestion extends React.Component {
           hw.setDate = homework.setDate;
           hw.dueDate = homework.dueDate;
           hw.description = homework.problems[index].description;
+          hw.numberOfQs = homework.problems.length;
         }
       });
       return hw;
     }, {});
-    this.setState({ homework: homeworkHeader }, () => console.log('getHomework ===>', this.state));
+    this.setState({ homework: homeworkHeader }, () => console.log(this.state));
   }
 
   feedbackOnChange = (e, id) => {
     const questions = this.state.questions.map(question => {
       if(question.problem.id === id) {
-        const loveley =  Object.assign(question, {problem: {feedback: e.target.value, feedbackMessage: 'Your feedback has not been saved', description: question.problem.description, id: question.problem.id, pupilCode: question.problem.pupilCode, starterCode: question.problem.starterCode, _id: question.problem._id}});
-        console.log(loveley);
-        return loveley;
+        return Object.assign(question, {problem: {feedback: e.target.value, feedbackMessage: 'Your feedback has not been saved', description: question.problem.description, id: question.problem.id, pupilCode: question.problem.pupilCode, starterCode: question.problem.starterCode, _id: question.problem._id}});
       } else {
         return question;
       }
@@ -101,14 +112,8 @@ class ShowHomeworkByQuestion extends React.Component {
           });
           state.questions = questions;
           return state;
-        },() => console.log(this.state));
+        });
       })
-      // .then((res) => this.setState(prevState => {
-      //   const newProblems = prevState.questions.problems.map(problem => (res.data.id === problem.id) ? Object.assign(problem, res.data, { feedbackMessage: null }) : problem);
-      //   const newState = Object.assign({}, prevState);
-      //   newState.homework.problems = newProblems;
-      //   return newState;
-      // }))
       .catch(err => console.log(err));
   }
 
@@ -120,7 +125,9 @@ class ShowHomeworkByQuestion extends React.Component {
           <div className="main-title">
             {this.state.homework &&
               <div>
-                <h1 className="title is-1">
+                <h1
+                  className="title is-1"
+                >
                   {this.state.homework.name}
                 </h1>
                 <p className="subtitle is-5">Set date: {FormatDate.getDDMMYYY(this.state.homework.setDate)} - Due date: {this.state.homework.dueDate ? FormatDate.getDDMMYYY(this.state.homework.dueDate) : 'n/a'}</p>
@@ -132,7 +139,7 @@ class ShowHomeworkByQuestion extends React.Component {
             {this.state.questions && this.state.questions.map(question => {
               return (
                 <div key={question.pupilId}>
-                  <p>{question.name}:</p>
+                  <p>{question.name} - {question.submitted ? 'Submitted' : 'Not submitted'}:</p>
                   <CodeBlock
                     pupilCode={question.problem.pupilCode}
                   />
@@ -146,6 +153,8 @@ class ShowHomeworkByQuestion extends React.Component {
               );
             })}
           </div>
+          {this.state.homework && (parseInt(this.props.match.params.number) !== 1) && <Link to={`/homeworks/${this.props.match.params.setDate}/question/${parseInt(this.props.match.params.number) - 1}`}>Previous Question</Link>}
+          {(this.state.homework && this.state.homework.numberOfQs >= (parseInt(this.props.match.params.number) + 1)) ? <Link to={`/homeworks/${this.props.match.params.setDate}/question/${parseInt(this.props.match.params.number) + 1}`}>Next Question</Link> : <Link to="/pupils">All pupils</Link>}
         </div>
       </main>
     );
