@@ -30,7 +30,6 @@ class CreateHomework extends React.Component {
   }
 
   addProblemToHw = () => {
-    console.log('state going into addProblemtoHW: ', this.state);
     this.setState(prevState => {
       const problems = prevState.homework.problems.concat({
         feedback: null,
@@ -41,13 +40,13 @@ class CreateHomework extends React.Component {
       const resultObj = Object.assign({}, prevState);
       resultObj.homework.problems = problems;
       return resultObj;
-    }, () => console.log(this.state));
+    });
   }
 
   handleChangeHomework = ({ target: { name, value }}) => {
     const oldHomework = Object.assign({}, this.state.homework);
     oldHomework[name] = value;
-    this.setState({ homework: oldHomework }, () => console.log(this.state));
+    this.setState({ homework: oldHomework });
   }
 
   createHomework = (e) => {
@@ -57,7 +56,6 @@ class CreateHomework extends React.Component {
     newHomework.teacherId = Auth.getPayload().teacherId;
     Axios
       .post('/api/homeworks', newHomework)
-      .then(res => console.log(res.data))
       .then(() => this.props.history.push('/pupils'))
       .catch(err => console.log(err));
   };
@@ -87,7 +85,6 @@ class CreateHomework extends React.Component {
   }
 
   deleteProblem(index) {
-    console.log('runngin');
     const currentHomework = Object.assign({}, this.state.homework);
     const updatedProblems = currentHomework.problems.filter((problem, problemIndex) => problemIndex !== index);
     currentHomework.problems = updatedProblems;
@@ -96,12 +93,11 @@ class CreateHomework extends React.Component {
 
   scrollToCreateProblem = () => {
     // this.createProblem.scrollIntoView({ behavior: 'smooth' });
-    console.log('Running scrollToCreateProblem function, which is currently disabled');
   }
 
   render() {
     return (
-      <div className="container homework">
+      <main className="container homework">
         <div className="homework-background"></div>
         <div className="homework-wrapper">
 
@@ -135,10 +131,10 @@ class CreateHomework extends React.Component {
             );
           })}
 
-          {!this.state.newProblemVisible && <a className="with20margin" href="#" onClick={this.addProblemToHw}>Add another question</a>}
-
+          {!this.state.newProblemVisible && <a className="with20margin" onClick={this.addProblemToHw}>Add another question</a>}
+          <button className="button is-info" onClick={this.createHomework}>Create and Set Homework</button>
         </div>
-      </div>
+      </main>
     );
   }
 }

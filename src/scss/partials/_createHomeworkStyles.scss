@@ -1,6 +1,14 @@
 @import 'variables.scss';
 $placeholder-grey: #aaa;
 
+.title-input {
+  display: flex;
+  flex-direction: column;
+  button {
+    margin: 40px;
+  }
+}
+
 .input-wrapper {
   position: relative;
   margin-bottom: -20px;
