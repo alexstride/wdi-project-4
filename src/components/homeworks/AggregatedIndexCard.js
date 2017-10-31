@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 // import classNames from 'classnames';
 import FormatDate from '../../lib/FormatDate';
 
-const AggregatedIndexCard = ({ name, setDate, onClick, dueDate, haveNotSubmitted }) => {
+const AggregatedIndexCard = ({ name, setDate, clickHandler, dueDate, haveNotSubmitted }) => {
 
   return (
-    <div className="homework-index-card" onClick={onClick}>
+    <div className="homework-index-card" onClick={clickHandler}>
       <div className="index-card-left">
-        <Link className="card-title" to={`/homeworks/${(new Date(setDate).valueOf())}/question/1`}>{name}</Link>
+        <h3 className="card-title" >{name}</h3>
         <p>Set: {FormatDate.getDDMMYYY(setDate)}</p>
         {dueDate && <p>Due: {FormatDate.getDDMMYYY(dueDate)}</p>}
       </div>
