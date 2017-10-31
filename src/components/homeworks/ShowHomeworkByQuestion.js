@@ -20,8 +20,8 @@ class ShowHomeworkByQuestion extends React.Component {
     if(this.props.match.params.number !== this.lastNumber) {
       this.loadData();
       this.lastNumber = this.props.match.params.number;
+      window.scrollTo(0, 0);
     }
-    window.scrollTo(0, 0);
   }
 
   componentDidMount() {
@@ -131,6 +131,15 @@ class ShowHomeworkByQuestion extends React.Component {
                   {this.state.homework.name}
                 </h1>
                 <p className="subtitle is-5">Set date: {FormatDate.getDDMMYYY(this.state.homework.setDate)} - Due date: {this.state.homework.dueDate ? FormatDate.getDDMMYYY(this.state.homework.dueDate) : 'n/a'}</p>
+                <ul>
+                  {this.state.questions.map(question => {
+                    if(question.submitted) {
+                      return <li key={question.id}><span  className="greenName">{question.name} </span></li>;
+                    } else {
+                      return <li key={question.id}><span  className="redName">{question.name} </span></li>;
+                    }
+                  })}</ul>
+                <div className="level"></div>
                 <p>Description: {this.state.homework.description}</p>
               </div>
             }
