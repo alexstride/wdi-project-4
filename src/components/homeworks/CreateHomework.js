@@ -19,7 +19,7 @@ class CreateHomework extends React.Component {
         dueDate: (new Date()).toISOString().slice(0, 10)
       },
       newProblemVisible: false,
-      errors: null
+      errors: {}
     };
 
   componentDidMount() {
@@ -33,7 +33,7 @@ class CreateHomework extends React.Component {
   addProblemToHw = () => {
     this.setState(prevState => {
       const problems = prevState.homework.problems.concat({
-        feedback: null,
+        feedback: ' ',
         description: '',
         starterCode: '#Starter Code...',
         pupilCode: '#Starter Code...'
@@ -47,7 +47,7 @@ class CreateHomework extends React.Component {
   handleChangeHomework = ({ target: { name, value }}) => {
     const oldHomework = Object.assign({}, this.state.homework);
     oldHomework[name] = value;
-    this.setState({ homework: oldHomework }, () => console.log(this.state));
+    this.setState({ homework: oldHomework }, () => console.dir(this.state));
   }
 
   createHomework = (e) => {
@@ -58,7 +58,7 @@ class CreateHomework extends React.Component {
     Axios
       .post('/api/homeworks', newHomework)
       .then(() => this.props.history.push('/pupils'))
-      .catch(err => console.log(err));
+      .catch((err) => this.setState({ errors: err.response.data.errors },() => console.log(this.state)));
   };
 
   handleChangeProblem = ({ target: { name, value }}, index) => {
@@ -116,6 +116,7 @@ class CreateHomework extends React.Component {
                 />
                 <i className="fa fa-pencil" />
               </div>
+              {this.state.errors['homeworks.2.name'] && <small className="form-error">{this.state.errors['homeworks.2.name']}</small>}
             </div>
             <div className="date-input">
               <p>Due date: </p>
@@ -134,6 +135,7 @@ class CreateHomework extends React.Component {
               <div key={i}>
                 <ProblemCreateWrapper
                   questionNum = {i + 1}
+                  error={this.state.errors}
                   {...problem}
                   handleChange={(e) => this.handleChangeProblem(e, i)}
                   deleteProb={() => this.deleteProblem(i)}

@@ -3,7 +3,7 @@ import React from 'react';
 const Feedback = ({user, feedback, feedbackSubmit, feedbackOnChange, feedbackMessage}) => {
   return (
     <div className="feedback">
-      {'pupilId' in user && feedback.length > 0 &&
+      {'pupilId' in user && feedback.length > 1 &&
       <div>
         <h5 className="label">Your feedback:</h5>
         <p>{feedback}</p>
