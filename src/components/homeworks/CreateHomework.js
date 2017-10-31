@@ -15,7 +15,8 @@ class CreateHomework extends React.Component {
         name: '',
         hasBeenSubmitted: false,
         problems: [],
-        setDate: null
+        setDate: new Date(),
+        dueDate: (new Date()).toISOString().slice(0, 10)
       },
       newProblemVisible: false,
       errors: null
@@ -30,7 +31,6 @@ class CreateHomework extends React.Component {
   }
 
   addProblemToHw = () => {
-    console.log('state going into addProblemtoHW: ', this.state);
     this.setState(prevState => {
       const problems = prevState.homework.problems.concat({
         feedback: null,
@@ -41,7 +41,7 @@ class CreateHomework extends React.Component {
       const resultObj = Object.assign({}, prevState);
       resultObj.homework.problems = problems;
       return resultObj;
-    }, () => console.log(this.state));
+    });
   }
 
   handleChangeHomework = ({ target: { name, value }}) => {
@@ -57,7 +57,6 @@ class CreateHomework extends React.Component {
     newHomework.teacherId = Auth.getPayload().teacherId;
     Axios
       .post('/api/homeworks', newHomework)
-      .then(res => console.log(res.data))
       .then(() => this.props.history.push('/pupils'))
       .catch(err => console.log(err));
   };
@@ -87,7 +86,6 @@ class CreateHomework extends React.Component {
   }
 
   deleteProblem(index) {
-    console.log('runngin');
     const currentHomework = Object.assign({}, this.state.homework);
     const updatedProblems = currentHomework.problems.filter((problem, problemIndex) => problemIndex !== index);
     currentHomework.problems = updatedProblems;
@@ -96,18 +94,17 @@ class CreateHomework extends React.Component {
 
   scrollToCreateProblem = () => {
     // this.createProblem.scrollIntoView({ behavior: 'smooth' });
-    console.log('Running scrollToCreateProblem function, which is currently disabled');
   }
 
   render() {
     return (
-      <div className="container homework">
+      <main className="container homework">
         <div className="homework-background"></div>
         <div className="homework-wrapper">
 
           <div className="main-title top-space">
             <div className="title-input">
-              <div className='input-wrapper'>
+              <div className='title-input-wrapper'>
                 <AutosizeInput
                   className="title is-1"
                   name="name"
@@ -119,6 +116,16 @@ class CreateHomework extends React.Component {
                 />
                 <i className="fa fa-pencil" />
               </div>
+            </div>
+            <div className="date-input">
+              <p>Due date: </p>
+              <input
+                name="dueDate"
+                className="input"
+                type="date"
+                value={this.state.homework.dueDate}
+                onChange={this.handleChangeHomework}
+              />
             </div>
           </div>
 
@@ -135,10 +142,10 @@ class CreateHomework extends React.Component {
             );
           })}
 
-          {!this.state.newProblemVisible && <a className="with20margin" href="#" onClick={this.addProblemToHw}>Add another question</a>}
-
+          {!this.state.newProblemVisible && <a className="with20margin" onClick={this.addProblemToHw}>Add another question</a>}
+          <button className="button is-info" onClick={this.createHomework}>Create and Set Homework</button>
         </div>
-      </div>
+      </main>
     );
   }
 }
