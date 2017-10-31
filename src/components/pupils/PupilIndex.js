@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Auth from '../../lib/Auth';
 import Flash from '../../lib/Flash';
 import AggregatedIndexCard from '../homeworks/AggregatedIndexCard';
+import _ from 'lodash';
 
 class PupilIndex extends React.Component {
   state = {
@@ -34,7 +35,11 @@ class PupilIndex extends React.Component {
     const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     Axios
       .get(`/api/teachers/${payload.teacherId}/pupils`, { headers })
-      .then(res => this.setState({ pupils: res.data, aggregateArray: this.getAggregate(res.data)}))
+      .then(res => {
+        const pupils = res.data;
+        const aggregateArray = _.orderBy(this.getAggregate(res.data), (hw) => Date.parse(hw.setDate), 'desc');
+        this.setState({ pupils, aggregateArray });
+      })
       .catch(err => {
         if (err.response.status === 401) {
           Flash.setMessage({ message: 'Access denied', type: 'danger'});
