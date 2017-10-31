@@ -47,28 +47,28 @@ class Nav extends React.Component {
             {isAuth && userType === 'teacher' &&
               <div className="navbar-item">
                 <Link to="/pupils">
-                  All Pupils
+                  Your Class
                 </Link>
               </div>
             }
             {isAuth && userType === 'teacher' &&
               <div className="navbar-item">
                 <Link to="/pupils/new">
-                  Add Pupils
+                  Edit Pupils
                 </Link>
               </div>
             }
             {isAuth && userType === 'teacher' &&
               <div className="navbar-item">
                 <Link to="/homeworks/new">
-                  Create Homework
+                  Set Homework
                 </Link>
               </div>
             }
             {isAuth && userType === 'pupil' &&
               <div className="navbar-item">
                 <Link to={`/pupils/${Auth.getPayload().pupilId}`}>
-                  All Homeworks
+                  All Work
                 </Link>
               </div>
             }
