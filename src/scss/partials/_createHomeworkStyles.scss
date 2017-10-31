@@ -1,3 +1,4 @@
+@import 'variables.scss';
 $placeholder-grey: #aaa;
 
 .input-wrapper {
@@ -33,5 +34,29 @@ $placeholder-grey: #aaa;
     top: -5px;
     right: -20px;
     color: $placeholder-grey;
+  }
+}
+
+.problem-edit {
+  .problem-edit-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    a {
+      background-color: $red;
+    }
+  }
+  .problem-edit-main {
+    padding: 5px 0;
+    input {
+      margin: 10px 0;
+      border: none;
+      font-size: 16px;
+      outline: none;
+    }
+    i {
+      color: #777;
+      padding: 0 5px;
+    }
   }
 }

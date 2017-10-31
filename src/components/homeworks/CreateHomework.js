@@ -3,8 +3,6 @@ import Axios from 'axios';
 import Auth from '../../lib/Auth';
 import AutosizeInput from 'react-input-autosize';
 
-
-import CodeBlock from './CodeBlock';
 import ProblemCreateWrapper from './ProblemCreateWrapper';
 
 import '../../scss/partials/_createHomeworkStyles.scss';
@@ -22,6 +20,10 @@ class CreateHomework extends React.Component {
       newProblemVisible: false,
       errors: null
     };
+
+  componentDidMount() {
+    this.addProblemToHw();
+  }
 
   componentDidUpdate() {
     this.scrollToCreateProblem();
@@ -60,9 +62,19 @@ class CreateHomework extends React.Component {
       .catch(err => console.log(err));
   };
 
-  handleChangeProblem = ({ target: { name, value }}) => {
-    const problem = Object.assign({}, this.state.problem, { [name]: value });
-    this.setState({ problem });
+  handleChangeProblem = ({ target: { name, value }}, index) => {
+    this.setState(prevState => {
+      const newProblems = prevState.homework.problems.map((prob, i) => {
+        if (i === index) {
+          return Object.assign(prob, {[name]: value });
+        } else {
+          return prob;
+        }
+      });
+      const newState = Object.assign({}, prevState);
+      newState.homework.problems = newProblems;
+      return newState;
+    });
   }
 
   handleCodeBlockChange = (codeValue) => {
@@ -74,21 +86,12 @@ class CreateHomework extends React.Component {
     });
   }
 
-  deleteProblem(e, index) {
-    e.preventDefault();
+  deleteProblem(index) {
+    console.log('runngin');
     const currentHomework = Object.assign({}, this.state.homework);
     const updatedProblems = currentHomework.problems.filter((problem, problemIndex) => problemIndex !== index);
     currentHomework.problems = updatedProblems;
     this.setState({ homework: currentHomework });
-  }
-
-  submitProblem = (e) => {
-    e.preventDefault();
-    const cleanProblem = {feedback: '', starterCode: '', pupilCode: '', description: ''};
-    const oldHomework = Object.assign({}, this.state.homework);
-    const createdProblem = Object.assign({}, this.state.problem);
-    oldHomework.problems.push(createdProblem);
-    this.setState({homework: oldHomework, problem: cleanProblem});
   }
 
   scrollToCreateProblem = () => {
@@ -113,7 +116,7 @@ class CreateHomework extends React.Component {
                   onChange={this.handleChangeHomework}
                   autoFocus
                   autoComplete="off"
-                / >
+                />
                 <i className="fa fa-pencil" />
               </div>
             </div>
@@ -123,8 +126,10 @@ class CreateHomework extends React.Component {
             return (
               <div key={i}>
                 <ProblemCreateWrapper
+                  questionNum = {i + 1}
                   {...problem}
-                  handleSubmit={() => console.log('not yet handling submit')}
+                  handleChange={(e) => this.handleChangeProblem(e, i)}
+                  deleteProb={() => this.deleteProblem(i)}
                 />
               </div>
             );
@@ -132,41 +137,6 @@ class CreateHomework extends React.Component {
 
           {!this.state.newProblemVisible && <a className="with20margin" href="#" onClick={this.addProblemToHw}>Add another question</a>}
 
-
-          {/* <div className="problem-wrapper">
-            <form onSubmit={this.submitProblem}>
-              <div className="field">
-                <label className="label">New problem:</label>
-                <div className="controller">
-                  <input
-                    className="input"
-                    type="text"
-                    name="description"
-                    onChange={this.handleChangeProblem}
-                    value={this.state.problem.description}
-                    placeholder="please provide a description for your problem"
-                  ></input>
-                </div>
-              </div>
-              <div className="field">
-                <div className="controller">
-                  <div className="code-block">
-                    <CodeBlock
-                      {...this.state.problem}
-                      isSubmitted={this.state.homework.hasBeenSubmitted}
-                      handleChange={(newValue) => this.handleCodeBlockChange(newValue)}
-                    />
-                  </div>
-                </div>
-              </div>
-              <button
-                className="button is-primary is-small"
-                ref={(element) => this.createProblem = element}
-              >
-                Add problem
-              </button>
-            </form>
-          </div> */}
         </div>
       </div>
     );
