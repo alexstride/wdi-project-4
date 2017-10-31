@@ -5,12 +5,12 @@ import Flash from '../../lib/Flash';
 import ReturnToDashboard from '../utilities/ReturnToDashboard';
 import { Link } from 'react-router-dom';
 import DeletePupilModal from './DeletePupilModal';
+import PupilCreateForm from './PupilCreateForm';
 
 class PupilCreate extends React.Component {
 
   state = {
     pupils: null,
-    newPupils: [],
     pupil: {
       firstname: '',
       lastname: '',
@@ -19,7 +19,8 @@ class PupilCreate extends React.Component {
       passwordConfirmation: '',
       teacher: Auth.getPayload().teacherId
     },
-    modalOpen: false
+    modalOpen: false,
+    formOpen: false
   };
 
   componentDidMount() {
@@ -48,31 +49,15 @@ class PupilCreate extends React.Component {
 
   addPupil = (e) => {
     e.preventDefault();
-    const pupil = {firstname: '', lastname: '', email: '', password: '', passwordConfirmation: '', teacher: Auth.getPayload().teacherId};
-    const newPupils = this.state.newPupils.slice();
-    newPupils.push(this.state.pupil);
-    this.setState({ newPupils, pupil });
-  }
-
-  removePupil = (e, index) => {
-    e.preventDefault();
-    const newPupils = this.state.newPupils.filter((pupil, pupilIndex) => pupilIndex !== index);
-    this.setState({ newPupils });
-  }
-
-  saveClass = (e) => {
-    e.preventDefault();
+    const cleanPupil = {firstname: '', lastname: '', email: '', password: '', passwordConfirmation: '', teacher: Auth.getPayload().teacherId};
     Axios
-      .post('/api/pupils/multiple', this.state.newPupils)
-      .then(() => this.props.history.push('/pupils'))
-      .catch(err => {
-        if (err.response.status === 401) {
-          Flash.setMessage({ message: 'Access denied', type: 'danger'});
-          this.props.history.push('/teachers/login');
-        } else {
-          console.log(err);
-        }
-      });
+      .post('/api/pupils/multiple', this.state.pupil)
+      .then(res => {
+        const pupils = this.state.pupils.slice();
+        pupils.push(res.data);
+        this.setState({ pupils, pupil: cleanPupil, formOpen: false });
+      })
+      .catch(err => console.log(err));
   }
 
   deletePupil =(e, pupilId) => {
@@ -100,6 +85,11 @@ class PupilCreate extends React.Component {
       this.setState({modalPupil: pupilId});
     }
     this.setState({modalOpen: !this.state.modalOpen});
+  }
+
+  toggleForm = (e) => {
+    e.preventDefault();
+    this.setState({ formOpen: !this.state.formOpen });
   }
 
   render() {
@@ -133,82 +123,21 @@ class PupilCreate extends React.Component {
         </div>
         <div className="level">
           <div className="level-item">
-            <button className="button is-success submit-button with20margin" >Add pupil</button>
-          </div>
-        </div>
-
-
-
-        <div className="problem-wrapper">
-          <form onSubmit={this.addPupil}>
-            <div className="field">
-              <label className="label" htmlFor="firstname">{'Pupil\'s first name'}</label>
-              <div className="controller">
-                <input
-                  className="input"
-                  name="firstname"
-                  type="text"
-                  value={this.state.pupil.firstname}
-                  onChange={this.handleChange}
-                />
-              </div>
-            </div>
-            <div className="field">
-              <label className="label" htmlFor="lastname">{'Pupil\'s last name'}</label>
-              <div className="controller">
-                <input
-                  className="input"
-                  name="lastname"
-                  type="text"
-                  value={this.state.pupil.lastname}
-                  onChange={this.handleChange}
-                />
-              </div>
-            </div>
-            <div className="field">
-              <label className="label" htmlFor="email">{'Pupil\'s email address'}</label>
-              <div className="controller">
-                <input
-                  className="input"
-                  name="email"
-                  type="email"
-                  value={this.state.pupil.email}
-                  onChange={this.handleChange}
-                />
-              </div>
-            </div>
-            <div className="field">
-              <label className="label" htmlFor="password">{'Pupil\'s password'}</label>
-              <div className="controller">
-                <input
-                  className="input"
-                  name="password"
-                  type="password"
-                  value={this.state.pupil.password}
-                  onChange={this.handleChange}
-                />
-              </div>
-            </div>
-            <div className="field">
-              <label className="label" htmlFor="passwordConfirmation">{'Pupil\'s password confirmation'}</label>
-              <div className="controller">
-                <input
-                  className="input"
-                  name="passwordConfirmation"
-                  type="password"
-                  value={this.state.pupil.passwordConfirmation}
-                  onChange={this.handleChange}
-                />
-              </div>
-            </div>
             <button
-              className="button is-info is-small"
-              ref={(element) => this.addPupilButton = element}
+              className="button is-success submit-button with20margin"
+              onClick={(e) => this.toggleForm(e)}
             >
               Add pupil
             </button>
-          </form>
+          </div>
         </div>
+        <PupilCreateForm
+          {...this.state.pupil}
+          handleChange={this.handleChange}
+          handleSubmit={this.addPupil}
+          formOpen={this.state.formOpen}
+          toggleForm={this.toggleForm}
+        />
         <DeletePupilModal
           pupil={this.state.modalPupil}
           handleSubmit={this.deletePupil}
