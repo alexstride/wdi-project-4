@@ -5,6 +5,7 @@ import AutosizeInput from 'react-input-autosize';
 
 
 import CodeBlock from './CodeBlock';
+import ProblemCreateWrapper from './ProblemCreateWrapper';
 
 import '../../scss/partials/_createHomeworkStyles.scss';
 
@@ -18,12 +19,7 @@ class CreateHomework extends React.Component {
         problems: [],
         setDate: null
       },
-      problem: {
-        feedback: '',
-        starterCode: '',
-        pupilCode: '',
-        description: ''
-      },
+      newProblemVisible: false,
       errors: null
     };
 
@@ -31,10 +27,25 @@ class CreateHomework extends React.Component {
     this.scrollToCreateProblem();
   }
 
+  addProblemToHw = () => {
+    console.log('state going into addProblemtoHW: ', this.state);
+    this.setState(prevState => {
+      const problems = prevState.homework.problems.concat({
+        feedback: null,
+        description: '',
+        starterCode: '#Starter Code...',
+        pupilCode: '#Starter Code...'
+      });
+      const resultObj = Object.assign({}, prevState);
+      resultObj.homework.problems = problems;
+      return resultObj;
+    }, () => console.log(this.state));
+  }
+
   handleChangeHomework = ({ target: { name, value }}) => {
     const oldHomework = Object.assign({}, this.state.homework);
     oldHomework[name] = value;
-    this.setState({ homework: oldHomework });
+    this.setState({ homework: oldHomework }, () => console.log(this.state));
   }
 
   createHomework = (e) => {
@@ -81,7 +92,8 @@ class CreateHomework extends React.Component {
   }
 
   scrollToCreateProblem = () => {
-    this.createProblem.scrollIntoView({ behavior: 'smooth' });
+    // this.createProblem.scrollIntoView({ behavior: 'smooth' });
+    console.log('Running scrollToCreateProblem function, which is currently disabled');
   }
 
   render() {
@@ -105,33 +117,23 @@ class CreateHomework extends React.Component {
                 <i className="fa fa-pencil" />
               </div>
             </div>
-
-            <form onSubmit={this.createHomework}>
-              <ul>
-                {this.state.homework && this.state.homework.problems.map((problem, i) => {
-                  return (
-                    <li key={i}>
-                      <p>{problem.description}</p>
-                      <div className="code-block">
-                        <div className="code-block-header">
-                          <div>
-                            <a className="delete" onClick={(e) => this.deleteProblem(e, i)}></a>
-                          </div>
-                        </div>
-                        <div className="code-block">
-                          <CodeBlock
-                            {...problem}
-                            isSubmitted={true}
-                          />
-                        </div>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            </form>
           </div>
-          <div className="problem-wrapper">
+
+          {this.state.homework && this.state.homework.problems.map((problem, i) => {
+            return (
+              <div key={i}>
+                <ProblemCreateWrapper
+                  {...problem}
+                  handleSubmit={() => console.log('not yet handling submit')}
+                />
+              </div>
+            );
+          })}
+
+          {!this.state.newProblemVisible && <a className="with20margin" href="#" onClick={this.addProblemToHw}>Add another question</a>}
+
+
+          {/* <div className="problem-wrapper">
             <form onSubmit={this.submitProblem}>
               <div className="field">
                 <label className="label">New problem:</label>
@@ -164,7 +166,7 @@ class CreateHomework extends React.Component {
                 Add problem
               </button>
             </form>
-          </div>
+          </div> */}
         </div>
       </div>
     );
