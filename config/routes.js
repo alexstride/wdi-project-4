@@ -27,7 +27,8 @@ router.route('/teachers/:id/pupils')
   .get(secureRouteTeacher, pupils.pupilsIndex);
 
 router.route('/pupils/:id')
-  .get(pupils.pupilsShow);
+  .get(pupils.pupilsShow)
+  .delete(pupils.pupilsDelete);
 
 router.route('/pupils/login')
   .post(auth.pupilLogin);
