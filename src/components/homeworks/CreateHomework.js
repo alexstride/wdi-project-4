@@ -1,8 +1,12 @@
 import React from 'react';
 import Axios from 'axios';
 import Auth from '../../lib/Auth';
+import AutosizeInput from 'react-input-autosize';
+
 
 import CodeBlock from './CodeBlock';
+
+import '../../scss/partials/_createHomeworkStyles.scss';
 
 class CreateHomework extends React.Component {
 
@@ -85,25 +89,24 @@ class CreateHomework extends React.Component {
       <div className="container homework">
         <div className="homework-background"></div>
         <div className="homework-wrapper">
-          <div className="main-title">
-            <h1 className="title is-1">Use this form to create a homework</h1>
-            <p className="subtitle is-5">It will be distributed to all pupils when it is submitted</p>
-          </div>
-          <div className="problem-wrapper">
-            <form onSubmit={this.createHomework}>
-              <div className="field">
-                <label className="label">Homework name:</label>
-                <div className="controller">
-                  <input
-                    onChange={this.handleChangeHomework}
-                    className="input"
-                    name="name"
-                    type="text"
-                    value={this.state.homework.name}
-                    placeholder="Homework name"
-                  ></input>
-                </div>
+
+          <div className="main-title top-space">
+            <div className="title-input">
+              <div className='input-wrapper'>
+                <AutosizeInput
+                  className="title is-1"
+                  name="name"
+                  value={this.state.homework.name}
+                  placeholder="Homework name"
+                  onChange={this.handleChangeHomework}
+                  autoFocus
+                  autoComplete="off"
+                / >
+                <i className="fa fa-pencil" />
               </div>
+            </div>
+
+            <form onSubmit={this.createHomework}>
               <ul>
                 {this.state.homework && this.state.homework.problems.map((problem, i) => {
                   return (
@@ -126,8 +129,6 @@ class CreateHomework extends React.Component {
                   );
                 })}
               </ul>
-
-              <button className="button is-primary is-small">Submit</button>
             </form>
           </div>
           <div className="problem-wrapper">
