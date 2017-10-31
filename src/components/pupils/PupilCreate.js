@@ -20,7 +20,8 @@ class PupilCreate extends React.Component {
       teacher: Auth.getPayload().teacherId
     },
     modalOpen: false,
-    formOpen: false
+    formOpen: false,
+    errors: {}
   };
 
   componentDidMount() {
@@ -57,7 +58,7 @@ class PupilCreate extends React.Component {
         pupils.push(res.data);
         this.setState({ pupils, pupil: cleanPupil, formOpen: false });
       })
-      .catch(err => console.log(err));
+      .catch((err) => this.setState({ errors: err.response.data.errors }));
   }
 
   deletePupil =(e, pupilId) => {
@@ -133,6 +134,7 @@ class PupilCreate extends React.Component {
         </div>
         <PupilCreateForm
           {...this.state.pupil}
+          errors={this.state.errors}
           handleChange={this.handleChange}
           handleSubmit={this.addPupil}
           formOpen={this.state.formOpen}

@@ -1,7 +1,7 @@
 import React from 'react';
 import AutosizeInput from 'react-input-autosize';
 
-const PupilCreateForm = ({ formOpen, handleChange, handleSubmit, toggleForm,  firstname, lastname, email, password, passwordConfirmation }) => {
+const PupilCreateForm = ({ formOpen, handleChange, handleSubmit, toggleForm,  firstname, lastname, email, password, passwordConfirmation, errors }) => {
   return (
     <div className="problem-edit class-edit-wrapper">
       <div className={formOpen ? 'problem-edit-main' : 'problem-edit-main hidden'}>
@@ -13,6 +13,7 @@ const PupilCreateForm = ({ formOpen, handleChange, handleSubmit, toggleForm,  fi
           placeholder="Enter pupil's first name"
           onChange={handleChange}
         />
+        {errors.firstname && <div><small className="form-error">{errors.firstname}</small></div>}
       </div>
       <div className={formOpen ? 'problem-edit-main' : 'problem-edit-main hidden'}>
         <i className="fa fa-pencil" />
@@ -23,6 +24,7 @@ const PupilCreateForm = ({ formOpen, handleChange, handleSubmit, toggleForm,  fi
           placeholder="Enter pupil's last name"
           onChange={handleChange}
         />
+        {errors.lastname && <div><small className="form-error">{errors.lastname}</small></div>}
       </div>
       <div className={formOpen ? 'problem-edit-main' : 'problem-edit-main hidden'}>
         <i className="fa fa-pencil" />
@@ -33,6 +35,7 @@ const PupilCreateForm = ({ formOpen, handleChange, handleSubmit, toggleForm,  fi
           placeholder="Enter pupil's email address (it must be unique)"
           onChange={handleChange}
         />
+        {errors.email && <div><small className="form-error">{errors.email}</small></div>}
       </div>
       <div className={formOpen ? 'problem-edit-main' : 'problem-edit-main hidden'}>
         <i className="fa fa-pencil" />
@@ -43,6 +46,7 @@ const PupilCreateForm = ({ formOpen, handleChange, handleSubmit, toggleForm,  fi
           placeholder="Create pupil's password"
           onChange={handleChange}
         />
+        {errors.password && <div><small className="form-error">{errors.password}</small></div>}
       </div>
       <div className={formOpen ? 'problem-edit-main' : 'problem-edit-main hidden'}>
         <i className="fa fa-pencil" />
@@ -53,6 +57,7 @@ const PupilCreateForm = ({ formOpen, handleChange, handleSubmit, toggleForm,  fi
           placeholder="Confirm pupil's password"
           onChange={handleChange}
         />
+        {errors.passwordConfirmation && <div><small className="form-error">{errors.passwordConfirmation}</small></div>}
       </div>
       <div className="modal-buttons">
         <button

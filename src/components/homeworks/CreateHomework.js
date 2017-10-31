@@ -58,7 +58,7 @@ class CreateHomework extends React.Component {
     Axios
       .post('/api/homeworks', newHomework)
       .then(() => this.props.history.push('/pupils'))
-      .catch((err) => this.setState({ errors: err.response.data.errors },() => console.log(this.state)));
+      .catch((err) => this.setState({ errors: err.response.data.errors }));
   };
 
   handleChangeProblem = ({ target: { name, value }}, index) => {

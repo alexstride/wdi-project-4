@@ -3,9 +3,9 @@ const bcrypt = require('bcrypt');
 const homeworkSchema = require('./homework').schema;
 
 const pupilSchema = mongoose.Schema({
-  firstname: { type: String, req: 'A pupil requires a first name' },
-  lastname: { type: String, req: 'A pupil requires a last name' },
-  email: { type: String, unique: 'The provided email must be unique', requried: 'an email must be provided' },
+  firstname: { type: String, required: 'A pupil requires a first name' },
+  lastname: { type: String, required: 'A pupil requires a last name' },
+  email: { type: String, unique: 'The provided email must be unique', required: 'an email must be provided' },
   password: { type: String, required: 'A password must be provided' },
   homeworks: [ homeworkSchema ],
   teacher: { type: mongoose.Schema.ObjectId, ref: 'Teacher', required: true }
