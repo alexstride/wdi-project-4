@@ -86,7 +86,7 @@ class Home extends React.Component {
                   <Link to="/pupils/login" className="button is-info">Pupil Login</Link>
                   <Link to="/teachers/login" className="button is-info">Teacher Login</Link>
                 </div>
-                <Link to="/teachers/register">Create a teacher account</Link>
+                <Link to="/teachers/register" className="register-link">Create a teacher account</Link>
               </div>
             </div>
           </div>

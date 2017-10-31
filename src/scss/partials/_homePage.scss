@@ -14,6 +14,17 @@ section.hero.is-fullheight {
       }
       div.home-links {
         display: flex;
+        flex-direction: column;
+        div {
+          .button {
+            margin: 10px;
+          }
+        }
+        .register-link {
+          color: #fefefe;
+          text-decoration: underline;
+          drop-shadow: 10px;
+        }
       }
     }
   }
