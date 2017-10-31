@@ -9,9 +9,8 @@ $placeholder-grey: #aaa;
   }
 }
 
-.input-wrapper {
+.title-input-wrapper {
   position: relative;
-  margin-bottom: -20px;
 
   &:focus-within {
     i {
@@ -42,6 +41,13 @@ $placeholder-grey: #aaa;
     top: -5px;
     right: -20px;
     color: $placeholder-grey;
+  }
+}
+
+.date-input {
+  input {
+    font-size: 20px;
+    width: 200px;
   }
 }
 

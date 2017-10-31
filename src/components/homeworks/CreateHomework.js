@@ -15,7 +15,8 @@ class CreateHomework extends React.Component {
         name: '',
         hasBeenSubmitted: false,
         problems: [],
-        setDate: null
+        setDate: new Date(),
+        dueDate: (new Date()).toISOString().slice(0, 10)
       },
       newProblemVisible: false,
       errors: null
@@ -46,7 +47,7 @@ class CreateHomework extends React.Component {
   handleChangeHomework = ({ target: { name, value }}) => {
     const oldHomework = Object.assign({}, this.state.homework);
     oldHomework[name] = value;
-    this.setState({ homework: oldHomework });
+    this.setState({ homework: oldHomework }, () => console.log(this.state));
   }
 
   createHomework = (e) => {
@@ -103,7 +104,7 @@ class CreateHomework extends React.Component {
 
           <div className="main-title top-space">
             <div className="title-input">
-              <div className='input-wrapper'>
+              <div className='title-input-wrapper'>
                 <AutosizeInput
                   className="title is-1"
                   name="name"
@@ -115,6 +116,16 @@ class CreateHomework extends React.Component {
                 />
                 <i className="fa fa-pencil" />
               </div>
+            </div>
+            <div className="date-input">
+              <p>Due date: </p>
+              <input
+                name="dueDate"
+                className="input"
+                type="date"
+                value={this.state.homework.dueDate}
+                onChange={this.handleChangeHomework}
+              />
             </div>
           </div>
 
