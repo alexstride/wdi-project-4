@@ -29,6 +29,9 @@ $submitted-green: #91ff93;
     text-align: right;
     small {
       color: $red;
+      &.all-submitted {
+        color: $submitted-green;
+      }
     }
     p.unsubmitted-names {
       font-size: 14px;

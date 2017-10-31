@@ -14,7 +14,10 @@ const AggregatedIndexCard = ({ name, setDate, onClick, dueDate, haveNotSubmitted
       </div>
       <div className="index-card-right">
         <div>
-          <small className="index-card-status">Unsubmitted:</small>
+          {haveNotSubmitted.length ?
+            <small className="index-card-status">Unsubmitted:</small>:
+            <small className="index-card-status all-submitted">All Submitted</small>
+          }
         </div>
         <div><p className="unsubmitted-names">{haveNotSubmitted.join(', ')}</p></div>
       </div>
