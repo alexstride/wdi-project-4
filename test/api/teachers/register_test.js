@@ -48,4 +48,37 @@ describe('POST /api/teachers', () => {
       });
   });
 
+  it('should return 422 status for missing email', function(done) {
+    api
+      .post('/api/teachers')
+      .set('Accept', 'application/json')
+      .send(Object.assign(teacherToCreate, {email: null}))
+      .expect(422, done);
+  });
+
+  it('should return 422 status for creating with email which is already registered', function(done) {
+    api
+      .post('/api/teachers')
+      .set('Accept', 'application/json')
+      .send(teacherToCreate)
+      .end(() => {
+        api
+          .post('/api/teachers')
+          .set('Accept', 'application/json')
+          .send(teacherToCreate)
+          .expect(422, done);
+      });
+  });
+
+  it('should return error object for invalid input', function(done) {
+    api
+      .post('/api/teachers')
+      .set('Accept', 'application/json')
+      .send(Object.assign(teacherToCreate, {email: null}))
+      .end((err, res) => {
+        expect(res.body).to.be.an('object');
+        done();
+      });
+  });
+
 });
