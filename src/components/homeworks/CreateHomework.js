@@ -52,11 +52,12 @@ class CreateHomework extends React.Component {
 
   createHomework = (e) => {
     e.preventDefault();
+    const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     const newHomework = this.state.homework;
     newHomework.setDate = new Date();
     newHomework.teacherId = Auth.getPayload().teacherId;
     Axios
-      .post('/api/homeworks', newHomework, { headers: { Authorization: `Bearer ${Auth.getToken()}`}})
+      .post('/api/homeworks', newHomework, { headers })
       .then(() => this.props.history.push('/pupils'))
       .catch((err) => this.setState({ errors: err.response.data.errors }));
   };

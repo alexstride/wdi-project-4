@@ -18,8 +18,9 @@ class HomeworksShow extends React.Component {
   }
 
   componentDidMount() {
+    const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     Axios
-      .get(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}`, { headers: { Authorization: `Bearer ${Auth.getPayload()}`}})
+      .get(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}`, { headers })
       .then(res => this.setState({ homework: res.data, user: Auth.getPayload()}))
       .catch(err => {
         if (err.response.status === 401) {
@@ -50,9 +51,11 @@ class HomeworksShow extends React.Component {
 
   submitConfirm = (e) => {
     e.preventDefault();
+    const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     Axios
-      .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}`, Object.assign(this.state.homework, { hasBeenSubmitted: true }), { headers: { Authorization: `Bearer ${Auth.getPayload()}`}})
+      .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}`, Object.assign(this.state.homework, { hasBeenSubmitted: true }), { headers })
       .then(res => {
+        console.dir(res.data);
         this.setState({ homework: res.data });
       })
       .then(() => this.setState({submitModalOpen: !this.state.submitModalOpen}))
@@ -61,9 +64,9 @@ class HomeworksShow extends React.Component {
 
   saveAndReturn = (e) => {
     e.preventDefault();
-    e.preventDefault();
+    const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     Axios
-      .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}`, Object.assign(this.state.homework, { hasBeenSubmitted: true }), { headers: { Authorization: `Bearer ${Auth.getPayload()}`}})
+      .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}`, Object.assign(this.state.homework, { hasBeenSubmitted: true }), { headers })
       .then(res => {
         this.setState({ homework: res.data });
       })
@@ -122,8 +125,9 @@ class HomeworksShow extends React.Component {
 
   feedbackSubmit = (e, id, feedback) => {
     e.preventDefault();
+    const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     Axios
-      .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}/problems/${id}`, {feedback}, { headers: { Authorization: `Bearer ${Auth.getPayload()}`}})
+      .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}/problems/${id}`, {feedback}, { headers })
       .then((res) => this.setState(prevState => {
         const newProblems = prevState.homework.problems.map(problem => (res.data.id === problem.id) ? Object.assign(problem, res.data, { feedbackMessage: null }) : problem);
         const newState = Object.assign({}, prevState);

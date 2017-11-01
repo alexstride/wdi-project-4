@@ -12,8 +12,9 @@ class PupilShow extends React.Component {
   }
 
   componentDidMount() {
+    const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     Axios
-      .get(`/api/pupils/${this.props.match.params.id}`, { header: { Authorization: `Bearer ${Auth.getPayload()}`}})
+      .get(`/api/pupils/${this.props.match.params.id}`, { headers })
       .then(res => this.setState({ pupil: res.data }))
       .then(() => {
         // const submittedHomeworks = this.state.pupil.homeworks
