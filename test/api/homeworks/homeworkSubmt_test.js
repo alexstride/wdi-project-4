@@ -106,13 +106,13 @@ describe('PUT /api/pupils/:id/homeworks/:homeworkId', () => {
 
   it('should return the correct homework data', function(done) {
     api
-      .put(`/pupils/${params.pupilId}/homeworks/${params.homeworkId}`)
+      .put(`/api/pupils/${params.pupilId}/homeworks/${params.homeworkId}`)
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${token}`)
       .send(putObject)
       .end((err, res) => {
         const hw = res.body;
-        expect(res.body).to.equal('Printing for Lemons');
+        expect(hw.hasBeenSubmitted).to.be.true;
         done();
       });
   });

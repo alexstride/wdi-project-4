@@ -61,16 +61,17 @@ function homeworksUpdate(req, res, next) {
     .findById(req.params.id)
     .exec()
     .then(pupil => {
-      let updatedHomework = null;
       pupil.homeworks = pupil.homeworks.map(hw => {
         if(hw.id === req.params.homeworkId) {
-          updatedHomework = Object.assign(hw, req.body);
-          return updatedHomework;
-        } else {
-          return hw;
+          Object.assign(hw, req.body);
         }
+        return hw;
       });
-      return pupil.save().then(() => res.json(updatedHomework));
+      return pupil.save();
+    })
+    .then((pupil) => {
+      const response = pupil.homeworks.id(req.params.homeworkId);
+      res.json(response);
     })
     .catch(next);
 }
