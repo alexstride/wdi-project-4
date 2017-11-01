@@ -52,7 +52,7 @@ class PupilCreate extends React.Component {
     e.preventDefault();
     const cleanPupil = {firstname: '', lastname: '', email: '', password: '', passwordConfirmation: '', teacher: Auth.getPayload().teacherId};
     Axios
-      .post('/api/pupils/multiple', this.state.pupil)
+      .post('/api/pupils/multiple', this.state.pupil, { headers: { Authorization: `Bearer ${Auth.getPayload()}`}})
       .then(res => {
         const pupils = this.state.pupils.slice();
         pupils.push(res.data);
@@ -64,7 +64,7 @@ class PupilCreate extends React.Component {
   deletePupil =(e, pupilId) => {
     e.preventDefault();
     Axios
-      .delete(`/api/pupils/${pupilId}`)
+      .delete(`/api/pupils/${pupilId}`, { headers: { Authorization: `Bearer ${Auth.getPayload()}`}})
       .then(() => {
         let pupils = this.state.pupils.slice();
         pupils = pupils.filter(pupil => pupil.id !== pupilId);

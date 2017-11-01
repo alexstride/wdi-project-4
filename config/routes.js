@@ -36,8 +36,8 @@ router.route('/pupils/login')
 router.route('/pupils/multiple')
   .post(secureRouteTeacher, pupils.pupilsCreate);
 
-router.route('/pupils/:id/homeworks')
-  .get(secureRouteAll, pupils.homeworksIndex);
+// router.route('/pupils/:id/homeworks')
+//   .get(secureRouteAll, pupils.homeworksIndex);
 
 router.route('/pupils/:id/homeworks/:homeworkId')
   .get(secureRouteAll, pupils.homeworksShow)
