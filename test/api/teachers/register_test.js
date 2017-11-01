@@ -70,4 +70,15 @@ describe('POST /api/teachers', () => {
       });
   });
 
+  it('should return error object for invalid input', function(done) {
+    api
+      .post('/api/teachers')
+      .set('Accept', 'application/json')
+      .send(Object.assign(teacherToCreate, {email: null}))
+      .end((err, res) => {
+        expect(res.body).to.be.an('object');
+        done();
+      });
+  });
+
 });
