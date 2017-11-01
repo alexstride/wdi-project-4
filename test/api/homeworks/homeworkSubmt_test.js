@@ -111,8 +111,8 @@ describe('PUT /api/pupils/:id/homeworks/:homeworkId', () => {
       .set('Authorization', `Bearer ${token}`)
       .send(putObject)
       .end((err, res) => {
-        const homework = res.body;
-        expect(homework.hasBeenSubmitted).to.equal(true);
+        const hw = res.body;
+        expect(res.body).to.equal('Printing for Lemons');
         done();
       });
   });
