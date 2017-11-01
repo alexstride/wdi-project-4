@@ -1,4 +1,4 @@
-/* global api, describe, it, expect, beforeEach, afterEach */
+/* global api, describe, it, expect, afterEach */
 
 require('../helper');
 

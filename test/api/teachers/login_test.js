@@ -27,7 +27,7 @@ describe('POST /api/teachers/login', () => {
       password: 'pass',
       passwordConfirmation: 'pass'
     }, (err, teacher) => {
-      name = teacher.firstname + ' ' + teacher.lastname;
+      name = `${teacher.firstname} ${teacher.lastname}`;
       done(err);
     });
   });
@@ -66,7 +66,7 @@ describe('POST /api/teachers/login', () => {
 
   it('should return the correct data', done => {
     api
-      .post('/api/treachers/login')
+      .post('/api/teachers/login')
       .set('Accept', 'application/json')
       .send(goodLoginTeacher)
       .end((err, res) => {
