@@ -33,7 +33,9 @@ function pupilsDelete(req, res, next) {
 function pupilsCreate(req, res, next) {
   Pupil
     .create(req.body)
-    .then(pupil => res.status(201).json(pupil))
+    .then(pupil => {
+      return res.status(201).json(pupil);
+    })
     .catch(next);
 }
 
@@ -56,44 +58,52 @@ function homeworksShow(req, res, next) {
     .catch(next);
 }
 
-function homeworksUpdate(req, res, next) {
-  Pupil
-    .findById(req.params.id)
-    .exec()
-    .then(pupil => {
-      pupil.homeworks = pupil.homeworks.map(hw => {
-        if(hw.id === req.params.homeworkId) {
-          Object.assign(hw, req.body);
-        }
-        return hw;
-      });
-      return pupil.save();
-    })
-    .then((pupil) => {
-      const response = pupil.homeworks.id(req.params.homeworkId);
-      res.json(response);
-    })
-    .catch(next);
+function homeworksUpdate(io) {
+  return (req, res, next) => {
+    Pupil
+      .findById(req.params.id)
+      .exec()
+      .then(pupil => {
+        pupil.homeworks = pupil.homeworks.map(hw => {
+          if(hw.id === req.params.homeworkId) {
+            Object.assign(hw, req.body);
+          }
+          return hw;
+        });
+        return pupil.save();
+      })
+      .then((pupil) => {
+        io.emit('submitted', {pupilId: req.params.id});
+        const response = pupil.homeworks.id(req.params.homeworkId);
+        res.json(response);
+      })
+      .catch(next);
+  };
 }
 
-function homeworksProblemUpdate(req, res, next) {
-  Pupil
-    .findById(req.params.id)
-    .exec()
-    .then(pupil => {
-      let currentProblem = null;
-      const hw = pupil.homeworks.id(req.params.homeworkId);
-      hw.problems.map(prob => {
-        if(prob.id === req.params.problemId) {
-          currentProblem = Object.assign(prob, req.body);
-          return currentProblem;
-        } else {
-          return prob;
-        }
-      });
-      return pupil.save().then(() => res.json(currentProblem));
-    })
-    .catch(next);
+function homeworksProblemUpdate(io) {
+  return (req, res, next) => {
+    Pupil
+      .findById(req.params.id)
+      .exec()
+      .then(pupil => {
+        let currentProblem = null;
+        const hw = pupil.homeworks.id(req.params.homeworkId);
+        hw.problems.map(prob => {
+          if(prob.id === req.params.problemId) {
+            currentProblem = Object.assign(prob, req.body);
+            return currentProblem;
+          } else {
+            return prob;
+          }
+        });
+        return pupil.save().then(() => {
+          io.emit('submitted', { pupilId: req.params.id });
+          res.json(currentProblem);
+        });
+      })
+      .catch(next);
+  };
 }
 
 module.exports = {

@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import socketIOClient from 'socket.io-client';
+
 
 import ProtectedRoute from './components/utilities/ProtectedRoute';
 import Home from './components/Home';
@@ -23,13 +25,25 @@ import './scss/style.scss';
 
 
 class App extends React.Component {
+  state = {
+    endpoint: 'http://127.0.0.1:4000',
+    webSocket: null
+  }
+
+  componentDidMount() {
+    const { endpoint } = this.state;
+    const socket = socketIOClient(endpoint);
+    this.setState({webSocket: socket}, () => console.log(this.state));
+    socket.on('FromAPI', data => console.log('Data from socket: ', data));
+    socket.on('submitted', data => console.log('Work submitted by pupil: ', data));
+  }
 
   render() {
     return (
       <div>
         <BrowserRouter>
           <div>
-            <Nav />
+            <Nav openSocket={this.state.webSocket}/>
             <FlashMessage />
             <Switch>
               <Route exact path="/" component={Home} />
