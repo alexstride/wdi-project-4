@@ -65,7 +65,11 @@ class CreateHomework extends React.Component {
     this.setState(prevState => {
       const newProblems = prevState.homework.problems.map((prob, i) => {
         if (i === index) {
-          return Object.assign(prob, {[name]: value });
+          if( name !== 'starterCode') {
+            return Object.assign(prob, {[name]: value });
+          } else {
+            return Object.assign(prob, {[name]: value, pupilCode: value });
+          }
         } else {
           return prob;
         }
@@ -73,7 +77,7 @@ class CreateHomework extends React.Component {
       const newState = Object.assign({}, prevState);
       newState.homework.problems = newProblems;
       return newState;
-    });
+    }, () => console.log(this.state));
   }
 
   handleCodeBlockChange = (codeValue) => {
