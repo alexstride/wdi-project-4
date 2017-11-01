@@ -57,6 +57,7 @@ function homeworksShow(req, res, next) {
 }
 
 function homeworksUpdate(req, res, next) {
+  console.log('running homeworks update with, ', req.body);
   Pupil
     .findById(req.params.id)
     .exec()
@@ -65,12 +66,16 @@ function homeworksUpdate(req, res, next) {
       pupil.homeworks = pupil.homeworks.map(hw => {
         if(hw.id === req.params.homeworkId) {
           updatedHomework = Object.assign(hw, req.body);
+          console.log('updatedHomework: ', updatedHomework);
           return updatedHomework;
         } else {
           return hw;
         }
       });
-      return pupil.save().then(() => res.json(updatedHomework));
+      return pupil.save().then(() => {
+        console.log('object being sent: ', updatedHomework);
+        return res.json(updatedHomework);
+      });
     })
     .catch(next);
 }
