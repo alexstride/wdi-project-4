@@ -19,7 +19,7 @@ class HomeworksShow extends React.Component {
 
   componentDidMount() {
     Axios
-      .get(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}`)
+      .get(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}`, { headers: { Authorization: `Bearer ${Auth.getPayload()}`}})
       .then(res => this.setState({ homework: res.data, user: Auth.getPayload()}))
       .catch(err => {
         if (err.response.status === 401) {
@@ -51,7 +51,7 @@ class HomeworksShow extends React.Component {
   submitConfirm = (e) => {
     e.preventDefault();
     Axios
-      .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}`, Object.assign(this.state.homework, { hasBeenSubmitted: true }))
+      .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}`, Object.assign(this.state.homework, { hasBeenSubmitted: true }), { headers: { Authorization: `Bearer ${Auth.getPayload()}`}})
       .then(res => {
         this.setState({ homework: res.data });
       })
@@ -63,7 +63,7 @@ class HomeworksShow extends React.Component {
     e.preventDefault();
     e.preventDefault();
     Axios
-      .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}`, Object.assign(this.state.homework, { hasBeenSubmitted: true }))
+      .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}`, Object.assign(this.state.homework, { hasBeenSubmitted: true }), { headers: { Authorization: `Bearer ${Auth.getPayload()}`}})
       .then(res => {
         this.setState({ homework: res.data });
       })
@@ -123,7 +123,7 @@ class HomeworksShow extends React.Component {
   feedbackSubmit = (e, id, feedback) => {
     e.preventDefault();
     Axios
-      .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}/problems/${id}`, {feedback})
+      .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}/problems/${id}`, {feedback}, { headers: { Authorization: `Bearer ${Auth.getPayload()}`}})
       .then((res) => this.setState(prevState => {
         const newProblems = prevState.homework.problems.map(problem => (res.data.id === problem.id) ? Object.assign(problem, res.data, { feedbackMessage: null }) : problem);
         const newState = Object.assign({}, prevState);

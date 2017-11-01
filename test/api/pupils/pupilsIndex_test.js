@@ -114,9 +114,9 @@ describe('GET /api/teachers/:id/pupils', () => {
       .end((err, res) => {
         const pupils = res.body;
         expect(pupils.length).to.equal(2);
-        expect(pupils[0].firstname).to.equal('Ben' || 'Alex');
-        expect(pupils[0].lastname).to.equal('Jones' || 'Stride');
-        expect(pupils[0].email).to.equal('ben@ben.com' || 'alex@alex.com');
+        expect(pupils[0].firstname).to.be.oneOf(['Ben','Alex']);
+        expect(pupils[0].lastname).to.be.oneOf(['Jones', 'Stride']);
+        expect(pupils[0].email).to.be.oneOf(['ben@ben.com', 'alex@alex.com']);
         expect(pupils[0].teacher).to.equal(teacherId);
         expect(pupils[0].homeworks.length).to.equal(1);
         done();

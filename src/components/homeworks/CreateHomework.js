@@ -56,7 +56,7 @@ class CreateHomework extends React.Component {
     newHomework.setDate = new Date();
     newHomework.teacherId = Auth.getPayload().teacherId;
     Axios
-      .post('/api/homeworks', newHomework)
+      .post('/api/homeworks', newHomework, { headers: { Authorization: `Bearer ${Auth.getToken()}`}})
       .then(() => this.props.history.push('/pupils'))
       .catch((err) => this.setState({ errors: err.response.data.errors }));
   };
@@ -65,7 +65,11 @@ class CreateHomework extends React.Component {
     this.setState(prevState => {
       const newProblems = prevState.homework.problems.map((prob, i) => {
         if (i === index) {
-          return Object.assign(prob, {[name]: value });
+          if( name !== 'starterCode') {
+            return Object.assign(prob, {[name]: value });
+          } else {
+            return Object.assign(prob, {[name]: value, pupilCode: value });
+          }
         } else {
           return prob;
         }
@@ -73,7 +77,7 @@ class CreateHomework extends React.Component {
       const newState = Object.assign({}, prevState);
       newState.homework.problems = newProblems;
       return newState;
-    });
+    }, () => console.log(this.state));
   }
 
   handleCodeBlockChange = (codeValue) => {

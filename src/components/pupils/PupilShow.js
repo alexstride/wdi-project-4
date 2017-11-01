@@ -1,6 +1,7 @@
 import React from 'react';
 import Axios from 'axios';
 import Flash from '../../lib/Flash';
+import Auth from '../../lib/Auth';
 import _ from 'lodash';
 
 import HomeworkIndexCard from '../homeworks/HomeworkIndexCard';
@@ -12,7 +13,7 @@ class PupilShow extends React.Component {
 
   componentDidMount() {
     Axios
-      .get(`/api/pupils/${this.props.match.params.id}`)
+      .get(`/api/pupils/${this.props.match.params.id}`, { header: { Authorization: `Bearer ${Auth.getPayload()}`}})
       .then(res => this.setState({ pupil: res.data }))
       .then(() => {
         // const submittedHomeworks = this.state.pupil.homeworks
