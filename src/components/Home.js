@@ -70,7 +70,7 @@ class Home extends React.Component {
       <div>
         <section className="hero is-fullheight">
           <video src="assets/Workaholic.webm" autoPlay poster="assets/Workaholic.jpg" loop>
-            Sorry, your browser doesn't support embedded videos,
+            Sorry, your browser doesnt support embedded videos,
             and watch it with your favorite video player!
           </video>
           <div className="hero-body">

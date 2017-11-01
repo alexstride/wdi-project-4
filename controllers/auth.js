@@ -29,7 +29,7 @@ function teacherLogin(req, res, next) {
 function teacherRegistration(req, res, next) {
   Teacher
     .create(req.body)
-    .then(() => res.json({ message: 'Registration successful' }))
+    .then(() => res.status(201).json({ message: 'Registration successful' }))
     .catch(next);
 }
 
