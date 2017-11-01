@@ -2,6 +2,9 @@
 
 require('../helper');
 
+const jwt = require('jsonwebtoken');
+const { secret } = require('../../../config/environment');
+
 const { teacherData, yeildPupils } = require('../seedData');
 
 const Teacher = require('../../../models/teacher');
@@ -9,6 +12,7 @@ const Pupil = require('../../../models/pupil');
 
 describe('get /api/pupils/:id', () => {
   let pupil = null;
+  let token = null;
 
   afterEach(done => {
     Teacher.collection.remove();
@@ -24,6 +28,7 @@ describe('get /api/pupils/:id', () => {
           .create(yeildPupils(teachers[0].id, teachers[1].id))
           .then(pupils => {
             pupil = pupils[0];
+            token = jwt.sign({pupilId: pupil.id }, secret, { expiresIn: '1hr'});
             done();
           });
       });
@@ -33,6 +38,7 @@ describe('get /api/pupils/:id', () => {
     api
       .get(`/api/pupils/${pupil.id}`)
       .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
       .expect(200, done);
   });
 
@@ -40,6 +46,7 @@ describe('get /api/pupils/:id', () => {
     api
       .get(`/api/pupils/${pupil.id}`)
       .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
       .end((err, res) => {
         expect(res.body).to.be.an('object');
         done();
@@ -50,6 +57,7 @@ describe('get /api/pupils/:id', () => {
     api
       .get(`/api/pupils/${pupil.id}`)
       .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
       .end((err, res) => {
         const pupilObj = res.body;
         expect(pupilObj.id).to.be.a('string');

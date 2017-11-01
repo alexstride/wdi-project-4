@@ -2,6 +2,9 @@
 
 require('../helper');
 
+const jwt = require('jsonwebtoken');
+const { secret } = require('../../../config/environment');
+
 const Pupil = require('../../../models/pupil');
 const Teacher = require('../../../models/teacher');
 
@@ -26,11 +29,13 @@ const pupilToCreate = {
 describe('POST /api/pupils/multiple', () => {
 
   let teacherId = null;
+  let token = null;
 
   beforeEach(done => {
     Teacher.create(teacherToCreate, (err, teacher) => {
       pupilToCreate.teacher = teacher.id;
       teacherId = teacher.id;
+      token = jwt.sign({teacherId: teacher.id }, secret, { expiresIn: '1hr'});
       done(err);
     });
   });
@@ -45,6 +50,7 @@ describe('POST /api/pupils/multiple', () => {
     api
       .post('/api/pupils/multiple')
       .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
       .send(pupilToCreate)
       .expect(201, done);
   });
@@ -53,6 +59,7 @@ describe('POST /api/pupils/multiple', () => {
     api
       .post('/api/pupils/multiple')
       .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
       .send(pupilToCreate)
       .end((err, res) => {
         expect(res.body).to.be.an('object');
@@ -64,6 +71,7 @@ describe('POST /api/pupils/multiple', () => {
     api
       .post('/api/pupils/multiple')
       .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
       .send(pupilToCreate)
       .end((err, res) => {
         const pupil = res.body;
