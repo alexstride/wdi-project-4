@@ -38,7 +38,6 @@ class ShowHomeworkByQuestion extends React.Component {
       .then(() => this.getQuestions(this.props.match.params.setDate, this.props.match.params.number))
       .then(() => this.getHomework(this.props.match.params.setDate, this.props.match.params.number))
       .catch(err => {
-        console.log(err);
         if (err.response.status === 401) {
           Flash.setMessage({ message: 'Access denied', type: 'danger'});
           this.props.history.push('/teachers/login');
