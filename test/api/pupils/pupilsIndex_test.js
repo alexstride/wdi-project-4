@@ -80,6 +80,13 @@ describe('GET /api/teachers/:id/pupils', () => {
     done();
   });
 
+  it('should return a 401 response when not authorised', function(done) {
+    api
+      .get(`/api/teachers/${teacherId}/pupils`)
+      .set('Accept', 'application/json')
+      .expect(401, done);
+  });
+
   it('should return a 200 response on success', function(done) {
     api
       .get(`/api/teachers/${teacherId}/pupils`)
@@ -107,9 +114,9 @@ describe('GET /api/teachers/:id/pupils', () => {
       .end((err, res) => {
         const pupils = res.body;
         expect(pupils.length).to.equal(2);
-        expect(pupils[0].firstname).to.equal('Ben');
-        expect(pupils[0].lastname).to.equal('Jones');
-        expect(pupils[0].email).to.equal('ben@ben.com');
+        expect(pupils[0].firstname).to.equal('Ben' || 'Alex');
+        expect(pupils[0].lastname).to.equal('Jones' || 'Stride');
+        expect(pupils[0].email).to.equal('ben@ben.com' || 'alex@alex.com');
         expect(pupils[0].teacher).to.equal(teacherId);
         expect(pupils[0].homeworks.length).to.equal(1);
         done();
