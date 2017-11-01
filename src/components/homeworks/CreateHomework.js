@@ -78,7 +78,7 @@ class CreateHomework extends React.Component {
       const newState = Object.assign({}, prevState);
       newState.homework.problems = newProblems;
       return newState;
-    }, () => console.log(this.state));
+    });
   }
 
   handleCodeBlockChange = (codeValue) => {

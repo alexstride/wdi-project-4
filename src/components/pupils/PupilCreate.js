@@ -29,7 +29,7 @@ class PupilCreate extends React.Component {
     const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     Axios
       .get(`/api/teachers/${payload.teacherId}/pupils`, { headers })
-      .then(res => this.setState({ pupils: res.data }, console.log(res)))
+      .then(res => this.setState({ pupils: res.data }))
       .catch(err => {
         if (err.response.status === 401) {
           Flash.setMessage({ message: 'Access denied', type: 'danger'});

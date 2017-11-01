@@ -77,7 +77,7 @@ class ShowHomeworkByQuestion extends React.Component {
       });
       return hw;
     }, {});
-    this.setState({ homework: homeworkHeader }, () => console.log(this.state));
+    this.setState({ homework: homeworkHeader });
   }
 
   feedbackOnChange = (e, id) => {

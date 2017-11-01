@@ -54,10 +54,7 @@ class HomeworksShow extends React.Component {
     const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     Axios
       .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}`, Object.assign(this.state.homework, { hasBeenSubmitted: true }), { headers })
-      .then(res => {
-        console.dir(res.data);
-        this.setState({ homework: res.data });
-      })
+      .then(res => this.setState({ homework: res.data }))
       .then(() => this.setState({submitModalOpen: !this.state.submitModalOpen}))
       .catch(err => console.log(err));
   }

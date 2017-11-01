@@ -45,8 +45,6 @@ class Home extends React.Component {
 //     videoWidth,
 //     videoHeight;
 //
-//     // console.log(windowHeight);
-//
 //     $(element).each(function(){
 //         var videoAspectRatio = $(this).data('height')/$(this).data('width');
 //
