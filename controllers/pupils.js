@@ -29,15 +29,13 @@ function pupilsDelete(req, res, next) {
 }
 
 function pupilsCreate(req, res, next) {
-  console.log(req.body);
   Pupil
     .create(req.body)
-    .then(newPupils => res.json(newPupils))
+    .then(pupil => res.status(201).json(pupil))
     .catch(next);
 }
 
 function homeworksIndex(req, res, next) {
-  console.log('homeworksIndex running!');
   Pupil
     .findById(req.params.id)
     .exec()
