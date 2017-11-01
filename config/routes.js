@@ -3,10 +3,10 @@ const router = require('express').Router();
 const auth = require('../controllers/auth');
 const homeworks = require('../controllers/homeworks');
 const pupils = require('../controllers/pupils');
-const { secureRouteTeacher } = require('../lib/secureRoute');
+const { secureRouteTeacher, secureRouteAll } = require('../lib/secureRoute');
 
 router.route('/homeworks')
-  .post(homeworks.set);
+  .post(secureRouteTeacher, homeworks.set);
 
 // the below route has been deprecated by the the pupils/:id/homeworks/:homeworkId/problems/:problemId route
 // router.route('/homeworks/:id/problems/:problemId')
@@ -27,24 +27,24 @@ router.route('/teachers/:id/pupils')
   .get(secureRouteTeacher, pupils.pupilsIndex);
 
 router.route('/pupils/:id')
-  .get(pupils.pupilsShow)
-  .delete(pupils.pupilsDelete);
+  .get(secureRouteAll, pupils.pupilsShow)
+  .delete(secureRouteTeacher, pupils.pupilsDelete);
 
 router.route('/pupils/login')
   .post(auth.pupilLogin);
 
 router.route('/pupils/multiple')
-  .post(pupils.pupilsCreate);
+  .post(secureRouteTeacher, pupils.pupilsCreate);
 
 router.route('/pupils/:id/homeworks')
-  .get(pupils.homeworksIndex);
+  .get(secureRouteAll, pupils.homeworksIndex);
 
 router.route('/pupils/:id/homeworks/:homeworkId')
-  .get(pupils.homeworksShow)
-  .put(pupils.homeworksUpdate);
+  .get(secureRouteAll, pupils.homeworksShow)
+  .put(secureRouteAll, pupils.homeworksUpdate);
 
 router.route('/pupils/:id/homeworks/:homeworkId/problems/:problemId')
-  .put(pupils.homeworksProblemUpdate);
+  .put(secureRouteAll, pupils.homeworksProblemUpdate);
 
 router.all('/*', (req, res) => res.notFound());
 

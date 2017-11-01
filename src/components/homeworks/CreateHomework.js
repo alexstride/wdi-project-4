@@ -56,7 +56,7 @@ class CreateHomework extends React.Component {
     newHomework.setDate = new Date();
     newHomework.teacherId = Auth.getPayload().teacherId;
     Axios
-      .post('/api/homeworks', newHomework)
+      .post('/api/homeworks', newHomework, { headers: { Authorization: `Bearer ${Auth.getToken()}`}})
       .then(() => this.props.history.push('/pupils'))
       .catch((err) => this.setState({ errors: err.response.data.errors }));
   };
