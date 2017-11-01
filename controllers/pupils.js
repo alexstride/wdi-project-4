@@ -4,7 +4,9 @@ function pupilsIndex(req, res, next) {
   Pupil
     .find({ teacher: req.params.id })
     .exec()
-    .then(pupils => res.json(pupils))
+    .then(pupils => {
+      res.json(pupils);
+    })
     .catch(next);
 }
 
