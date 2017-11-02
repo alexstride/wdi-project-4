@@ -7,7 +7,8 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server); // this gives us a socketIO instance, allowing us to receive socket connections.
 
-io.on('connection', (socket) => {
+const socket = io.of('/socket');
+socket.on('connection', socket => {
   console.log('connection received');
   socket.on('disconnect', () => console.log('Client disconnected'));
   socket.on('hello', () => console.log('picked up a hello event!'));
@@ -33,7 +34,7 @@ app.use(bodyParser.json());
 
 app.use(customResponses);
 
-app.use('/api', routesGen(io));
+app.use('/api', routesGen(socket));
 app.get('/*', (req, res) => res.sendFile(`${__dirname}/public/index.html`));
 
 app.use(errorHandler);

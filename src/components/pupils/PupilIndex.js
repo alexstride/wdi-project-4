@@ -53,7 +53,7 @@ class PupilIndex extends React.Component {
       .then(res => {
         const pupils = res.data;
         const aggregateArray = _.orderBy(this.getAggregate(res.data), (hw) => Date.parse(hw.setDate), 'desc');
-        this.setState({ pupils, aggregateArray }, () => console.log(this.state));
+        this.setState({ pupils, aggregateArray });
       })
       .catch(err => {
         if (err.response.status === 401) {

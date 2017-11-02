@@ -28,7 +28,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {};
-    this.state.endpoint = 'http://127.0.0.1:4000';
+    this.state.endpoint = '/socket';
     this.state.webSocket = socketIOClient(this.state.endpoint);
   }
 

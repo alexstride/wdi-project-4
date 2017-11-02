@@ -40,6 +40,14 @@ module.exports = {
     port: 8000,
     open: true,
     proxy: {
+      '/socket.io': {
+        target: 'http://localhost:4000',
+        secure: false
+      },
+      '/socket': {
+        target: 'http://localhost:4000',
+        secure: false
+      },
       '/api': {
         target: 'http://localhost:4000',
         secure: false
