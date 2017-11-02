@@ -14,6 +14,7 @@ $submitted-green: #91ff93;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  overflow: hidden;
   cursor: pointer;
   &:hover {
     border-width: 3px;
