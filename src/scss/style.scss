@@ -66,9 +66,13 @@ span.redName {
 }
 
 span.greenName {
-  color: green;
+  color: $theme-green;
 }
 
 .title-wrapper {
   width: 100%;
+}
+
+.hang-left {
+  text-align: left;
 }
