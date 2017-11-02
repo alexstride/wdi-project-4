@@ -53,7 +53,7 @@ class App extends React.Component {
               <Route exact path="/teachers/register" component={TeacherRegister} />
               <ProtectedRoute exact path="/pupils/:id/homeworks/:homeworkId" component={HomeworksShow} />
               <ProtectedRoute exact path="/homeworks/new" component={CreateHomework} />
-              <ProtectedRoute exact path="/homeworks/:setDate/question/:number" component={ShowHomeworkByQuestion}/>
+              <ProtectedRoute exact path="/homeworks/:setDate/question/:number" component={ShowHomeworkByQuestion} innerProps={{socket: this.state.webSocket}} socket={this.state.webSocket}/>
               <Route component={NoRoute} />
             </Switch>
           </div>

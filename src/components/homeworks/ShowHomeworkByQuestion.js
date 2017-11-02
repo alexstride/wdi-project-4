@@ -22,11 +22,26 @@ class ShowHomeworkByQuestion extends React.Component {
       this.lastNumber = this.props.match.params.number;
       window.scrollTo(0, 0);
     }
+    this.props.socket.on('submitted', data => {
+      if (this.checkForPupilId(data.pupilId)) {
+        this.loadData();
+      }
+    });
   }
 
   componentDidMount() {
     this.loadData();
     this.lastNumber = 1;
+    this.props.socket.on('submitted', data => {
+      if (this.checkForPupilId(data.pupilId)) {
+        this.loadData();
+      }
+    });
+  }
+
+  checkForPupilId = (id) => {
+    if (!this.state.pupils) return false;
+    return this.state.pupils.find(pupil => pupil.id === id);
   }
 
   loadData = () => {
