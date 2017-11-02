@@ -1,5 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Catamaran|Varela+Round');
 @import 'partials/variables.scss';
-
 @import 'partials/homePage.scss';
 
 $red: hsl(348, 100%, 61%);
@@ -9,6 +9,7 @@ main {
 }
 
 .main-title {
+  // font-family: Catamaran, sans-serif;
   text-align: center;
   padding: 20px;
   margin: 0;
