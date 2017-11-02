@@ -240,7 +240,7 @@ Promise
           homeworks: homeworks
         },{
           firstname: 'Astrid',
-          lastname: 'unknown',
+          lastname: 'Haizet',
           email: 'astrid@astrid.com',
           teacher: teachers[0],
           password: 'pass',

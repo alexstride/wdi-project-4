@@ -6,7 +6,7 @@ const Feedback = ({user, feedback, feedbackSubmit, feedbackOnChange, feedbackMes
       {'pupilId' in user && feedback.length > 1 &&
       <div>
         <h5 className="label">Your feedback:</h5>
-        <p>{feedback}</p>
+        <p className="feedback-text">{feedback}</p>
       </div>}
       {'teacherId' in user &&
       <form onSubmit={feedbackSubmit}>
