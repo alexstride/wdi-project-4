@@ -17,6 +17,7 @@ class ShowHomeworkByQuestion extends React.Component {
   }
 
   componentDidUpdate() {
+    console.log('updating');
     if(this.props.match.params.number !== this.lastNumber) {
       this.loadData();
       this.lastNumber = this.props.match.params.number;
@@ -119,19 +120,12 @@ class ShowHomeworkByQuestion extends React.Component {
     Axios
       .put(`/api/pupils/${pupilId}/homeworks/${homeworkId}/problems/${problemId}`, { feedback }, { headers })
       .then((res) => {
-        this.setState(prevState => {
-          const state = Object.assign({}, prevState);
-          const questions = state.questions.map(question => {
-            if(question.problem.id === res.data.id) {
-              question.problem = res.data;
-              return question;
-            } else {
-              return question;
-            }
-          });
-          state.questions = questions;
-          return state;
+        const questions = this.state.questions.map(question => {
+          if(question.problem.id === res.data.id) question.problem = res.data;
+          return question;
         });
+
+        this.setState({ questions });
       })
       .catch(err => console.log(err));
   }
@@ -188,7 +182,7 @@ class ShowHomeworkByQuestion extends React.Component {
                     {...question.problem}
                     user={this.state.user}
                     feedbackSubmit={(e) => this.feedbackSubmit(e, question.problem.feedback, question.pupilId, question.homeworkId, question.problem.id)}
-                    feedbackOnChange={(e) => this.feedbackOnChange(e, question.problem._id, question.problem.feedback)}
+                    feedbackOnChange={(e) => this.feedbackOnChange(e, question.problem.id, question.problem.feedback)}
                   />
                 </div>
               );
