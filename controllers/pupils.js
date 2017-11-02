@@ -1,4 +1,5 @@
 const Pupil = require('../models/pupil');
+const socket = require('../lib/sockets').getConnection();
 
 function pupilsIndex(req, res, next) {
   Pupil
@@ -58,53 +59,49 @@ function homeworksShow(req, res, next) {
     .catch(next);
 }
 
-function homeworksUpdate(io) {
-  return (req, res, next) => {
-    Pupil
-      .findById(req.params.id)
-      .exec()
-      .then(pupil => {
-        pupil.homeworks = pupil.homeworks.map(hw => {
-          if(hw.id === req.params.homeworkId) {
-            Object.assign(hw, req.body);
-          }
-          return hw;
-        });
-        return pupil.save();
-      })
-      .then((pupil) => {
-        io.emit('submitted', {pupilId: req.params.id});
-        const response = pupil.homeworks.id(req.params.homeworkId);
-        res.json(response);
-      })
-      .catch(next);
-  };
+function homeworksUpdate(req, res, next) {
+  Pupil
+    .findById(req.params.id)
+    .exec()
+    .then(pupil => {
+      pupil.homeworks = pupil.homeworks.map(hw => {
+        if(hw.id === req.params.homeworkId) {
+          Object.assign(hw, req.body);
+        }
+        return hw;
+      });
+      return pupil.save();
+    })
+    .then((pupil) => {
+      socket.emit('submitted', {pupilId: req.params.id});
+      const response = pupil.homeworks.id(req.params.homeworkId);
+      res.json(response);
+    })
+    .catch(next);
 }
 
-function homeworksProblemUpdate(io) {
-  return (req, res, next) => {
-    console.log('Running problem update');
-    Pupil
-      .findById(req.params.id)
-      .exec()
-      .then(pupil => {
-        let currentProblem = null;
-        const hw = pupil.homeworks.id(req.params.homeworkId);
-        hw.problems.map(prob => {
-          if(prob.id === req.params.problemId) {
-            currentProblem = Object.assign(prob, req.body);
-            return currentProblem;
-          } else {
-            return prob;
-          }
-        });
-        return pupil.save().then(() => {
-          io.emit('submitted', { pupilId: req.params.id });
-          res.json(currentProblem);
-        });
-      })
-      .catch(next);
-  };
+function homeworksProblemUpdate(req, res, next) {
+  console.log('Running problem update');
+  Pupil
+    .findById(req.params.id)
+    .exec()
+    .then(pupil => {
+      let currentProblem = null;
+      const hw = pupil.homeworks.id(req.params.homeworkId);
+      hw.problems.map(prob => {
+        if(prob.id === req.params.problemId) {
+          currentProblem = Object.assign(prob, req.body);
+          return currentProblem;
+        } else {
+          return prob;
+        }
+      });
+      return pupil.save().then(() => {
+        socket.emit('submitted', { pupilId: req.params.id });
+        res.json(currentProblem);
+      });
+    })
+    .catch(next);
 }
 
 module.exports = {
