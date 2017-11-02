@@ -4,7 +4,7 @@ import AutosizeInput from 'react-input-autosize';
 const PupilCreateForm = ({ formOpen, handleChange, handleSubmit, toggleForm,  firstname, lastname, email, password, passwordConfirmation, errors }) => {
   return (
     <div className="problem-edit class-edit-wrapper">
-      <div className={formOpen ? 'problem-edit-main' : 'problem-edit-main hidden'}>
+      <div className={formOpen ? 'problem-edit-main addPupil' : 'problem-edit-main addPupil hidden'}>
         <i className="fa fa-pencil" />
         <AutosizeInput
           name="firstname"
@@ -15,7 +15,7 @@ const PupilCreateForm = ({ formOpen, handleChange, handleSubmit, toggleForm,  fi
         />
         {errors.firstname && <div><small className="form-error">{errors.firstname}</small></div>}
       </div>
-      <div className={formOpen ? 'problem-edit-main' : 'problem-edit-main hidden'}>
+      <div className={formOpen ? 'problem-edit-main addPupil' : 'problem-edit-main addPupil hidden'}>
         <i className="fa fa-pencil" />
         <AutosizeInput
           name="lastname"
@@ -26,7 +26,7 @@ const PupilCreateForm = ({ formOpen, handleChange, handleSubmit, toggleForm,  fi
         />
         {errors.lastname && <div><small className="form-error">{errors.lastname}</small></div>}
       </div>
-      <div className={formOpen ? 'problem-edit-main' : 'problem-edit-main hidden'}>
+      <div className={formOpen ? 'problem-edit-main addPupil' : 'problem-edit-main addPupil hidden'}>
         <i className="fa fa-pencil" />
         <AutosizeInput
           name="email"
@@ -37,7 +37,7 @@ const PupilCreateForm = ({ formOpen, handleChange, handleSubmit, toggleForm,  fi
         />
         {errors.email && <div><small className="form-error">{errors.email}</small></div>}
       </div>
-      <div className={formOpen ? 'problem-edit-main' : 'problem-edit-main hidden'}>
+      <div className={formOpen ? 'problem-edit-main addPupil' : 'problem-edit-main addPupil hidden'}>
         <i className="fa fa-pencil" />
         <AutosizeInput
           name="password"
@@ -48,7 +48,7 @@ const PupilCreateForm = ({ formOpen, handleChange, handleSubmit, toggleForm,  fi
         />
         {errors.password && <div><small className="form-error">{errors.password}</small></div>}
       </div>
-      <div className={formOpen ? 'problem-edit-main' : 'problem-edit-main hidden'}>
+      <div className={formOpen ? 'problem-edit-main addPupil' : 'problem-edit-main addPupil hidden'}>
         <i className="fa fa-pencil" />
         <AutosizeInput
           name="passwordConfirmation"
@@ -61,13 +61,13 @@ const PupilCreateForm = ({ formOpen, handleChange, handleSubmit, toggleForm,  fi
       </div>
       <div className="modal-buttons">
         <button
-          className={formOpen ? 'button is-info modal-button' : 'button is-success modal-button problem-edit-main hidden'}
+          className={formOpen ? 'button is-info modal-button' : 'button is-success modal-button problem-edit-main addPupil hidden'}
           onClick={handleSubmit}
         >
           Add pupil to class
         </button>
         <button
-          className={formOpen ? 'button modal-button' : 'button is-info modal-button problem-edit-main hidden'}
+          className={formOpen ? 'button modal-button' : 'button is-info modal-button problem-edit-main addPupil hidden'}
           onClick={toggleForm}
         >
           Cancel
