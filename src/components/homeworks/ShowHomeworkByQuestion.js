@@ -111,8 +111,9 @@ class ShowHomeworkByQuestion extends React.Component {
 
   feedbackSubmit = (e, feedback, pupilId, homeworkId, problemId) => {
     e.preventDefault();
+    const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     Axios
-      .put(`/api/pupils/${pupilId}/homeworks/${homeworkId}/problems/${problemId}`, {feedback})
+      .put(`/api/pupils/${pupilId}/homeworks/${homeworkId}/problems/${problemId}`, { feedback }, { headers })
       .then((res) => {
         this.setState(prevState => {
           const state = Object.assign({}, prevState);
