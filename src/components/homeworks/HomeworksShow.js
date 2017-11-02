@@ -92,9 +92,10 @@ class HomeworksShow extends React.Component {
   }
 
   codeBlockHandleSubmit = (e, id, pupilCode) => {
+    const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     e.preventDefault();
     Axios
-      .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}/problems/${id}`, { pupilCode: pupilCode })
+      .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}/problems/${id}`, { pupilCode: pupilCode }, {headers})
       .then(() => {
         this.createMessage(id, 'All changes saved');
       })

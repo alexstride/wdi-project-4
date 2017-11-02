@@ -31,6 +31,21 @@ class PupilIndex extends React.Component {
   }
 
   componentDidMount() {
+    this.refreshData();
+    console.log('Socket is present: ', !!this.props.socket);
+    this.props.socket.on('submitted', data => {
+      if (this.checkForPupilId(data.pupilId)) {
+        this.refreshData();
+      }
+    });
+  }
+
+  checkForPupilId = (id) => {
+    if (!this.state.pupils) return false;
+    return this.state.pupils.find(pupil => pupil.id === id);
+  }
+
+  refreshData = () => {
     const payload = Auth.getPayload();
     const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     Axios
@@ -38,7 +53,7 @@ class PupilIndex extends React.Component {
       .then(res => {
         const pupils = res.data;
         const aggregateArray = _.orderBy(this.getAggregate(res.data), (hw) => Date.parse(hw.setDate), 'desc');
-        this.setState({ pupils, aggregateArray });
+        this.setState({ pupils, aggregateArray }, () => console.log(this.state));
       })
       .catch(err => {
         if (err.response.status === 401) {

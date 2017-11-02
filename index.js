@@ -9,7 +9,6 @@ const io = socketIo(server); // this gives us a socketIO instance, allowing us t
 
 io.on('connection', (socket) => {
   console.log('connection received');
-  setTimeout(() => io.emit('FromAPI', { message: 'hello there client' }), 5000);
   socket.on('disconnect', () => console.log('Client disconnected'));
   socket.on('hello', () => console.log('picked up a hello event!'));
 });

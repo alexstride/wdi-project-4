@@ -83,6 +83,7 @@ function homeworksUpdate(io) {
 
 function homeworksProblemUpdate(io) {
   return (req, res, next) => {
+    console.log('Running problem update');
     Pupil
       .findById(req.params.id)
       .exec()

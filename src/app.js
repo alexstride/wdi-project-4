@@ -25,17 +25,15 @@ import './scss/style.scss';
 
 
 class App extends React.Component {
-  state = {
-    endpoint: 'http://127.0.0.1:4000',
-    webSocket: null
+  constructor() {
+    super();
+    this.state = {};
+    this.state.endpoint = 'http://127.0.0.1:4000';
+    this.state.webSocket = socketIOClient(this.state.endpoint);
   }
 
   componentDidMount() {
-    const { endpoint } = this.state;
-    const socket = socketIOClient(endpoint);
-    this.setState({webSocket: socket}, () => console.log(this.state));
-    socket.on('FromAPI', data => console.log('Data from socket: ', data));
-    socket.on('submitted', data => console.log('Work submitted by pupil: ', data));
+    this.state.webSocket.on('submitted', data => console.log('Work submitted by pupil: ', data));
   }
 
   render() {
@@ -43,11 +41,11 @@ class App extends React.Component {
       <div>
         <BrowserRouter>
           <div>
-            <Nav openSocket={this.state.webSocket}/>
+            <Nav/>
             <FlashMessage />
             <Switch>
               <Route exact path="/" component={Home} />
-              <ProtectedRoute exact path="/pupils" component={PupilIndex} />
+              <ProtectedRoute exact path="/pupils" component={PupilIndex} innerProps={{socket: this.state.webSocket}} socket={this.state.webSocket}/>
               <ProtectedRoute exact path="/pupils/new" component={PupilCreate} />
               <Route exact path="/pupils/login" component={PupilLogin} />
               <ProtectedRoute exact path="/pupils/:id" component={PupilShow} />
