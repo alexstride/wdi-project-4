@@ -111,7 +111,7 @@ class HomeworksShow extends React.Component {
     Axios
       .put(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}/problems/${id}`, { pupilCode: pupilCode }, {headers})
       .then(() => {
-        this.createMessage(id, 'All changes saved');
+        this.createMessage(id, '');
       })
       .catch(() => {
         this.createMessage(id, 'Your work was unable to be saved');
@@ -154,11 +154,12 @@ class HomeworksShow extends React.Component {
     const problems = this.state.homework.problems.map(problem => {
       if(problem.id === id) {
         problem.pupilCode = problem.starterCode;
-        problem.message = '';
+        problem.message = 'Your work has not been saved';
         return problem;
       }
       return problem;
     });
+
     const homework = Object.assign(this.state.homework, problems);
     this.setState({ homework });
   }
