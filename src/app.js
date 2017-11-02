@@ -25,6 +25,7 @@ import './scss/style.scss';
 
 
 class App extends React.Component {
+
   webSocket = socketIOClient('/socket');
 
   componentDidMount() {
@@ -40,7 +41,7 @@ class App extends React.Component {
             <FlashMessage />
             <Switch>
               <Route exact path="/" component={Home} />
-              <ProtectedRoute exact path="/pupils" component={PupilIndex} innerProps={{socket: this.webSocket}} socket={this.state.webSocket}/>
+              <ProtectedRoute exact path="/pupils" component={PupilIndex} innerProps={{socket: this.webSocket}} />
               <ProtectedRoute exact path="/pupils/new" component={PupilCreate} />
               <Route exact path="/pupils/login" component={PupilLogin} />
               <ProtectedRoute exact path="/pupils/:id" component={PupilShow} />
@@ -48,7 +49,7 @@ class App extends React.Component {
               <Route exact path="/teachers/register" component={TeacherRegister} />
               <ProtectedRoute exact path="/pupils/:id/homeworks/:homeworkId" component={HomeworksShow} />
               <ProtectedRoute exact path="/homeworks/new" component={CreateHomework} />
-              <ProtectedRoute exact path="/homeworks/:setDate/question/:number" component={ShowHomeworkByQuestion} innerProps={{socket: this.state.webSocket}} socket={this.state.webSocket}/>
+              <ProtectedRoute exact path="/homeworks/:setDate/question/:number" component={ShowHomeworkByQuestion} innerProps={{socket: this.webSocket}}/>
               <Route component={NoRoute} />
             </Switch>
           </div>
