@@ -22,21 +22,25 @@ class ShowHomeworkByQuestion extends React.Component {
       this.lastNumber = this.props.match.params.number;
       window.scrollTo(0, 0);
     }
-    this.props.socket.on('submitted', data => {
-      if (this.checkForPupilId(data.pupilId)) {
-        this.loadData();
-      }
-    });
+  }
+
+  listenerFunction = (data) => {
+    console.log('FIRING!!');
+    console.log(this.props.socket.listeners('submitted'));
+    if (this.checkForPupilId(data.pupilId)) {
+      this.loadData();
+    }
   }
 
   componentDidMount() {
     this.loadData();
     this.lastNumber = 1;
-    this.props.socket.on('submitted', data => {
-      if (this.checkForPupilId(data.pupilId)) {
-        this.loadData();
-      }
-    });
+    this.props.socket.on('submitted', this.listenerFunction);
+  }
+
+  componentWillUnmount() {
+    console.log('trying to get rid of listeners');
+    this.props.socket.removeListener('submitted', this.listenerFunction);
   }
 
   checkForPupilId = (id) => {

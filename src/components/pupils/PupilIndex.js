@@ -30,14 +30,20 @@ class PupilIndex extends React.Component {
     return Object.values(resultObject);
   }
 
+  listenerFunction = data => {
+    if (this.checkForPupilId(data.pupilId)) {
+      this.refreshData();
+    }
+  }
+
   componentDidMount() {
     this.refreshData();
     console.log('Socket is present: ', !!this.props.socket);
-    this.props.socket.on('submitted', data => {
-      if (this.checkForPupilId(data.pupilId)) {
-        this.refreshData();
-      }
-    });
+    this.props.socket.on('submitted', this.listenerFunction);
+  }
+
+  componentWillUnmount() {
+    this.props.socket.removeListener('submitted', this.listenerFunction);
   }
 
   checkForPupilId = (id) => {
