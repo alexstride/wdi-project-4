@@ -83,7 +83,7 @@ class PupilIndex extends React.Component {
               <li key={pupil.id} className="name">
                 <Link to={`/pupils/${pupil.id}`}>
                   {pupil.allSubmitted ? <div className="circle green-circle"></div> : <div className="circle red-circle"></div> }
-                  {`${pupil.firstname} ${pupil.lastname} - ${pupil.email}`}
+                  {`${pupil.firstname} ${pupil.lastname}`}
                 </Link>
               </li>
             )}

@@ -57,7 +57,7 @@ class PupilLogin extends React.Component {
               </div>
             </div>
             <div className="control">
-              <button className="button is-primary">Submit</button>
+              <button className="button is-info">Submit</button>
             </div>
 
             {this.state.error && (<div className="form-error">
