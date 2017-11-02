@@ -137,34 +137,41 @@ class ShowHomeworkByQuestion extends React.Component {
       <main className="container homework">
         <div className="homework-background"></div>
         <div className="homework-wrapper">
-          <div className="main-title">
-            {this.state.homework &&
-              <div>
+
+          {this.state.homework &&
+              <div className="main-title top-space">
                 <h1
                   className="title is-1"
                 >
                   {this.state.homework.name}
                 </h1>
                 <p className="subtitle is-5">Set date: {FormatDate.getDDMMYYY(this.state.homework.setDate)} - Due date: {this.state.homework.dueDate ? FormatDate.getDDMMYYY(this.state.homework.dueDate) : 'n/a'}</p>
-                <ul>
-                  {this.state.questions.map((question, index) => {
-                    return (
-                      <li
-                        key={index}
-                      >
-                        <span
-                          className={question.submitted ? 'greenName' : 'redName'}
-                        >
-                          {question.name}
-                        </span>
-                      </li>
-                    );
-                  })}</ul>
-                <div className="level"></div>
-                <p>Description: {this.state.homework.description}</p>
               </div>
-            }
-          </div>
+          }
+
+          {this.state.homework &&
+
+              <ul className="names-list">
+                {this.state.questions.map((question, index) => {
+                  return (
+                    <li
+                      key={index}
+                      className="name"
+                    >
+                      <span
+                        className={question.submitted ? 'greenName' : 'redName'}
+                      >
+                        {question.name}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+          }
+
+          {this.state.homework &&
+              <p className="agg-qn-description">Description: {this.state.homework.description}</p>
+          }
           <div>
             {this.state.questions && this.state.questions.map(question => {
               return (
