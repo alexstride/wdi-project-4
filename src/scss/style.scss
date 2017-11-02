@@ -65,8 +65,9 @@ main {
 .names-list {
   padding: 20px;
   max-width: 70%;
+  margin-left: 25%;
   .name {
-    text-align: center;
+    text-align: left;
     width: 50%;
     display: inline-block;
     span.redName {
