@@ -149,6 +149,20 @@ class HomeworksShow extends React.Component {
       .catch(err => console.log(err));
   }
 
+  resetBlock = (e, id) => {
+    e.preventDefault();
+    const problems = this.state.homework.problems.map(problem => {
+      if(problem.id === id) {
+        problem.pupilCode = problem.starterCode;
+        problem.message = '';
+        return problem;
+      }
+      return problem;
+    });
+    const homework = Object.assign(this.state.homework, problems);
+    this.setState({ homework });
+  }
+
   render() {
     return (
       <main className="container homework">
@@ -168,6 +182,7 @@ class HomeworksShow extends React.Component {
               homework={this.state.homework}
               handleChange={this.handleChange}
               codeBlockHandleSubmit={this.codeBlockHandleSubmit}
+              resetBlock={this.resetBlock}
               feedbackSubmit={this.feedbackSubmit}
               feedbackOnChange={this.feedbackOnChange}
             />
