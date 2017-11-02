@@ -23,10 +23,6 @@ class PupilShow extends React.Component {
         const submittedHomeworks = _.orderBy(this.state.pupil.homeworks
           .filter(hw => hw.hasBeenSubmitted), (hw) => Date.parse(hw.setDate), 'desc');
 
-        // const unsubmittedHomeworks = this.state.pupil.homeworks
-        //   .filter(hw => !hw.hasBeenSubmitted)
-        //   .sort(FormatDate.sortDesc);
-
         const unsubmittedHomeworks = _.orderBy(this.state.pupil.homeworks
           .filter(hw => !hw.hasBeenSubmitted), (hw) => Date.parse(hw.setDate), 'desc');
 
@@ -56,6 +52,8 @@ class PupilShow extends React.Component {
           {this.state.pupil && <h1 className="title is-1">Homeworks for {this.state.pupil.firstname}</h1>}
         </div>
         <div className="homework-index">
+          {this.state.pupil && this.state.pupil.homeworks.length === 0 &&
+          <p>There are no homeworks to display</p>}
           {this.state.unsubmittedHomeworks && this.state.unsubmittedHomeworks.map(hw =>
             <HomeworkIndexCard
               key={hw.id}
