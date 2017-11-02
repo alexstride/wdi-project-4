@@ -102,7 +102,12 @@ class PupilCreate extends React.Component {
       <div className="container homework">
         <div className="title-wrapper">
           <div className="main-title top-space columns">
-            <div className="column is-4 hang-left"><ReturnToDashboard /></div>
+            <div className="column is-4 hang-left">
+              <ReturnToDashboard
+                destinationURL="/pupils"
+                destinationName="Your Class"
+              />
+            </div>
             <div className="column is-4">
               <h1 className="title is-1">
                 Edit Class

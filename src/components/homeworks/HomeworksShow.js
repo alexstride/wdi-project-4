@@ -6,6 +6,7 @@ import Auth from '../../lib/Auth';
 
 import Problem from './Problem';
 import SubmitModal from './SubmitModal';
+import ReturnToDashboard from '../utilities/ReturnToDashboard';
 
 import '../../scss/partials/_homeworkStyles.scss';
 
@@ -168,12 +169,24 @@ class HomeworksShow extends React.Component {
     return (
       <main className="container homework">
         <div className="homework-background"></div>
-        <div className="homework-wrapper">
-          <div className="main-title">
+        <div className="main-title top-space columns">
+          <div className="column is-4 hang-left">
+            {this.state.pupil &&
+              <ReturnToDashboard
+                destinationURL={`/pupils/${this.state.pupil.id}`}
+                destinationName={`${this.state.pupil.firstname} ${this.state.pupil.lastname}`}
+              />
+            }
+          </div>
+          <div className="column is-4">
             {this.state.homework && <h1 className="title is-1">{this.state.homework.name}</h1>}
             {this.state.pupil && <p className="subtitle is-5">{`${this.state.pupil.firstname} ${this.state.pupil.lastname}`}</p>}
             {this.state.homework && this.state.homework.hasBeenSubmitted && <p className="subtitle is-5">This homework has been submitted</p>}
           </div>
+          <div className="column is-4"></div>
+        </div>
+        <div className="homework-wrapper">
+
 
           {this.state.homework && this.state.homework.problems.map(problem =>
             <Problem
