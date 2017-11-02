@@ -97,6 +97,7 @@ class CreateHomework extends React.Component {
   }
 
   deleteProblem(index) {
+    this.questions -= 1;
     const currentHomework = Object.assign({}, this.state.homework);
     const updatedProblems = currentHomework.problems.filter((problem, problemIndex) => problemIndex !== index);
     currentHomework.problems = updatedProblems;

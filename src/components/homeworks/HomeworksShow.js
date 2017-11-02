@@ -14,7 +14,8 @@ class HomeworksShow extends React.Component {
   state = {
     user: null,
     homework: null,
-    submitModalOpen: false
+    submitModalOpen: false,
+    pupil: null
   }
 
   componentDidMount() {
@@ -22,6 +23,19 @@ class HomeworksShow extends React.Component {
     Axios
       .get(`/api/pupils/${this.props.match.params.id}/homeworks/${this.props.match.params.homeworkId}`, { headers })
       .then(res => this.setState({ homework: res.data, user: Auth.getPayload()}))
+      .catch(err => {
+        if (err.response.status === 401) {
+          Flash.setMessage({ message: 'Access denied', type: 'danger'});
+          this.props.history.push('/teachers/login');
+        } else if (err.response.status === 404) {
+          this.props.history.push('/NoRoute');
+        } else {
+          console.log(err);
+        }
+      });
+    Axios
+      .get(`/api/pupils/${this.props.match.params.id}`, { headers })
+      .then(res => this.setState({ pupil: res.data }))
       .catch(err => {
         if (err.response.status === 401) {
           Flash.setMessage({ message: 'Access denied', type: 'danger'});
@@ -142,6 +156,7 @@ class HomeworksShow extends React.Component {
         <div className="homework-wrapper">
           <div className="main-title">
             {this.state.homework && <h1 className="title is-1">{this.state.homework.name}</h1>}
+            {this.state.pupil && <p className="subtitle is-5">{`${this.state.pupil.firstname} ${this.state.pupil.lastname}`}</p>}
             {this.state.homework && this.state.homework.hasBeenSubmitted && <p className="subtitle is-5">This homework has been submitted</p>}
           </div>
 
