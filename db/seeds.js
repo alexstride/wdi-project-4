@@ -192,7 +192,7 @@ Promise
           homeworks: homeworks
         },{
           firstname: 'Paul',
-          lastname: 'Marden',
+          lastname: 'Mardling',
           email: 'paul@paul.com',
           teacher: teachers[0],
           password: 'pass',
