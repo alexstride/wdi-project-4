@@ -11,6 +11,10 @@ class PupilIndex extends React.Component {
     pupils: null
   }
 
+  componentWillMount() {
+    console.log('trying to mount');
+  }
+
   getAggregate(pupils) {
     const resultObject = pupils.reduce((result, pupil) => {
       pupil.homeworks.forEach(hw => {

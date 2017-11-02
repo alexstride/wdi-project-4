@@ -51,6 +51,7 @@ class CreateHomework extends React.Component {
   }
 
   createHomework = (e) => {
+    console.log('running function');
     e.preventDefault();
     const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     const newHomework = this.state.homework;
@@ -58,7 +59,10 @@ class CreateHomework extends React.Component {
     newHomework.teacherId = Auth.getPayload().teacherId;
     Axios
       .post('/api/homeworks', newHomework, { headers })
-      .then(() => this.props.history.push('/pupils'))
+      .then(() => {
+        console.log('got here');
+        this.props.history.push('/pupils');
+      })
       .catch((err) => this.setState({ errors: err.response.data.errors }));
   };
 
