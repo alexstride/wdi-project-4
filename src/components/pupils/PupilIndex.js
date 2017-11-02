@@ -78,9 +78,9 @@ class PupilIndex extends React.Component {
           <h2 className="title is-4">Pupils</h2>
         </div>
         <div className="pupil-index-list">
-          <ul>
+          <ul className="names-list">
             {this.state.pupils && this.state.pupils.map(pupil =>
-              <li key={pupil.id}>
+              <li key={pupil.id} className="name">
                 <Link to={`/pupils/${pupil.id}`}>
                   {pupil.allSubmitted ? <div className="circle green-circle"></div> : <div className="circle red-circle"></div> }
                   {`${pupil.firstname} ${pupil.lastname} - ${pupil.email}`}
