@@ -39,20 +39,13 @@ module.exports = {
     inline: true,
     port: 8000,
     open: true,
-    proxy: {
-      '/socket.io': {
-        target: 'http://localhost:4000',
-        secure: false
-      },
-      '/socket': {
-        target: 'http://localhost:4000',
-        secure: false
-      },
-      '/api': {
+    proxy: [
+      {
+        context: ['/api', '/socket', '/socket.io'],
         target: 'http://localhost:4000',
         secure: false
       }
-    }
+    ]
   },
   plugins: [HotModuleReplcement, HtmlWebpack, CopyWebpack]
 };
