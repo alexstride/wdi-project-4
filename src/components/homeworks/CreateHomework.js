@@ -23,11 +23,16 @@ class CreateHomework extends React.Component {
     };
 
   componentDidMount() {
+    this.questions = 1;
     this.addProblemToHw();
   }
 
   componentDidUpdate() {
-    this.scrollToCreateProblem();
+    if(this.state.homework.problems.length > this.questions) {
+      this.scrollToButton();
+      this.questions = 1;
+    }
+
   }
 
   addProblemToHw = () => {
@@ -42,6 +47,7 @@ class CreateHomework extends React.Component {
       resultObj.homework.problems = problems;
       return resultObj;
     });
+
   }
 
   handleChangeHomework = ({ target: { name, value }}) => {
@@ -97,8 +103,8 @@ class CreateHomework extends React.Component {
     this.setState({ homework: currentHomework });
   }
 
-  scrollToCreateProblem = () => {
-    // this.createProblem.scrollIntoView({ behavior: 'smooth' });
+  scrollToButton = () => {
+    this.addQButton.scrollIntoView({ behavior: 'smooth' });
   }
 
   render() {
@@ -149,7 +155,7 @@ class CreateHomework extends React.Component {
             );
           })}
 
-          {!this.state.newProblemVisible && <a className="with20margin" onClick={this.addProblemToHw}>Add another question</a>}
+          {!this.state.newProblemVisible && <a ref={element => this.addQButton = element} className="with20margin" onClick={this.addProblemToHw}>Add another question</a>}
           <button className="button is-success" onClick={this.createHomework}>Create and Set Homework</button>
         </div>
       </main>
