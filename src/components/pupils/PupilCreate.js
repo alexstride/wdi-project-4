@@ -57,7 +57,7 @@ class PupilCreate extends React.Component {
       .then(res => {
         const pupils = this.state.pupils.slice();
         pupils.push(res.data);
-        this.setState({ pupils, pupil: cleanPupil, formOpen: false });
+        this.setState({ pupils, pupil: cleanPupil, formOpen: false, errors: {} });
       })
       .catch((err) => this.setState({ errors: err.response.data.errors }));
   }
@@ -92,7 +92,8 @@ class PupilCreate extends React.Component {
 
   toggleForm = (e) => {
     e.preventDefault();
-    this.setState({ formOpen: !this.state.formOpen });
+    const cleanPupil = {firstname: '', lastname: '', email: '', password: '', passwordConfirmation: '', teacher: Auth.getPayload().teacherId};
+    this.setState({ formOpen: !this.state.formOpen, pupil: cleanPupil, errors: {} });
   }
 
   render() {
