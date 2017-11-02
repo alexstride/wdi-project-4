@@ -150,7 +150,7 @@ class CreateHomework extends React.Component {
           })}
 
           {!this.state.newProblemVisible && <a className="with20margin" onClick={this.addProblemToHw}>Add another question</a>}
-          <button className="button is-info" onClick={this.createHomework}>Create and Set Homework</button>
+          <button className="button is-success" onClick={this.createHomework}>Create and Set Homework</button>
         </div>
       </main>
     );

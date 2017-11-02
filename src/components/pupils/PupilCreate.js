@@ -99,14 +99,17 @@ class PupilCreate extends React.Component {
   render() {
     return(
       <div className="container homework">
-        <div className="columns title-wrapper">
-          <div className="column is-4"><ReturnToDashboard /></div>
-          <div className="column is-4 main-title">
-            <h1 className="title is-1">
-              Edit Class
-            </h1>
+        <div className="title-wrapper">
+          <div className="main-title columns">
+            <div className="column is-4 hang-left"><ReturnToDashboard /></div>
+            <div className="column is-4">
+              <h1 className="title is-1">
+                Edit Class
+              </h1>
+            </div>
+            <div className="column is-4"></div>
           </div>
-          <div className="column is-4"></div>
+
         </div>
         <div>
           <div className="main-title">
@@ -127,12 +130,13 @@ class PupilCreate extends React.Component {
         </div>
         <div className="level">
           <div className="level-item">
-            <button
-              className="button is-success submit-button with20margin"
+            <a
+              href="#"
+              className="with20margin"
               onClick={(e) => this.toggleForm(e)}
             >
               Add pupil
-            </button>
+            </a>
           </div>
         </div>
         <PupilCreateForm

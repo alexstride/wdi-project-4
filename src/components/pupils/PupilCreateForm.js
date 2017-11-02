@@ -61,13 +61,13 @@ const PupilCreateForm = ({ formOpen, handleChange, handleSubmit, toggleForm,  fi
       </div>
       <div className="modal-buttons">
         <button
-          className={formOpen ? 'button is-success modal-button' : 'button is-success modal-button problem-edit-main hidden'}
+          className={formOpen ? 'button is-info modal-button' : 'button is-success modal-button problem-edit-main hidden'}
           onClick={handleSubmit}
         >
           Add pupil to class
         </button>
         <button
-          className={formOpen ? 'button is-info modal-button' : 'button is-info modal-button problem-edit-main hidden'}
+          className={formOpen ? 'button modal-button' : 'button is-info modal-button problem-edit-main hidden'}
           onClick={toggleForm}
         >
           Cancel
