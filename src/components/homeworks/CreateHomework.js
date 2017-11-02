@@ -4,6 +4,7 @@ import Auth from '../../lib/Auth';
 import AutosizeInput from 'react-input-autosize';
 
 import ProblemCreateWrapper from './ProblemCreateWrapper';
+import ReturnToDashBoard from '../utilities/ReturnToDashBoard';
 
 import '../../scss/partials/_createHomeworkStyles.scss';
 
@@ -116,9 +117,14 @@ class CreateHomework extends React.Component {
     return (
       <main className="container homework">
         <div className="homework-background"></div>
-        <div className="homework-wrapper">
-
-          <div className="main-title top-space">
+        <div className="columns main-title top-space">
+          <div className="column is-3 hang-left">
+            <ReturnToDashBoard
+              destinationURL="/pupils"
+              destinationName="Your Class"
+            />
+          </div>
+          <div className="column is-6">
             <div className="title-input">
               <div className='title-input-wrapper'>
                 <AutosizeInput
@@ -145,7 +151,9 @@ class CreateHomework extends React.Component {
               />
             </div>
           </div>
-
+          <div className="column is-3"></div>
+        </div>
+        <div className="homework-wrapper">
           {this.state.homework && this.state.homework.problems.map((problem, i) => {
             return (
               <div key={i}>

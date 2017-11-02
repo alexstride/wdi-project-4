@@ -3,6 +3,7 @@ import Axios from 'axios';
 import Flash from '../../lib/Flash';
 import Auth from '../../lib/Auth';
 import _ from 'lodash';
+import ReturnToDashBoard from '../utilities/ReturnToDashBoard';
 
 import HomeworkIndexCard from '../homeworks/HomeworkIndexCard';
 
@@ -48,8 +49,17 @@ class PupilShow extends React.Component {
   render() {
     return (
       <main className="container">
-        <div className="main-title">
-          {this.state.pupil && <h1 className="title is-1">Homeworks for {this.state.pupil.firstname}</h1>}
+        <div className="columns main-title">
+          <div className="column is-4 hang-left">
+            {('teacherId' in Auth.getPayload()) && <ReturnToDashBoard
+              destinationURL="/pupils"
+              destinationName="Your Class"
+            />}
+          </div>
+          <div className="column is-4">
+            {this.state.pupil && <h1 className="title is-1">Homeworks for {this.state.pupil.firstname}</h1>}
+          </div>
+          <div className="column is-4"></div>
         </div>
         <div className="homework-index">
           {this.state.pupil && this.state.pupil.homeworks.length === 0 &&
