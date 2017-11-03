@@ -5,6 +5,7 @@ import AutosizeInput from 'react-input-autosize';
 
 import ProblemCreateWrapper from './ProblemCreateWrapper';
 import ReturnToDashBoard from '../utilities/ReturnToDashBoard';
+import SetHomeworkModal from './SetHomeworkModal';
 
 import '../../scss/partials/_createHomeworkStyles.scss';
 
@@ -20,7 +21,8 @@ class CreateHomework extends React.Component {
         dueDate: (new Date()).toISOString().slice(0, 10)
       },
       newProblemVisible: false,
-      errors: {}
+      errors: {},
+      modalOpen: false
     };
 
   componentDidMount() {
@@ -67,7 +69,6 @@ class CreateHomework extends React.Component {
     Axios
       .post('/api/homeworks', newHomework, { headers })
       .then(() => {
-        console.log('got here');
         this.props.history.push('/pupils');
       })
       .catch((err) => this.setState({ errors: err.response.data.errors }));
@@ -111,6 +112,11 @@ class CreateHomework extends React.Component {
 
   scrollToButton = () => {
     this.addQButton.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  toggleModal = (e) => {
+    e.preventDefault();
+    this.setState({ modalOpen: !this.state.modalOpen })
   }
 
   render() {
@@ -169,8 +175,13 @@ class CreateHomework extends React.Component {
           })}
 
           {!this.state.newProblemVisible && <a ref={element => this.addQButton = element} className="with20margin" onClick={this.addProblemToHw}>Add another question</a>}
-          <button className="button is-success" onClick={this.createHomework}>Create and Set Homework</button>
+          <button className="button is-success" onClick={this.toggleModal}>Create and Set Homework</button>
         </div>
+        <SetHomeworkModal
+          handleSubmit={this.createHomework}
+          toggleModal={this.toggleModal}
+          modalOpen={this.state.modalOpen}
+        />
       </main>
     );
   }
