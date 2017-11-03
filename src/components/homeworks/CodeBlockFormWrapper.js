@@ -2,7 +2,7 @@ import React from 'react';
 
 import CodeBlock from './CodeBlock';
 
-const CodeBlockFormWrapper = ({handleSubmit, handleChange, isSubmitted, pupilCode, id, message}) => {
+const CodeBlockFormWrapper = ({handleSubmit, handleChange, isSubmitted, pupilCode, starterCode, id, message, resetBlock}) => {
   return (
     <div className="code-block">
       <form onSubmit={handleSubmit}>
@@ -17,6 +17,7 @@ const CodeBlockFormWrapper = ({handleSubmit, handleChange, isSubmitted, pupilCod
           <button className={message ? '' : 'deactivated'}>
             Save
           </button>
+          <button onClick={resetBlock} className={pupilCode.length === starterCode.length ? 'deactivated' : 'reset'}>Reset</button>
         </div>
       </form>
     </div>

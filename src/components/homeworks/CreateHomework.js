@@ -4,6 +4,7 @@ import Auth from '../../lib/Auth';
 import AutosizeInput from 'react-input-autosize';
 
 import ProblemCreateWrapper from './ProblemCreateWrapper';
+import ReturnToDashboard from '../utilities/ReturnToDashboard';
 
 import '../../scss/partials/_createHomeworkStyles.scss';
 
@@ -23,11 +24,16 @@ class CreateHomework extends React.Component {
     };
 
   componentDidMount() {
+    this.questions = 1;
     this.addProblemToHw();
   }
 
   componentDidUpdate() {
-    this.scrollToCreateProblem();
+    if(this.state.homework.problems.length > this.questions) {
+      this.scrollToButton();
+      this.questions = 1;
+    }
+
   }
 
   addProblemToHw = () => {
@@ -42,6 +48,7 @@ class CreateHomework extends React.Component {
       resultObj.homework.problems = problems;
       return resultObj;
     });
+
   }
 
   handleChangeHomework = ({ target: { name, value }}) => {
@@ -51,13 +58,18 @@ class CreateHomework extends React.Component {
   }
 
   createHomework = (e) => {
+    console.log('running function');
     e.preventDefault();
+    const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     const newHomework = this.state.homework;
     newHomework.setDate = new Date();
     newHomework.teacherId = Auth.getPayload().teacherId;
     Axios
-      .post('/api/homeworks', newHomework, { headers: { Authorization: `Bearer ${Auth.getToken()}`}})
-      .then(() => this.props.history.push('/pupils'))
+      .post('/api/homeworks', newHomework, { headers })
+      .then(() => {
+        console.log('got here');
+        this.props.history.push('/pupils');
+      })
       .catch((err) => this.setState({ errors: err.response.data.errors }));
   };
 
@@ -77,7 +89,7 @@ class CreateHomework extends React.Component {
       const newState = Object.assign({}, prevState);
       newState.homework.problems = newProblems;
       return newState;
-    }, () => console.log(this.state));
+    });
   }
 
   handleCodeBlockChange = (codeValue) => {
@@ -90,23 +102,29 @@ class CreateHomework extends React.Component {
   }
 
   deleteProblem(index) {
+    this.questions -= 1;
     const currentHomework = Object.assign({}, this.state.homework);
     const updatedProblems = currentHomework.problems.filter((problem, problemIndex) => problemIndex !== index);
     currentHomework.problems = updatedProblems;
     this.setState({ homework: currentHomework });
   }
 
-  scrollToCreateProblem = () => {
-    // this.createProblem.scrollIntoView({ behavior: 'smooth' });
+  scrollToButton = () => {
+    this.addQButton.scrollIntoView({ behavior: 'smooth' });
   }
 
   render() {
     return (
       <main className="container homework">
         <div className="homework-background"></div>
-        <div className="homework-wrapper">
-
-          <div className="main-title top-space">
+        <div className="columns main-title top-space">
+          <div className="column is-3 hang-left">
+            <ReturnToDashboard
+              destinationURL="/pupils"
+              destinationName="Your Class"
+            />
+          </div>
+          <div className="column is-6">
             <div className="title-input">
               <div className='title-input-wrapper'>
                 <AutosizeInput
@@ -133,7 +151,9 @@ class CreateHomework extends React.Component {
               />
             </div>
           </div>
-
+          <div className="column is-3"></div>
+        </div>
+        <div className="homework-wrapper">
           {this.state.homework && this.state.homework.problems.map((problem, i) => {
             return (
               <div key={i}>
@@ -148,8 +168,8 @@ class CreateHomework extends React.Component {
             );
           })}
 
-          {!this.state.newProblemVisible && <a className="with20margin" onClick={this.addProblemToHw}>Add another question</a>}
-          <button className="button is-info" onClick={this.createHomework}>Create and Set Homework</button>
+          {!this.state.newProblemVisible && <a ref={element => this.addQButton = element} className="with20margin" onClick={this.addProblemToHw}>Add another question</a>}
+          <button className="button is-success" onClick={this.createHomework}>Create and Set Homework</button>
         </div>
       </main>
     );

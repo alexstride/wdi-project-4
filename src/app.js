@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import socketIOClient from 'socket.io-client';
+
 
 import ProtectedRoute from './components/utilities/ProtectedRoute';
 import Home from './components/Home';
@@ -24,16 +26,22 @@ import './scss/style.scss';
 
 class App extends React.Component {
 
+  webSocket = socketIOClient('/socket');
+
+  componentDidMount() {
+    this.webSocket.on('submitted', data => console.log('Work submitted by pupil: ', data));
+  }
+
   render() {
     return (
       <div>
         <BrowserRouter>
           <div>
-            <Nav />
+            <Nav/>
             <FlashMessage />
             <Switch>
               <Route exact path="/" component={Home} />
-              <ProtectedRoute exact path="/pupils" component={PupilIndex} />
+              <ProtectedRoute exact path="/pupils" component={PupilIndex} innerProps={{socket: this.webSocket}} />
               <ProtectedRoute exact path="/pupils/new" component={PupilCreate} />
               <Route exact path="/pupils/login" component={PupilLogin} />
               <ProtectedRoute exact path="/pupils/:id" component={PupilShow} />
@@ -41,7 +49,7 @@ class App extends React.Component {
               <Route exact path="/teachers/register" component={TeacherRegister} />
               <ProtectedRoute exact path="/pupils/:id/homeworks/:homeworkId" component={HomeworksShow} />
               <ProtectedRoute exact path="/homeworks/new" component={CreateHomework} />
-              <ProtectedRoute exact path="/homeworks/:setDate/question/:number" component={ShowHomeworkByQuestion}/>
+              <ProtectedRoute exact path="/homeworks/:setDate/question/:number" component={ShowHomeworkByQuestion} innerProps={{socket: this.webSocket}}/>
               <Route component={NoRoute} />
             </Switch>
           </div>

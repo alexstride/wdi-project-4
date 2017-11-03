@@ -1,4 +1,5 @@
 const Pupil = require('../models/pupil');
+const socket = require('../lib/sockets').getConnection();
 
 function pupilsIndex(req, res, next) {
   Pupil
@@ -33,7 +34,9 @@ function pupilsDelete(req, res, next) {
 function pupilsCreate(req, res, next) {
   Pupil
     .create(req.body)
-    .then(pupil => res.status(201).json(pupil))
+    .then(pupil => {
+      return res.status(201).json(pupil);
+    })
     .catch(next);
 }
 
@@ -62,25 +65,24 @@ function homeworksUpdate(req, res, next) {
     .findById(req.params.id)
     .exec()
     .then(pupil => {
-      let updatedHomework = null;
       pupil.homeworks = pupil.homeworks.map(hw => {
         if(hw.id === req.params.homeworkId) {
-          updatedHomework = Object.assign(hw, req.body);
-          console.log('updatedHomework: ', updatedHomework);
-          return updatedHomework;
-        } else {
-          return hw;
+          Object.assign(hw, req.body);
         }
+        return hw;
       });
-      return pupil.save().then(() => {
-        console.log('object being sent: ', updatedHomework);
-        return res.json(updatedHomework);
-      });
+      return pupil.save();
+    })
+    .then((pupil) => {
+      socket.emit('submitted', {pupilId: req.params.id});
+      const response = pupil.homeworks.id(req.params.homeworkId);
+      res.json(response);
     })
     .catch(next);
 }
 
 function homeworksProblemUpdate(req, res, next) {
+  console.log('Running problem update');
   Pupil
     .findById(req.params.id)
     .exec()
@@ -95,7 +97,10 @@ function homeworksProblemUpdate(req, res, next) {
           return prob;
         }
       });
-      return pupil.save().then(() => res.json(currentProblem));
+      return pupil.save().then(() => {
+        socket.emit('submitted', { pupilId: req.params.id });
+        res.json(currentProblem);
+      });
     })
     .catch(next);
 }

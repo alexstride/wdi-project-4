@@ -106,26 +106,14 @@ describe('PUT /api/pupils/:id/homeworks/:homeworkId', () => {
 
   it('should return the correct homework data', function(done) {
     api
-      .put(`/pupils/${params.pupilId}/homeworks/${params.homeworkId}`)
+      .put(`/api/pupils/${params.pupilId}/homeworks/${params.homeworkId}`)
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${token}`)
       .send(putObject)
       .end((err, res) => {
-        console.log('reponse received by test suite: ', res.body);
-        expect(res.body.name).to.equal('Printing for Lemons');
-        done(err);
-      });
-  });
-
-  it('should return the correct homework data', function(done) {
-    api
-      .put(`/pupils/${params.pupilId}/homeworks/${params.homeworkId}`)
-      .set('Accept', 'application/json')
-      .set('Authorization', `Bearer ${token}`)
-      .send(putObject)
-      .end((err, response) => {
-        console.log('reponse received by test suite in new copy: ', response.body);
-        done(err);
+        const hw = res.body;
+        expect(hw.hasBeenSubmitted).to.be.true;
+        done();
       });
   });
 

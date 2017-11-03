@@ -29,7 +29,7 @@ class PupilCreate extends React.Component {
     const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     Axios
       .get(`/api/teachers/${payload.teacherId}/pupils`, { headers })
-      .then(res => this.setState({ pupils: res.data }, console.log(res)))
+      .then(res => this.setState({ pupils: res.data }))
       .catch(err => {
         if (err.response.status === 401) {
           Flash.setMessage({ message: 'Access denied', type: 'danger'});
@@ -50,21 +50,23 @@ class PupilCreate extends React.Component {
 
   addPupil = (e) => {
     e.preventDefault();
+    const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     const cleanPupil = {firstname: '', lastname: '', email: '', password: '', passwordConfirmation: '', teacher: Auth.getPayload().teacherId};
     Axios
-      .post('/api/pupils/multiple', this.state.pupil, { headers: { Authorization: `Bearer ${Auth.getPayload()}`}})
+      .post('/api/pupils/multiple', this.state.pupil, { headers })
       .then(res => {
         const pupils = this.state.pupils.slice();
         pupils.push(res.data);
-        this.setState({ pupils, pupil: cleanPupil, formOpen: false });
+        this.setState({ pupils, pupil: cleanPupil, formOpen: false, errors: {} });
       })
       .catch((err) => this.setState({ errors: err.response.data.errors }));
   }
 
   deletePupil =(e, pupilId) => {
     e.preventDefault();
+    const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     Axios
-      .delete(`/api/pupils/${pupilId}`, { headers: { Authorization: `Bearer ${Auth.getPayload()}`}})
+      .delete(`/api/pupils/${pupilId}`, { headers })
       .then(() => {
         let pupils = this.state.pupils.slice();
         pupils = pupils.filter(pupil => pupil.id !== pupilId);
@@ -90,20 +92,30 @@ class PupilCreate extends React.Component {
 
   toggleForm = (e) => {
     e.preventDefault();
-    this.setState({ formOpen: !this.state.formOpen });
+    const cleanPupil = {firstname: '', lastname: '', email: '', password: '', passwordConfirmation: '', teacher: Auth.getPayload().teacherId};
+    this.setState({ formOpen: !this.state.formOpen, pupil: cleanPupil, errors: {} });
   }
 
   render() {
     return(
+
       <div className="container homework">
-        <div className="columns title-wrapper">
-          <div className="column is-4"><ReturnToDashboard /></div>
-          <div className="column is-4 main-title">
-            <h1 className="title is-1">
-              Edit Class
-            </h1>
+        <div className="title-wrapper">
+          <div className="main-title top-space columns">
+            <div className="column is-4 hang-left">
+              <ReturnToDashboard
+                destinationURL="/pupils"
+                destinationName="Your Class"
+              />
+            </div>
+            <div className="column is-4">
+              <h1 className="title is-1">
+                Edit Class
+              </h1>
+            </div>
+            <div className="column is-4"></div>
           </div>
-          <div className="column is-4"></div>
+
         </div>
         <div>
           <div className="main-title">
@@ -124,12 +136,13 @@ class PupilCreate extends React.Component {
         </div>
         <div className="level">
           <div className="level-item">
-            <button
-              className="button is-success submit-button with20margin"
+            <a
+              href="#"
+              className="with20margin"
               onClick={(e) => this.toggleForm(e)}
             >
               Add pupil
-            </button>
+            </a>
           </div>
         </div>
         <PupilCreateForm

@@ -29,7 +29,6 @@ class Nav extends React.Component {
     let userType = null;
     const isAuth = Auth.isAuthenticated();
     if (isAuth) userType = Auth.getPayload().userType;
-    console.log('nav props: ', this.props);
     return (
       <nav className="navbar is-transparent">
         <div className="navbar-brand">

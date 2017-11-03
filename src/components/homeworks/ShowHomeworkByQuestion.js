@@ -17,6 +17,7 @@ class ShowHomeworkByQuestion extends React.Component {
   }
 
   componentDidUpdate() {
+    console.log('updating');
     if(this.props.match.params.number !== this.lastNumber) {
       this.loadData();
       this.lastNumber = this.props.match.params.number;
@@ -24,9 +25,28 @@ class ShowHomeworkByQuestion extends React.Component {
     }
   }
 
+  listenerFunction = (data) => {
+    console.log('FIRING!!');
+    console.log(this.props.socket.listeners('submitted'));
+    if (this.checkForPupilId(data.pupilId)) {
+      this.loadData();
+    }
+  }
+
   componentDidMount() {
     this.loadData();
     this.lastNumber = 1;
+    this.props.socket.on('submitted', this.listenerFunction);
+  }
+
+  componentWillUnmount() {
+    console.log('trying to get rid of listeners');
+    this.props.socket.removeListener('submitted', this.listenerFunction);
+  }
+
+  checkForPupilId = (id) => {
+    if (!this.state.pupils) return false;
+    return this.state.pupils.find(pupil => pupil.id === id);
   }
 
   loadData = () => {
@@ -38,7 +58,6 @@ class ShowHomeworkByQuestion extends React.Component {
       .then(() => this.getQuestions(this.props.match.params.setDate, this.props.match.params.number))
       .then(() => this.getHomework(this.props.match.params.setDate, this.props.match.params.number))
       .catch(err => {
-        console.log(err);
         if (err.response.status === 401) {
           Flash.setMessage({ message: 'Access denied', type: 'danger'});
           this.props.history.push('/teachers/login');
@@ -77,7 +96,7 @@ class ShowHomeworkByQuestion extends React.Component {
       });
       return hw;
     }, {});
-    this.setState({ homework: homeworkHeader }, () => console.log(this.state));
+    this.setState({ homework: homeworkHeader });
   }
 
   feedbackOnChange = (e, id) => {
@@ -97,22 +116,16 @@ class ShowHomeworkByQuestion extends React.Component {
 
   feedbackSubmit = (e, feedback, pupilId, homeworkId, problemId) => {
     e.preventDefault();
+    const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     Axios
-      .put(`/api/pupils/${pupilId}/homeworks/${homeworkId}/problems/${problemId}`, {feedback})
+      .put(`/api/pupils/${pupilId}/homeworks/${homeworkId}/problems/${problemId}`, { feedback }, { headers })
       .then((res) => {
-        this.setState(prevState => {
-          const state = Object.assign({}, prevState);
-          const questions = state.questions.map(question => {
-            if(question.problem.id === res.data.id) {
-              question.problem = res.data;
-              return question;
-            } else {
-              return question;
-            }
-          });
-          state.questions = questions;
-          return state;
+        const questions = this.state.questions.map(question => {
+          if(question.problem.id === res.data.id) question.problem = res.data;
+          return question;
         });
+
+        this.setState({ questions });
       })
       .catch(err => console.log(err));
   }
@@ -122,28 +135,41 @@ class ShowHomeworkByQuestion extends React.Component {
       <main className="container homework">
         <div className="homework-background"></div>
         <div className="homework-wrapper">
-          <div className="main-title">
-            {this.state.homework &&
-              <div>
+
+          {this.state.homework &&
+              <div className="main-title top-space">
                 <h1
                   className="title is-1"
                 >
                   {this.state.homework.name}
                 </h1>
                 <p className="subtitle is-5">Set date: {FormatDate.getDDMMYYY(this.state.homework.setDate)} - Due date: {this.state.homework.dueDate ? FormatDate.getDDMMYYY(this.state.homework.dueDate) : 'n/a'}</p>
-                <ul>
-                  {this.state.questions.map(question => {
-                    if(question.submitted) {
-                      return <li key={question.id}><span  className="greenName">{question.name} </span></li>;
-                    } else {
-                      return <li key={question.id}><span  className="redName">{question.name} </span></li>;
-                    }
-                  })}</ul>
-                <div className="level"></div>
-                <p>Description: {this.state.homework.description}</p>
               </div>
-            }
-          </div>
+          }
+
+          {this.state.homework &&
+
+              <ul className="names-list">
+                {this.state.questions.map((question, index) => {
+                  return (
+                    <li
+                      key={index}
+                      className="name"
+                    >
+                      <span
+                        className={question.submitted ? 'greenName' : 'redName'}
+                      >
+                        {question.name}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+          }
+
+          {this.state.homework &&
+              <p className="agg-qn-description">Description: {this.state.homework.description}</p>
+          }
           <div>
             {this.state.questions && this.state.questions.map(question => {
               return (
@@ -156,7 +182,7 @@ class ShowHomeworkByQuestion extends React.Component {
                     {...question.problem}
                     user={this.state.user}
                     feedbackSubmit={(e) => this.feedbackSubmit(e, question.problem.feedback, question.pupilId, question.homeworkId, question.problem.id)}
-                    feedbackOnChange={(e) => this.feedbackOnChange(e, question.problem._id, question.problem.feedback)}
+                    feedbackOnChange={(e) => this.feedbackOnChange(e, question.problem.id, question.problem.feedback)}
                   />
                 </div>
               );

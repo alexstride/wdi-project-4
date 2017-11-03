@@ -1,5 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300|Varela+Round');
 @import 'partials/variables.scss';
-
 @import 'partials/homePage.scss';
 
 $red: hsl(348, 100%, 61%);
@@ -9,6 +9,7 @@ main {
 }
 
 .main-title {
+  font-family: "Source Sans Pro", sans-serif;
   text-align: center;
   padding: 20px;
   margin: 0;
@@ -61,14 +62,45 @@ main {
   }
 }
 
-span.redName {
-  color: red;
+.names-list {
+  padding: 20px;
+  max-width: 70%;
+  margin-left: 25%;
+  .name {
+    text-align: left;
+    width: 50%;
+    display: inline-block;
+    span.redName {
+      color: red;
+    }
+    span.greenName {
+      color: $theme-green;
+    }
+  }
 }
 
-span.greenName {
-  color: green;
+.modal-content {
+  text-align: center;
+}
+
+.agg-qn-description {
+  padding: 10px 10px 20px 10px;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 1.1rem;
 }
 
 .title-wrapper {
   width: 100%;
+}
+
+.hang-left {
+  text-align: left;
+}
+
+.feedback-text {
+  color: $theme-green;
+}
+.pupil-delete-modal {
+  text-align: center;
 }

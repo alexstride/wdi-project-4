@@ -1,0 +1,51 @@
+@import 'variables.scss';
+$placeholder-grey: #aaa;
+
+.class-edit {
+  .class-edit-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    a {
+      background-color: $red;
+    }
+  }
+  .class-edit-main {
+    padding: 5px 0;
+    div {
+      input {
+        margin: 10px 0;
+        border: none;
+        font-size: 16px;
+        outline: none;
+        &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+          color: $placeholder-grey;
+          font-style: italic;
+        }
+        &::-moz-placeholder { /* Firefox 19+ */
+          color: $placeholder-grey;
+          font-style: italic;
+        }
+        &:-ms-input-placeholder { /* IE 10+ */
+          color: $placeholder-grey;
+          font-style: italic;
+        }
+        &:-moz-placeholder { /* Firefox 18- */
+          color: $placeholder-grey;
+          font-style: italic;
+        }
+      }
+      i {
+        color: #777;
+        padding: 0 5px;
+      }
+    }
+  }
+  .hidden {
+    visibility: hidden;
+  }
+}
+
+.class-edit-wrapper {
+  text-align: center;
+}

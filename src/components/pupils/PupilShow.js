@@ -3,6 +3,7 @@ import Axios from 'axios';
 import Flash from '../../lib/Flash';
 import Auth from '../../lib/Auth';
 import _ from 'lodash';
+import ReturnToDashboard from '../utilities/ReturnToDashboard';
 
 import HomeworkIndexCard from '../homeworks/HomeworkIndexCard';
 
@@ -12,8 +13,9 @@ class PupilShow extends React.Component {
   }
 
   componentDidMount() {
+    const headers = Auth.isAuthenticated() ? { authorization: `Bearer ${Auth.getToken()}`} : {};
     Axios
-      .get(`/api/pupils/${this.props.match.params.id}`, { header: { Authorization: `Bearer ${Auth.getPayload()}`}})
+      .get(`/api/pupils/${this.props.match.params.id}`, { headers })
       .then(res => this.setState({ pupil: res.data }))
       .then(() => {
         // const submittedHomeworks = this.state.pupil.homeworks
@@ -21,10 +23,6 @@ class PupilShow extends React.Component {
         //   .sort(FormatDate.sortDesc);
         const submittedHomeworks = _.orderBy(this.state.pupil.homeworks
           .filter(hw => hw.hasBeenSubmitted), (hw) => Date.parse(hw.setDate), 'desc');
-
-        // const unsubmittedHomeworks = this.state.pupil.homeworks
-        //   .filter(hw => !hw.hasBeenSubmitted)
-        //   .sort(FormatDate.sortDesc);
 
         const unsubmittedHomeworks = _.orderBy(this.state.pupil.homeworks
           .filter(hw => !hw.hasBeenSubmitted), (hw) => Date.parse(hw.setDate), 'desc');
@@ -51,10 +49,21 @@ class PupilShow extends React.Component {
   render() {
     return (
       <main className="container">
-        <div className="main-title">
-          {this.state.pupil && <h1 className="title is-1">Homeworks for {this.state.pupil.firstname}</h1>}
+        <div className="columns main-title">
+          <div className="column is-4 hang-left">
+            {('teacherId' in Auth.getPayload()) && <ReturnToDashboard
+              destinationURL="/pupils"
+              destinationName="Your Class"
+            />}
+          </div>
+          <div className="column is-4">
+            {this.state.pupil && <h1 className="title is-1">Homeworks for {this.state.pupil.firstname}</h1>}
+          </div>
+          <div className="column is-4"></div>
         </div>
         <div className="homework-index">
+          {this.state.pupil && this.state.pupil.homeworks.length === 0 &&
+          <p>There are no homeworks to display</p>}
           {this.state.unsubmittedHomeworks && this.state.unsubmittedHomeworks.map(hw =>
             <HomeworkIndexCard
               key={hw.id}

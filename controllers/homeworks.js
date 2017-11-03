@@ -7,7 +7,6 @@ function hwSet(req, res, next) {
       console.log(pupils);
       const promises = pupils.map(pupil => {
         pupil.homeworks.push(req.body);
-        console.log(pupil.homeworks);
         return pupil.save();
       });
       Promise

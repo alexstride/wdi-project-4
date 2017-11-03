@@ -76,6 +76,26 @@ $placeholder-grey: #aaa;
   .hidden {
     visibility: hidden;
   }
+  .problem-edit-main.addPupil {
+    padding: 5px 0;
+    margin: 0 auto;
+    width: 60%;
+    input {
+      min-width: 400px;
+      margin: 10px 0;
+      border: none;
+      border-bottom: 1px solid $placeholder-grey;
+      font-size: 16px;
+      outline: none;
+    }
+    i {
+      color: #777;
+      padding: 0 5px;
+    }
+  }
+  .hidden {
+    visibility: hidden;
+  }
 }
 
 .class-edit-wrapper {

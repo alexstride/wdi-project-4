@@ -66,6 +66,10 @@
           background-color: grey;
           cursor: not-allowed;
         }
+        &.reset {
+          background-color: yellow;
+          color: black;
+        }
       }
     }
   }
@@ -98,7 +102,7 @@
           border: 0;
           cursor: pointer;
 
-          background-color: $theme-green;
+          background-color: #4d8ff9;
           color: white;
           font-size: 16px;
           font-weight: 500;
