@@ -116,7 +116,7 @@ class CreateHomework extends React.Component {
 
   toggleModal = (e) => {
     e.preventDefault();
-    this.setState({ modalOpen: !this.state.modalOpen })
+    this.setState({ modalOpen: !this.state.modalOpen });
   }
 
   render() {
