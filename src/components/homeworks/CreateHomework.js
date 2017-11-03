@@ -4,7 +4,7 @@ import Auth from '../../lib/Auth';
 import AutosizeInput from 'react-input-autosize';
 
 import ProblemCreateWrapper from './ProblemCreateWrapper';
-import ReturnToDashboard from '../utilities/ReturnToDashBoard';
+import ReturnToDashboard from '../utilities/ReturnToDashboard';
 import SetHomeworkModal from './SetHomeworkModal';
 
 import '../../scss/partials/_createHomeworkStyles.scss';
