@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import classNames from 'classnames';
 import FormatDate from '../../lib/FormatDate';
 
 const AggregatedIndexCard = ({ name, setDate, clickHandler, dueDate, haveNotSubmitted }) => {
